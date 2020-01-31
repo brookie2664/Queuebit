@@ -38,16 +38,16 @@ public class PlayerController : NetworkBehaviour
             //Spacebar special
         } 
         else {
-            if (Input.GetKeyDown(KeyCode.W)) {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) {
                 this.transform.Translate(0, 0, 1);
             }
-            if (Input.GetKeyDown(KeyCode.A)) {
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
                 this.transform.Translate(-1, 0, 0);
             }
-            if (Input.GetKeyDown(KeyCode.S)) {
+            if (Input.GetKeyDown(KeyCode.DownArrow)) {
                 this.transform.Translate(0, 0, -1);
             }
-            if (Input.GetKeyDown(KeyCode.D)) {
+            if (Input.GetKeyDown(KeyCode.RightArrow)) {
                 this.transform.Translate(1, 0, 0);
             }
 
