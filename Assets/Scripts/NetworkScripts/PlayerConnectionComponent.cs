@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 public class PlayerConnectionComponent : NetworkBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,11 +23,15 @@ public class PlayerConnectionComponent : NetworkBehaviour
         //Unless you use NetworkServer.Spawn().
         //NetworkServer.Spawn(PlayerUnitPrefab);
         CmdSpawnPlayerQbit();
+        //CmdSpawnPlayerCamera();
         //Visual effects can be instantiated on local computer - that's fine.
+        
+        //Attach main camera to player
 
     }
 
     public GameObject PlayerUnitPrefab;
+    public GameObject PlayerCameraPrefab;
     public string PlayerName = "Anon";
     // Update is called once per frame
     void Update()
@@ -50,15 +55,16 @@ public class PlayerConnectionComponent : NetworkBehaviour
     void CmdSpawnPlayerQbit() {
         //Guaranteed to be on the server right now
         //Can only call command spawn for things you have authority over.
-        GameObject go = Instantiate(PlayerUnitPrefab);
-
-
+        GameObject localPlayerUnit = Instantiate(PlayerUnitPrefab);
+        //GameObject localPlayerCamera = Instantiate(PlayerCameraPrefab);
+        //localPlayerCamera.GetComponent<PlayerCameraController>().setCameraTarget(localPlayerUnit.transform);
         //go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
         //Now, the game object exists on the server
         //Propagate it to all clients (and also wire up the NetworkIdentity)
-        NetworkServer.SpawnWithClientAuthority(go, connectionToClient);
+        NetworkServer.SpawnWithClientAuthority(localPlayerUnit, connectionToClient);
+
+        //TODO: Connect main camera to local player unity
+        
     }
-
-
 
 }

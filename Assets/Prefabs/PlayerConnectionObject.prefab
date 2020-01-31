@@ -79,3 +79,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerUnitPrefab: {fileID: 7786770177699762589, guid: d36899923e5ff5c4ba82fbff123125cd,
     type: 3}
+  PlayerCameraPrefab: {fileID: 3121244372427534900, guid: 3088af3fb4b9c3848b6e7b9ece4f2adf,
+    type: 3}
+  PlayerName: Anon

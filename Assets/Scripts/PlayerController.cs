@@ -8,10 +8,20 @@ public class PlayerController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // if (isLocalPlayer) {
+        //     Debug.Log("localplayer true");
+        // } else {
+        //     Debug.Log("localplayer false");
+        // }
+        // if (hasAuthority) {
+        //     Debug.Log("HA true");
+        // } else {
+        //     Debug.Log("HA false");
+        // }
     }
 
     // Update is called once per frame
+    private bool isCameraConnected = false;
     void Update()
     {
         //Note: Update() here runs on all playerunits.
@@ -19,7 +29,11 @@ public class PlayerController : NetworkBehaviour
             return;
         }
         
-        //if IsActive:
+        if (!isCameraConnected) {
+            Camera.main.GetComponent<PlayerCameraController>().setCameraTarget(this.transform);
+            isCameraConnected = true;
+        }
+        //TODO: Rhythm: if IsActive:
         if (Input.GetKeyDown(KeyCode.Space)) {
             //Spacebar special
         } 
@@ -43,6 +57,5 @@ public class PlayerController : NetworkBehaviour
         if(Input.GetKeyDown(KeyCode.Backspace)) {
             Destroy(gameObject);
         }
-
     }
 }
