@@ -31,7 +31,7 @@ public class PlayerConnectionComponent : NetworkBehaviour
     }
 
     public GameObject PlayerUnitPrefab;
-    public GameObject PlayerCameraPrefab;
+    //public GameObject PlayerCameraPrefab;
     public string PlayerName = "Anon";
     // Update is called once per frame
     void Update()
@@ -63,7 +63,8 @@ public class PlayerConnectionComponent : NetworkBehaviour
         //Propagate it to all clients (and also wire up the NetworkIdentity)
         NetworkServer.SpawnWithClientAuthority(localPlayerUnit, connectionToClient);
 
-        //TODO: Connect main camera to local player unity
+        //Connect main camera to local player: Done in Player Controller Script
+
         
     }
 

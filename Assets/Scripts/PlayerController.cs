@@ -8,16 +8,6 @@ public class PlayerController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // if (isLocalPlayer) {
-        //     Debug.Log("localplayer true");
-        // } else {
-        //     Debug.Log("localplayer false");
-        // }
-        // if (hasAuthority) {
-        //     Debug.Log("HA true");
-        // } else {
-        //     Debug.Log("HA false");
-        // }
     }
 
     // Update is called once per frame
