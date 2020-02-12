@@ -36,4 +36,13 @@ public class Grid {
         return grid[row, column];
     }
 
+    //Is called when a player attempts to move their character
+    public void MoveQuery(int row, int col, int dr, int dc) {
+        if (CellAt(row + dr, col + dc) != null && !CellAt(row + dr, col + dc).GetObstacle()) {
+            //Move the player position to the new tile and update the entire chain.
+        } else {
+            //Play an animation of bonking into the wall.
+        }
+    }
+
 }
