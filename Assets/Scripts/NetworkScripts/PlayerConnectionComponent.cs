@@ -6,9 +6,38 @@ using UnityEngine.Networking;
 public class PlayerConnectionComponent : NetworkBehaviour
 {
 
+    public GameObject gameStateObject;
+    private GameState gameState;
+
+    private GameObject playerCamera;
+    private GameObject renderer;
+    private Vector2 playerPosition;
+    private static KeyCode[] ALLOWED_INPUTS = {
+        KeyCode.W,
+        KeyCode.A,
+        KeyCode.S,
+        KeyCode.D
+    };
+
+    [ClientRpc]
+    public void RpcSetPlayerLocation(int x, int y) {
+        if (!isLocalPlayer) {
+            return;
+        }
+        playerPosition = new Vector2(x, y);
+        UpdateCamera();
+    }
+
+    void UpdateCamera() {
+        playerCamera.transform.position = new Vector3(playerPosition.x, playerPosition.y, -1);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        gameStateObject = GameObject.Find("GameState");
+        gameState = gameStateObject.GetComponent<GameState>();
+
         //PlayerConnectionObject is an always-on, invisible object that is spawned when a player connects to the game.
         //
         if (isLocalPlayer == false) {
@@ -16,22 +45,15 @@ public class PlayerConnectionComponent : NetworkBehaviour
             return;
         }
 
+        playerCamera = gameState.localCamera;
+        renderer = gameState.localRenderer;
+        
         Debug.Log("Spawning Player Unit");
 
-        //Instantiate() only creates an object on the LOCAL COMPUTER
-        //Even if it has a networkidentity, it will still not exist on the network (and therefore not on any other client)
-        //Unless you use NetworkServer.Spawn().
-        //NetworkServer.Spawn(PlayerUnitPrefab);
-        CmdSpawnPlayerQbit();
-        //CmdSpawnPlayerCamera();
-        //Visual effects can be instantiated on local computer - that's fine.
         
-        //Attach main camera to player
 
     }
 
-    public GameObject PlayerUnitPrefab;
-    //public GameObject PlayerCameraPrefab;
     public string PlayerName = "Anon";
     // Update is called once per frame
     void Update()
@@ -40,32 +62,13 @@ public class PlayerConnectionComponent : NetworkBehaviour
         if (isLocalPlayer == false) {
             return;
         }
-        
-        if (Input.GetKeyDown(KeyCode.P)) {
-            CmdSpawnPlayerQbit();
+        foreach (KeyCode entry in ALLOWED_INPUTS) {
+            if (Input.GetKeyDown(entry)) {
+                gameState.CmdSendInput(KeyCode.W, GetComponent<NetworkIdentity>());
+                break;
+            }
         }
 
-
-    }
-
-    //Commands:
-    //Commands are special function that only get executed on the server
-
-    [Command]
-    void CmdSpawnPlayerQbit() {
-        //Guaranteed to be on the server right now
-        //Can only call command spawn for things you have authority over.
-        GameObject localPlayerUnit = Instantiate(PlayerUnitPrefab);
-        //GameObject localPlayerCamera = Instantiate(PlayerCameraPrefab);
-        //localPlayerCamera.GetComponent<PlayerCameraController>().setCameraTarget(localPlayerUnit.transform);
-        //go.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-        //Now, the game object exists on the server
-        //Propagate it to all clients (and also wire up the NetworkIdentity)
-        NetworkServer.SpawnWithClientAuthority(localPlayerUnit, connectionToClient);
-
-        //Connect main camera to local player: Done in Player Controller Script
-
-        
     }
 
 }
