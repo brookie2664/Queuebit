@@ -20,16 +20,22 @@ public class PlayerConnectionComponent : NetworkBehaviour
     };
 
     [ClientRpc]
-    public void RpcSetPlayerLocation(int x, int y) {
+    public void RpcUpdateCamera(Vector2 gridPos) {
         if (!isLocalPlayer) {
             return;
         }
-        playerPosition = new Vector2(x, y);
-        UpdateCamera();
+        GameObject targetCell = renderer.GetComponent<GridRenderer>().GetCellRenderAt(gridPos);
+        playerCamera.transform.position = targetCell.transform.position + new Vector3(0, 0, -1);
     }
 
-    void UpdateCamera() {
-        playerCamera.transform.position = new Vector3(playerPosition.x, playerPosition.y, -1);
+    [Command]
+    public void CmdCreatePlayer(NetworkIdentity playerId) {
+        gameState.CreatePlayer(playerId);
+    }
+
+    [Command]
+    public void CmdSendInput(KeyCode input, NetworkIdentity playerId) {
+        gameState.SendInput(input, playerId);
     }
 
     // Start is called before the first frame update
@@ -50,7 +56,7 @@ public class PlayerConnectionComponent : NetworkBehaviour
         
         Debug.Log("Spawning Player Unit");
 
-        
+        CmdCreatePlayer(GetComponent<NetworkIdentity>());
 
     }
 
@@ -64,7 +70,7 @@ public class PlayerConnectionComponent : NetworkBehaviour
         }
         foreach (KeyCode entry in ALLOWED_INPUTS) {
             if (Input.GetKeyDown(entry)) {
-                gameState.CmdSendInput(KeyCode.W, GetComponent<NetworkIdentity>());
+                CmdSendInput(entry, GetComponent<NetworkIdentity>());
                 break;
             }
         }
