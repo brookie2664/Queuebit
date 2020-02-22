@@ -26,7 +26,7 @@ public class GridRenderer : MonoBehaviour
         } else if (data.occupied) {
             renderer.color = data.color;
         } else if (data.painted) {
-            renderer.color = data.color / 2;
+            renderer.color = data.color / 3 * 2;
         } else {
             renderer.color = Color.gray;
         }

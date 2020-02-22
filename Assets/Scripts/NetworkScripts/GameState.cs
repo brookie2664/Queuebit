@@ -118,17 +118,20 @@ public class GameState : NetworkBehaviour
         if (plannedMotion != Vector2Int.zero) {
             Cell currentPos = data.GetMostCurrentCell(inputClientData.x, inputClientData.y);
             Cell targetPos = data.GetMostCurrentCell(inputClientData.x + plannedMotion.x, inputClientData.y + plannedMotion.y);
-            data.QueueUpdateOccupied(currentPos.x, currentPos.y, false);
-            data.QueueUpdateOccupied(targetPos.x, targetPos.y, true);
-            data.QueueUpdatePlayer(targetPos.x, targetPos.y, playerDataId);
-            data.QueueUpdateColor(targetPos.x, targetPos.y, inputClientData.color);
-            data.QueueUpdatePainted(targetPos.x, targetPos.y, true);
+            
+            if (!(targetPos.obstacle || targetPos.occupied)) {
+                data.QueueUpdateOccupied(currentPos.x, currentPos.y, false);
+                data.QueueUpdateOccupied(targetPos.x, targetPos.y, true);
+                data.QueueUpdatePlayer(targetPos.x, targetPos.y, playerDataId);
+                data.QueueUpdateColor(targetPos.x, targetPos.y, inputClientData.color);
+                data.QueueUpdatePainted(targetPos.x, targetPos.y, true);
 
-            PlayerData newPlayerData = inputClientData;
-            newPlayerData.SetX(targetPos.x);
-            newPlayerData.SetY(targetPos.y);
-            playerData.RemoveAt(playerIndex);
-            playerData.Insert(playerIndex, newPlayerData);
+                PlayerData newPlayerData = inputClientData;
+                newPlayerData.SetX(targetPos.x);
+                newPlayerData.SetY(targetPos.y);
+                playerData.RemoveAt(playerIndex);
+                playerData.Insert(playerIndex, newPlayerData);
+            }
         }
 
         data.ApplyUpdates();
@@ -136,12 +139,18 @@ public class GameState : NetworkBehaviour
         playerId.GetComponentInParent<PlayerConnectionComponent>().RpcUpdateCamera(new Vector2Int(currentData.x, currentData.y));
     }
 
+    private Color[] teamColorsTemp = {
+        Color.red,
+        Color.blue,
+        Color.green
+    };
+
     public void CreatePlayer(NetworkIdentity playerId) {
-        Debug.Log(playerId.netId.Value);
         players.Add((int) playerId.netId.Value);
-        Vector2Int newPlayerPos = new Vector2Int(2, 2 + dummy++);
-        playerData.Add(new PlayerData(newPlayerPos.x, newPlayerPos.y, Color.red));
+        Vector2Int newPlayerPos = new Vector2Int(2, 2 + dummy);
+        playerData.Add(new PlayerData(newPlayerPos.x, newPlayerPos.y, teamColorsTemp[dummy % teamColorsTemp.Length]));
         playerId.GetComponentInParent<PlayerConnectionComponent>().RpcUpdateCamera(new Vector2Int(newPlayerPos.x, newPlayerPos.y));
+        dummy++;
     }
     
     // Start is called before the first frame update
