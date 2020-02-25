@@ -7,6 +7,8 @@ public struct Cell {
     public bool obstacle; //True if the tile is an obstacle tile, false if it is a floor tile
     public bool occupied; //True if occupied by a player
     public int player; //Player occupying the cell, if occupied
+    public int distToTail; //Number of cells to traverse to head of snake
+    public bool isHead; //True if the cell is the head of a snake
     public bool painted; //True if the tile is painted
     public Color color; //Color painted in cell, or of occupying player
 
@@ -25,6 +27,14 @@ public struct Cell {
 
     public void SetPlayer(int value) {
         player = value;
+    }
+
+    public void SetDistToTail(int value) {
+        distToTail = value;
+    }
+
+    public void SetIsHead(bool value) {
+        isHead = value;
     }
 
     public void SetPainted(bool value) {

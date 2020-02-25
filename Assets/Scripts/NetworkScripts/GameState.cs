@@ -6,17 +6,20 @@ using UnityEngine.Networking;
 public class GameState : NetworkBehaviour
 {
     public class PlayerDataSyncList : SyncListStruct<PlayerData> {}
+    
+    //Move to another file later
     public class GameGridSyncList : SyncListStruct<Cell> {
         private Dictionary<Vector2Int, Cell> queuedUpdates = new Dictionary<Vector2Int, Cell>();
         private int width;
         private int height;
-        public int GetQueueCount() {
-            return queuedUpdates.Count;
-        }
 
         public void SetDimensions(int width, int height) {
             this.width = width;
             this.height = height;
+        }
+
+        public Cell GetMostCurrentCell(Vector2 cellPos) {
+            return GetMostCurrentCell((int) cellPos.x, (int) cellPos.y);
         }
 
         public Cell GetMostCurrentCell(int x, int y) {
@@ -45,6 +48,18 @@ public class GameState : NetworkBehaviour
         public void QueueUpdatePlayer(int x, int y, int value) {
             Cell newCell = GetMostCurrentCell(x, y);
             newCell.SetPlayer(value);
+            QueueCellUpdate(newCell);
+        }
+
+        public void QueueUpdateDistToTail(int x, int y, int value) {
+            Cell newCell = GetMostCurrentCell(x, y);
+            newCell.SetDistToTail(value);
+            QueueCellUpdate(newCell);
+        }
+
+        public void QueueUpdateIsHead(int x, int y, bool value) {
+            Cell newCell = GetMostCurrentCell(x, y);
+            newCell.SetIsHead(value);
             QueueCellUpdate(newCell);
         }
 
@@ -94,8 +109,6 @@ public class GameState : NetworkBehaviour
     public GameGridSyncList GetData() {
         return data;
     }
-
-    int dummy = 0;
     
     public void SendInput(KeyCode input, NetworkIdentity playerId) {
         if (!isServer) {
@@ -103,40 +116,79 @@ public class GameState : NetworkBehaviour
         }
         int playerDataId = (int)playerId.netId.Value;
         int playerIndex = players.IndexOf(playerDataId);
-        PlayerData inputClientData = playerData.GetItem(playerIndex);
+        PlayerData inputSourceData = playerData.GetItem(playerIndex);
 
-        Vector2Int plannedMotion = new Vector2Int();
-        if (input == KeyCode.W) {
-            plannedMotion += new Vector2Int(0, -1);
-        } else if (input == KeyCode.A) {
-            plannedMotion += new Vector2Int(-1, 0);
-        } else if (input == KeyCode.S) {
-            plannedMotion += new Vector2Int(0, 1);
-        } else if (input == KeyCode.D) {
-            plannedMotion += new Vector2Int(1, 0);
-        }
-        if (plannedMotion != Vector2Int.zero) {
-            Cell currentPos = data.GetMostCurrentCell(inputClientData.x, inputClientData.y);
-            Cell targetPos = data.GetMostCurrentCell(inputClientData.x + plannedMotion.x, inputClientData.y + plannedMotion.y);
-            
-            if (!(targetPos.obstacle || targetPos.occupied)) {
-                data.QueueUpdateOccupied(currentPos.x, currentPos.y, false);
-                data.QueueUpdateOccupied(targetPos.x, targetPos.y, true);
-                data.QueueUpdatePlayer(targetPos.x, targetPos.y, playerDataId);
-                data.QueueUpdateColor(targetPos.x, targetPos.y, inputClientData.color);
-                data.QueueUpdatePainted(targetPos.x, targetPos.y, true);
+        Vector2 playerHeadPos = new Vector2(inputSourceData.x, inputSourceData.y);
+        Vector2 moveDirection = Vector2.zero;
 
-                PlayerData newPlayerData = inputClientData;
-                newPlayerData.SetX(targetPos.x);
-                newPlayerData.SetY(targetPos.y);
-                playerData.RemoveAt(playerIndex);
-                playerData.Insert(playerIndex, newPlayerData);
+        if (input == KeyCode.W) moveDirection = Vector2.down;
+        else if (input == KeyCode.A) moveDirection = Vector2.left;
+        else if (input == KeyCode.S) moveDirection = Vector2.up;
+        else if (input == KeyCode.D) moveDirection = Vector2.right; 
+
+        Cell currHeadCell = data.GetMostCurrentCell(playerHeadPos);
+        
+        //Calculate movement if input is movement
+        if (moveDirection != Vector2.zero) {
+            Cell targetCell = data.GetMostCurrentCell(playerHeadPos + moveDirection);
+            if (!targetCell.obstacle && !targetCell.occupied) {
+                data.QueueUpdateColor(targetCell.x, targetCell.y, inputSourceData.color);
+                data.QueueUpdateOccupied(targetCell.x, targetCell.y, true);
+                data.QueueUpdateIsHead(targetCell.x, targetCell.y, true);
+                data.QueueUpdateDistToTail(targetCell.x, targetCell.y, currHeadCell.distToTail + 1);
+                data.QueueUpdatePainted(targetCell.x, targetCell.y, true);
+                data.QueueUpdatePlayer(targetCell.x, targetCell.y, inputSourceData.id);
+                data.QueueUpdateIsHead(currHeadCell.x, currHeadCell.y, false);
+                inputSourceData.SetX(targetCell.x);
+                inputSourceData.SetY(targetCell.y);
+                playerHeadPos += moveDirection;
+            }
+
+            //Update length of tail after movement
+            Cell updatedTargetCell = data.GetMostCurrentCell(playerHeadPos);
+            if (updatedTargetCell.distToTail > inputSourceData.length) {
+                bool finishedTailUpdate = false;
+                Vector2 tailUpdateLocation = playerHeadPos;
+                
+                //Update distance for each segment of snake
+                while (!finishedTailUpdate) {
+                    int newDist = data.GetMostCurrentCell(tailUpdateLocation).distToTail - 1;
+                    data.QueueUpdateDistToTail((int) tailUpdateLocation.x, (int) tailUpdateLocation.y, newDist);
+                    if (newDist < 0) {
+                        data.QueueUpdateOccupied((int) tailUpdateLocation.x, (int) tailUpdateLocation.y, false);
+                    }
+
+                    //Look for next further segment in all directions
+                    Vector2[] directions = new Vector2[]{Vector2.up, Vector2.left, Vector2.down, Vector2.right};
+                    bool foundNext = false;
+                    foreach (Vector2 searchDir in directions) {
+                        Vector2 searchPos = tailUpdateLocation + searchDir;
+                        Cell checkCell = data.GetMostCurrentCell(searchPos);
+                        if (checkCell.occupied && checkCell.player == inputSourceData.id && checkCell.distToTail == newDist) {
+                            foundNext = true;
+                            tailUpdateLocation = searchPos;
+                            break;
+                        }
+                    }
+                    if (!foundNext) {
+                        finishedTailUpdate = true;
+                    }
+                }
             }
         }
 
+        //VERY IMPORTANT
+        //Up until this point, all updates to the grid are being stored in a temporary hashmap.
+        //This takes those updates and applies them to the synclist so that any cell updates
+        //are applied with only one actual network update per cell
         data.ApplyUpdates();
-        PlayerData currentData = playerData.GetItem(playerIndex);
-        playerId.GetComponentInParent<PlayerConnectionComponent>().RpcUpdateCamera(new Vector2Int(currentData.x, currentData.y));
+
+        //Updates the data of the player that produced the input across all instances of game
+        playerData.RemoveAt(playerIndex);
+        playerData.Insert(playerIndex, inputSourceData);
+        
+        //Update's player's camera to focus on new head cell
+        playerId.GetComponentInParent<PlayerConnectionComponent>().RpcUpdateCamera(new Vector2Int(inputSourceData.x, inputSourceData.y));
     }
 
     private Color[] teamColorsTemp = {
@@ -145,10 +197,13 @@ public class GameState : NetworkBehaviour
         Color.green
     };
 
+    int dummy = 0;
+
     public void CreatePlayer(NetworkIdentity playerId) {
-        players.Add((int) playerId.netId.Value);
+        int idNum = (int) playerId.netId.Value;
+        players.Add(idNum);
         Vector2Int newPlayerPos = new Vector2Int(2, 2 + dummy);
-        playerData.Add(new PlayerData(newPlayerPos.x, newPlayerPos.y, teamColorsTemp[dummy % teamColorsTemp.Length]));
+        playerData.Add(new PlayerData(idNum, newPlayerPos.x, newPlayerPos.y, teamColorsTemp[dummy % teamColorsTemp.Length]));
         playerId.GetComponentInParent<PlayerConnectionComponent>().RpcUpdateCamera(new Vector2Int(newPlayerPos.x, newPlayerPos.y));
         dummy++;
     }

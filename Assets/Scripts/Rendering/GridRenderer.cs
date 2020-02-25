@@ -23,10 +23,12 @@ public class GridRenderer : MonoBehaviour
         SpriteRenderer renderer = sprite.GetComponent<SpriteRenderer>();
         if (data.obstacle == true) {
             renderer.color = Color.white;
-        } else if (data.occupied) {
+        } else if (data.isHead) {
             renderer.color = data.color;
+        } else if (data.occupied) {
+            renderer.color = data.color * .9f;
         } else if (data.painted) {
-            renderer.color = data.color / 3 * 2;
+            renderer.color = data.color * .66f;
         } else {
             renderer.color = Color.gray;
         }
