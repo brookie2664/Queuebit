@@ -9,6 +9,7 @@ public class GameState : NetworkBehaviour
     
     //Move to another file later
     public class GameGridSyncList : SyncListStruct<Cell> {
+        //Used to hold cell updates not ready to be pushed to the clients
         private Dictionary<Vector2Int, Cell> queuedUpdates = new Dictionary<Vector2Int, Cell>();
         private int width;
         private int height;
@@ -18,10 +19,12 @@ public class GameState : NetworkBehaviour
             this.height = height;
         }
 
+        //Used to access most current version of a cell, from either the SyncList or the queued updates 
         public Cell GetMostCurrentCell(Vector2 cellPos) {
             return GetMostCurrentCell((int) cellPos.x, (int) cellPos.y);
         }
 
+        //Used to access most current version of a cell, from either the SyncList or the queued updates
         public Cell GetMostCurrentCell(int x, int y) {
             if (x < 0 || x >= width || y < 0 || y >= height) {
                 throw new System.Exception("Cannot modify cell at " + x + ", " + y + " becuase it does not exist");
@@ -29,52 +32,61 @@ public class GameState : NetworkBehaviour
             return queuedUpdates.ContainsKey(new Vector2Int(x, y)) ? queuedUpdates[new Vector2Int(x, y)]: this.GetItem(y * width + x);
         }
 
-        public void QueueCellUpdate(Cell cell) {
+        //Used by Queue_x_Update methods to add the update to the queue
+        private void QueueCellUpdate(Cell cell) {
             queuedUpdates[new Vector2Int(cell.x, cell.y)] = cell;
         }
 
+        //This should be used to update cells, in conjunction with ApplyUpdates()
         public void QueueUpdateObstacle(int x, int y, bool value) {
             Cell newCell = GetMostCurrentCell(x, y);
             newCell.SetObstacle(value);
             QueueCellUpdate(newCell);
         }
 
+        //This should be used to update cells, in conjunction with ApplyUpdates()
         public void QueueUpdateOccupied(int x, int y, bool value) {
             Cell newCell = GetMostCurrentCell(x, y);
             newCell.SetOccupied(value);
             QueueCellUpdate(newCell);
         }
 
+        //This should be used to update cells, in conjunction with ApplyUpdates()
         public void QueueUpdatePlayer(int x, int y, int value) {
             Cell newCell = GetMostCurrentCell(x, y);
             newCell.SetPlayer(value);
             QueueCellUpdate(newCell);
         }
 
+        //This should be used to update cells, in conjunction with ApplyUpdates()
         public void QueueUpdateDistToTail(int x, int y, int value) {
             Cell newCell = GetMostCurrentCell(x, y);
             newCell.SetDistToTail(value);
             QueueCellUpdate(newCell);
         }
 
+        //This should be used to update cells, in conjunction with ApplyUpdates()
         public void QueueUpdateIsHead(int x, int y, bool value) {
             Cell newCell = GetMostCurrentCell(x, y);
             newCell.SetIsHead(value);
             QueueCellUpdate(newCell);
         }
 
+        //This should be used to update cells, in conjunction with ApplyUpdates()
         public void QueueUpdatePainted(int x, int y, bool value) {
             Cell newCell = GetMostCurrentCell(x, y);
             newCell.SetPainted(value);
             QueueCellUpdate(newCell);
         }
 
+        //This should be used to update cells, in conjunction with ApplyUpdates()
         public void QueueUpdateColor(int x, int y, Color value) {
             Cell newCell = GetMostCurrentCell(x, y);
             newCell.SetColor(value);
             QueueCellUpdate(newCell);
         }
 
+        //Pushes updates in the queued updates to the synclist so they propogate to clients
         public void ApplyUpdates() {
             foreach (KeyValuePair<Vector2Int, Cell> pair in queuedUpdates) {
                 Cell cell = pair.Value;
@@ -94,11 +106,12 @@ public class GameState : NetworkBehaviour
     private int gridWidth;
     private int gridHeight;
 
-    public SyncListInt players = new SyncListInt();
+    public SyncListInt players = new SyncListInt(); //Holds list of player id's, to be used to reference the list of their data
     public PlayerDataSyncList playerData = new PlayerDataSyncList();
 
     [SyncVar]
-    bool gridCreated = false;
+    bool gridCreated = false; //Used by GridRenderer to know when the grid has been filled so
+    //it can start checking for updates
 
     GameGridSyncList data = new GameGridSyncList();
 
@@ -110,28 +123,32 @@ public class GameState : NetworkBehaviour
         return data;
     }
     
+    //Called by commands from clients to process key input
     public void SendInput(KeyCode input, NetworkIdentity playerId) {
         if (!isServer) {
             return;
         }
+        
+        //Finds the player's data by cross-ref the playerId with the list of player id's
         int playerDataId = (int)playerId.netId.Value;
         int playerIndex = players.IndexOf(playerDataId);
         PlayerData inputSourceData = playerData.GetItem(playerIndex);
 
-        Vector2 playerHeadPos = new Vector2(inputSourceData.x, inputSourceData.y);
+        //Creates a vector to represent intended move direction of player
         Vector2 moveDirection = Vector2.zero;
-
         if (input == KeyCode.W) moveDirection = Vector2.down;
         else if (input == KeyCode.A) moveDirection = Vector2.left;
         else if (input == KeyCode.S) moveDirection = Vector2.up;
         else if (input == KeyCode.D) moveDirection = Vector2.right; 
 
+        Vector2 playerHeadPos = new Vector2(inputSourceData.x, inputSourceData.y);
         Cell currHeadCell = data.GetMostCurrentCell(playerHeadPos);
         
         //Calculate movement if input is movement
         if (moveDirection != Vector2.zero) {
             Cell targetCell = data.GetMostCurrentCell(playerHeadPos + moveDirection);
             if (!targetCell.obstacle && !targetCell.occupied) {
+                //Make all the cell updates needed to move the head of the snake
                 data.QueueUpdateColor(targetCell.x, targetCell.y, inputSourceData.color);
                 data.QueueUpdateOccupied(targetCell.x, targetCell.y, true);
                 data.QueueUpdateIsHead(targetCell.x, targetCell.y, true);
@@ -139,8 +156,12 @@ public class GameState : NetworkBehaviour
                 data.QueueUpdatePainted(targetCell.x, targetCell.y, true);
                 data.QueueUpdatePlayer(targetCell.x, targetCell.y, inputSourceData.id);
                 data.QueueUpdateIsHead(currHeadCell.x, currHeadCell.y, false);
+
+                //Update the PlayerData with the new head position
                 inputSourceData.SetX(targetCell.x);
                 inputSourceData.SetY(targetCell.y);
+
+                //Update variable for later use
                 playerHeadPos += moveDirection;
             }
 
@@ -197,8 +218,10 @@ public class GameState : NetworkBehaviour
         Color.green
     };
 
+    //Dummy variable for team assignment and spawn placement
     int dummy = 0;
 
+    //Called by command from client to register when a player joins
     public void CreatePlayer(NetworkIdentity playerId) {
         int idNum = (int) playerId.netId.Value;
         players.Add(idNum);

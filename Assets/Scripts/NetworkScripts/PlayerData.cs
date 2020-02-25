@@ -1,11 +1,11 @@
 using UnityEngine;
 
 public struct PlayerData {
-    public int id;
-    public int length;
-    public int x;
-    public int y;
-    public Color color;
+    public int id; //An int representing the player, as derived from the PlayerController's NetworkIdentity
+    public int length; //The length of the player's snake
+    public int x; //The x position of the player's head
+    public int y; //The y position of the player's head
+    public Color color; //The color/team of the player
 
     public PlayerData(int id, int x, int y, Color color) {
         this.id = id;
