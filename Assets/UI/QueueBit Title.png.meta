@@ -1,0 +1,3028 @@
+fileFormatVersion: 2
+guid: ef8c086812641244ebe22fbc7eafcea0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5434245392712148195
+    second: QueueBit Title v7_0
+  - first:
+      213: -180587152507097820
+    second: QueueBit Title v7_1
+  - first:
+      213: -1590312057046674338
+    second: QueueBit Title v7_2
+  - first:
+      213: 2983929276606952263
+    second: QueueBit Title v7_3
+  - first:
+      213: 4214571784758714010
+    second: QueueBit Title v7_4
+  - first:
+      213: -4436522377739095733
+    second: QueueBit Title v7_5
+  - first:
+      213: -2341483532597841300
+    second: QueueBit Title v7_6
+  - first:
+      213: 8812535684787880114
+    second: QueueBit Title v7_7
+  - first:
+      213: 3392882109503883435
+    second: QueueBit Title v7_8
+  - first:
+      213: -4883610733703312132
+    second: QueueBit Title v7_9
+  - first:
+      213: -2549841022109380722
+    second: QueueBit Title v7_10
+  - first:
+      213: 3680792930729810451
+    second: QueueBit Title v7_11
+  - first:
+      213: 2085308369717999432
+    second: QueueBit Title v7_12
+  - first:
+      213: 2346395484998835674
+    second: QueueBit Title v7_13
+  - first:
+      213: -8491686899750669216
+    second: QueueBit Title v7_14
+  - first:
+      213: -687925078735512675
+    second: QueueBit Title v7_15
+  - first:
+      213: 3947367204187281455
+    second: QueueBit Title v7_16
+  - first:
+      213: 5099884369933273830
+    second: QueueBit Title v7_17
+  - first:
+      213: 5106067540773516238
+    second: QueueBit Title v7_18
+  - first:
+      213: 2153704080779313394
+    second: QueueBit Title v7_19
+  - first:
+      213: -5938457829703010933
+    second: QueueBit Title v7_20
+  - first:
+      213: 351437112196253689
+    second: QueueBit Title v7_21
+  - first:
+      213: -8504029482329411096
+    second: QueueBit Title v7_22
+  - first:
+      213: 8992642006190659869
+    second: QueueBit Title v7_23
+  - first:
+      213: 2264896469500050194
+    second: QueueBit Title v7_24
+  - first:
+      213: 4192622142478730625
+    second: QueueBit Title v7_25
+  - first:
+      213: 8657774429289797958
+    second: QueueBit Title v7_26
+  - first:
+      213: -8631900739030453068
+    second: QueueBit Title v7_27
+  - first:
+      213: -3660250935723612600
+    second: QueueBit Title v7_28
+  - first:
+      213: 1653869526665098987
+    second: QueueBit Title v7_29
+  - first:
+      213: 6071919341361127228
+    second: QueueBit Title v7_30
+  - first:
+      213: 7552769304739258562
+    second: QueueBit Title v7_31
+  - first:
+      213: 5785575452178778343
+    second: QueueBit Title v7_32
+  - first:
+      213: 9209595283993764276
+    second: QueueBit Title v7_33
+  - first:
+      213: -6085816194711882349
+    second: QueueBit Title v7_34
+  - first:
+      213: 1752544368458494625
+    second: QueueBit Title v7_35
+  - first:
+      213: 3534656360214321505
+    second: QueueBit Title v7_36
+  - first:
+      213: -7938684907253631485
+    second: QueueBit Title v7_37
+  - first:
+      213: -4454270950939456027
+    second: QueueBit Title v7_38
+  - first:
+      213: -66202710136714240
+    second: QueueBit Title v7_39
+  - first:
+      213: 2676036450640138965
+    second: QueueBit Title v7_40
+  - first:
+      213: -405040247644966289
+    second: QueueBit Title v7_41
+  - first:
+      213: -2258504940995606075
+    second: QueueBit Title v7_42
+  - first:
+      213: -5346648673648990619
+    second: QueueBit Title v7_43
+  - first:
+      213: -6427552686631706788
+    second: QueueBit Title v7_44
+  - first:
+      213: -1362948275920234382
+    second: QueueBit Title v7_45
+  - first:
+      213: 2619256037562545499
+    second: QueueBit Title v7_46
+  - first:
+      213: -2191035548884885186
+    second: QueueBit Title v7_47
+  - first:
+      213: -4686169321572272956
+    second: QueueBit Title v7_48
+  - first:
+      213: -5308220660939121539
+    second: QueueBit Title v7_49
+  - first:
+      213: 7389984910129464521
+    second: QueueBit Title v7_50
+  - first:
+      213: -8807517316792076476
+    second: QueueBit Title v7_51
+  - first:
+      213: -7645320377170089306
+    second: QueueBit Title v7_52
+  - first:
+      213: -4295198961076192110
+    second: QueueBit Title v7_53
+  - first:
+      213: -5844612981996859381
+    second: QueueBit Title v7_54
+  - first:
+      213: 8880571408029275012
+    second: QueueBit Title v7_55
+  - first:
+      213: -3652631709696373034
+    second: QueueBit Title v7_56
+  - first:
+      213: -631996589830542433
+    second: QueueBit Title v7_57
+  - first:
+      213: 915394060850473270
+    second: QueueBit Title v7_58
+  - first:
+      213: -6957159803496024425
+    second: QueueBit Title v7_59
+  - first:
+      213: 4719223290989317117
+    second: QueueBit Title v7_60
+  - first:
+      213: -2148030410047765807
+    second: QueueBit Title v7_61
+  - first:
+      213: 5788014731951829083
+    second: QueueBit Title v7_62
+  - first:
+      213: 6140962105449426973
+    second: QueueBit Title v7_63
+  - first:
+      213: -4686533998547122177
+    second: QueueBit Title v7_64
+  - first:
+      213: -5324798334660888969
+    second: QueueBit Title v7_65
+  - first:
+      213: 7255339363124648149
+    second: QueueBit Title v7_66
+  - first:
+      213: 1465068305898791044
+    second: QueueBit Title v7_67
+  - first:
+      213: -4225245865371633827
+    second: QueueBit Title v7_68
+  - first:
+      213: 8411304153164918121
+    second: QueueBit Title v7_69
+  - first:
+      213: 1324164309695814279
+    second: QueueBit Title v7_70
+  - first:
+      213: -5796795923843693100
+    second: QueueBit Title v7_71
+  - first:
+      213: -6491975189152933310
+    second: QueueBit Title v7_72
+  - first:
+      213: -258157617999769247
+    second: QueueBit Title v7_73
+  - first:
+      213: -1442958414896110556
+    second: QueueBit Title v7_74
+  - first:
+      213: 1998046132767692929
+    second: QueueBit Title v7_75
+  - first:
+      213: -6613501278653942313
+    second: QueueBit Title v7_76
+  - first:
+      213: -6311206070211950966
+    second: QueueBit Title v7_77
+  - first:
+      213: 4604001575282341482
+    second: QueueBit Title v7_78
+  - first:
+      213: -288098093651368696
+    second: QueueBit Title v7_79
+  - first:
+      213: -5707181360232137742
+    second: QueueBit Title v7_80
+  - first:
+      213: 3811246876326890638
+    second: QueueBit Title v7_81
+  - first:
+      213: 1901258122747438425
+    second: QueueBit Title v7_82
+  - first:
+      213: 4722114345083606010
+    second: QueueBit Title v7_83
+  - first:
+      213: -4823405072387254174
+    second: QueueBit Title v7_84
+  - first:
+      213: -3564686331236263062
+    second: QueueBit Title v7_85
+  - first:
+      213: 2427671325625708543
+    second: QueueBit Title v7_86
+  - first:
+      213: 4208358645014146255
+    second: QueueBit Title v7_87
+  - first:
+      213: -6408265600153512102
+    second: QueueBit Title v7_88
+  - first:
+      213: -3447482244781899818
+    second: QueueBit Title v7_89
+  - first:
+      213: -8524695679862702837
+    second: QueueBit Title v7_90
+  - first:
+      213: 5495664114057865647
+    second: QueueBit Title v7_91
+  - first:
+      213: -5515975676008628948
+    second: QueueBit Title v7_92
+  - first:
+      213: 7698142694283158662
+    second: QueueBit Title v7_93
+  - first:
+      213: -7350373007193860257
+    second: QueueBit Title v7_94
+  - first:
+      213: -6396294654483735252
+    second: QueueBit Title v7_95
+  - first:
+      213: 3479356851405689397
+    second: QueueBit Title v7_96
+  - first:
+      213: 123223916796398552
+    second: QueueBit Title v7_97
+  - first:
+      213: -253198057854632524
+    second: QueueBit Title v7_98
+  - first:
+      213: -1216631515152982606
+    second: QueueBit Title v7_99
+  - first:
+      213: 4260196687512119955
+    second: QueueBit Title v7_100
+  - first:
+      213: -2268067173861224369
+    second: QueueBit Title v7_101
+  - first:
+      213: -1105527932528676673
+    second: QueueBit Title v7_102
+  - first:
+      213: 5458230184420025556
+    second: QueueBit Title v7_103
+  - first:
+      213: 2517043110805215962
+    second: QueueBit Title v7_104
+  - first:
+      213: 1508800714733298792
+    second: QueueBit Title v7_105
+  - first:
+      213: 8743930484543505746
+    second: QueueBit Title v7_106
+  - first:
+      213: -4634300050102237529
+    second: QueueBit Title v7_107
+  - first:
+      213: -1323147942505150040
+    second: QueueBit Title v7_108
+  - first:
+      213: -1010354438344574658
+    second: QueueBit Title v7_109
+  - first:
+      213: -5079786258106690676
+    second: QueueBit Title v7_110
+  - first:
+      213: -8393428451731068303
+    second: QueueBit Title v7_111
+  - first:
+      213: 7265951865642552571
+    second: QueueBit Title v7_112
+  - first:
+      213: -7657458200746571110
+    second: QueueBit Title v7_113
+  - first:
+      213: 3338541984177476069
+    second: QueueBit Title v7_114
+  - first:
+      213: -61691607806159172
+    second: QueueBit Title v7_115
+  - first:
+      213: -527101891968421282
+    second: QueueBit Title v7_116
+  - first:
+      213: 3402287044334222371
+    second: QueueBit Title v7_117
+  - first:
+      213: 5149637396960648975
+    second: QueueBit Title v7_118
+  - first:
+      213: -3472306607635634723
+    second: QueueBit Title v7_119
+  - first:
+      213: 8313529466984098649
+    second: QueueBit Title v7_120
+  - first:
+      213: -4349389987235798640
+    second: QueueBit Title v7_121
+  - first:
+      213: 3200759825753482575
+    second: QueueBit Title v7_122
+  - first:
+      213: -3540251732712810138
+    second: QueueBit Title v7_123
+  - first:
+      213: 834132329558419603
+    second: QueueBit Title v7_124
+  - first:
+      213: 3556684686684693474
+    second: QueueBit Title v7_125
+  - first:
+      213: 1955546331539408266
+    second: QueueBit Title v7_126
+  - first:
+      213: 3331126476438324361
+    second: QueueBit Title v7_127
+  - first:
+      213: 6221189673871523072
+    second: QueueBit Title v7_128
+  - first:
+      213: 3267708421661368641
+    second: QueueBit Title v7_129
+  - first:
+      213: -2137917042325843700
+    second: QueueBit Title v7_130
+  - first:
+      213: 7224832787884472112
+    second: QueueBit Title v7_131
+  - first:
+      213: 1320837058175733110
+    second: QueueBit Title v7_132
+  - first:
+      213: 2114943121006634827
+    second: QueueBit Title v7_133
+  - first:
+      213: 4317538737276604359
+    second: QueueBit Title v7_134
+  - first:
+      213: 6854278915434162128
+    second: QueueBit Title v7_135
+  - first:
+      213: 6665389996286589395
+    second: QueueBit Title v7_136
+  - first:
+      213: -5747395801458793661
+    second: QueueBit Title v7_137
+  - first:
+      213: 4284424173223256758
+    second: QueueBit Title v7_138
+  - first:
+      213: 1214104998416082318
+    second: QueueBit Title v7_139
+  - first:
+      213: 8963029660985089189
+    second: QueueBit Title v7_140
+  - first:
+      213: -5549170233831342731
+    second: QueueBit Title v7_141
+  - first:
+      213: -753970385224050957
+    second: QueueBit Title v7_142
+  - first:
+      213: 3147628286891045347
+    second: QueueBit Title v7_143
+  - first:
+      213: -243852980170582666
+    second: QueueBit Title v7_144
+  - first:
+      213: -2115267470387887978
+    second: QueueBit Title v7_145
+  - first:
+      213: -5008337452792798607
+    second: QueueBit Title v7_146
+  - first:
+      213: -4574636244382839696
+    second: QueueBit Title v7_147
+  - first:
+      213: -5340555642556928892
+    second: QueueBit Title v7_148
+  - first:
+      213: -2628811120430960878
+    second: QueueBit Title v7_149
+  - first:
+      213: 670597399956932662
+    second: QueueBit Title v7_150
+  - first:
+      213: -614313975758801996
+    second: QueueBit Title v7_151
+  - first:
+      213: -8227744557567886593
+    second: QueueBit Title v7_152
+  - first:
+      213: 3072304388025464146
+    second: QueueBit Title v7_153
+  - first:
+      213: 4542905196418151717
+    second: QueueBit Title v7_154
+  - first:
+      213: -3309166383653143478
+    second: QueueBit Title v7_155
+  - first:
+      213: 5781054911221136211
+    second: QueueBit Title v7_156
+  - first:
+      213: 5863470214570610222
+    second: QueueBit Title v7_157
+  - first:
+      213: 527464072424380162
+    second: QueueBit Title v7_158
+  - first:
+      213: 2704003803736911242
+    second: QueueBit Title v7_159
+  - first:
+      213: -7741011932019127209
+    second: QueueBit Title v7_160
+  - first:
+      213: -9000284236935297859
+    second: QueueBit Title v7_161
+  - first:
+      213: -5224895469166327450
+    second: QueueBit Title v7_162
+  - first:
+      213: -5632352849990116198
+    second: QueueBit Title v7_163
+  - first:
+      213: -5236376603744607793
+    second: QueueBit Title v7_164
+  - first:
+      213: -3307669032373709369
+    second: QueueBit Title v7_165
+  - first:
+      213: 2087354184692355829
+    second: QueueBit Title v7_166
+  - first:
+      213: 8068602122920403976
+    second: QueueBit Title v7_167
+  - first:
+      213: -2206952799884004767
+    second: QueueBit Title v7_168
+  - first:
+      213: 6755268737688583445
+    second: QueueBit Title v7_169
+  - first:
+      213: -5538647712565617053
+    second: QueueBit Title v7_170
+  - first:
+      213: -4279624044613361289
+    second: QueueBit Title v7_171
+  - first:
+      213: 185058489782525951
+    second: QueueBit Title v7_172
+  - first:
+      213: -6198017833181547677
+    second: QueueBit Title v7_173
+  - first:
+      213: -3537914570354258711
+    second: QueueBit Title v7_174
+  - first:
+      213: 1897690348408599340
+    second: QueueBit Title v7_175
+  - first:
+      213: 1131677302117601032
+    second: QueueBit Title v7_176
+  - first:
+      213: 477444628236608609
+    second: QueueBit Title v7_177
+  - first:
+      213: 6822532332003628250
+    second: QueueBit Title v7_178
+  - first:
+      213: -3267237466858689868
+    second: QueueBit Title v7_179
+  - first:
+      213: -6102279096071407033
+    second: QueueBit Title v7_180
+  - first:
+      213: -3028850795069609408
+    second: QueueBit Title v7_181
+  - first:
+      213: -2801211240360150852
+    second: QueueBit Title v7_182
+  - first:
+      213: -1519753884431958162
+    second: QueueBit Title v7_183
+  - first:
+      213: -4781848813308431049
+    second: QueueBit Title v7_184
+  - first:
+      213: 9058254350067892564
+    second: QueueBit Title v7_185
+  - first:
+      213: -5404157350152995766
+    second: QueueBit Title v7_186
+  - first:
+      213: -6026060113974444573
+    second: QueueBit Title v7_187
+  - first:
+      213: 3363432173794858035
+    second: QueueBit Title v7_188
+  - first:
+      213: 9123022960705803726
+    second: QueueBit Title v7_189
+  - first:
+      213: 5266593007171512803
+    second: QueueBit Title v7_190
+  - first:
+      213: 68445720382443388
+    second: QueueBit Title v7_191
+  - first:
+      213: -2687849154120529972
+    second: QueueBit Title v7_192
+  - first:
+      213: -2904790341384605154
+    second: QueueBit Title v7_193
+  - first:
+      213: 5552132541094183590
+    second: QueueBit Title v7_194
+  - first:
+      213: 114665817546824504
+    second: QueueBit Title v7_195
+  - first:
+      213: 2517778364392498867
+    second: QueueBit Title v7_196
+  - first:
+      213: 883209499988518445
+    second: QueueBit Title v7_197
+  - first:
+      213: 6369794276920894708
+    second: QueueBit Title v7_198
+  - first:
+      213: 5041745015165679720
+    second: QueueBit Title v7_199
+  - first:
+      213: 1675885959193609253
+    second: QueueBit Title v7_200
+  - first:
+      213: 3462718675538120400
+    second: QueueBit Title v7_201
+  - first:
+      213: -6875498312898894384
+    second: QueueBit Title v7_202
+  - first:
+      213: 999207080505956486
+    second: QueueBit Title v7_203
+  - first:
+      213: -3523514928179945614
+    second: QueueBit Title v7_204
+  - first:
+      213: 9105619387842892904
+    second: QueueBit Title v7_205
+  - first:
+      213: -3271947023887476838
+    second: QueueBit Title v7_206
+  - first:
+      213: -5829127105079355934
+    second: QueueBit Title v7_207
+  - first:
+      213: -4312185563901279940
+    second: QueueBit Title v7_208
+  - first:
+      213: 3669605419898860815
+    second: QueueBit Title v7_209
+  - first:
+      213: -4673604830048261695
+    second: QueueBit Title v7_210
+  - first:
+      213: -5624624619953102968
+    second: QueueBit Title v7_211
+  - first:
+      213: 8913602897068711706
+    second: QueueBit Title v7_212
+  - first:
+      213: -5692597675113585775
+    second: QueueBit Title v7_213
+  - first:
+      213: 8901776387228323813
+    second: QueueBit Title v7_214
+  - first:
+      213: -3445280423775363219
+    second: QueueBit Title v7_215
+  - first:
+      213: -1208549645122258035
+    second: QueueBit Title v7_216
+  - first:
+      213: -3741137196456957585
+    second: QueueBit Title v7_217
+  - first:
+      213: 3628871503828288961
+    second: QueueBit Title v7_218
+  - first:
+      213: -8334633303532223970
+    second: QueueBit Title v7_219
+  - first:
+      213: -3068624653778747583
+    second: QueueBit Title v7_220
+  - first:
+      213: -1390545791981483358
+    second: QueueBit Title v7_221
+  - first:
+      213: -2245989627946008178
+    second: QueueBit Title v7_222
+  - first:
+      213: 7090954420914596112
+    second: QueueBit Title v7_223
+  - first:
+      213: -7983810494123396052
+    second: QueueBit Title v7_224
+  - first:
+      213: -6191699430202487830
+    second: QueueBit Title v7_225
+  - first:
+      213: 4022836034634110738
+    second: QueueBit Title v7_226
+  - first:
+      213: 8554451968159869404
+    second: QueueBit Title v7_227
+  - first:
+      213: -3563760235091572162
+    second: QueueBit Title v7_228
+  - first:
+      213: -5450599437098939319
+    second: QueueBit Title v7_229
+  - first:
+      213: -6994226858237811007
+    second: QueueBit Title v7_230
+  - first:
+      213: 8870435916204697216
+    second: QueueBit Title v7_231
+  - first:
+      213: -4857579722825663316
+    second: QueueBit Title v7_232
+  - first:
+      213: -2597186886154905399
+    second: QueueBit Title v7_233
+  - first:
+      213: 8055505988058970721
+    second: QueueBit Title v7_234
+  - first:
+      213: 5344690744047699853
+    second: QueueBit Title v7_235
+  - first:
+      213: 597852571436523973
+    second: QueueBit Title v7_236
+  - first:
+      213: 1505440969264266808
+    second: QueueBit Title v7_237
+  - first:
+      213: 8540200540992731443
+    second: QueueBit Title v7_238
+  - first:
+      213: -8389016232599775483
+    second: QueueBit Title v7_239
+  - first:
+      213: -7533448793857175940
+    second: QueueBit Title v7_240
+  - first:
+      213: -6166107261856638237
+    second: QueueBit Title v7_241
+  - first:
+      213: -9029558030191387505
+    second: QueueBit Title v7_242
+  - first:
+      213: 1466947599715220403
+    second: QueueBit Title v7_243
+  - first:
+      213: 8520824179416309129
+    second: QueueBit Title v7_244
+  - first:
+      213: -5202562948806768650
+    second: QueueBit Title v7_245
+  - first:
+      213: 3484873185206675595
+    second: QueueBit Title v7_246
+  - first:
+      213: 7396358472708547255
+    second: QueueBit Title v7_247
+  - first:
+      213: -4797195551261709169
+    second: QueueBit Title v7_248
+  - first:
+      213: 3950558342880381832
+    second: QueueBit Title v7_249
+  - first:
+      213: 3560424118058052441
+    second: QueueBit Title v7_250
+  - first:
+      213: -3857183505943258859
+    second: QueueBit Title v7_251
+  - first:
+      213: 2949310201590647301
+    second: QueueBit Title v7_252
+  - first:
+      213: 3976946990363947965
+    second: QueueBit Title v7_253
+  - first:
+      213: 8317969757293978573
+    second: QueueBit Title v7_254
+  - first:
+      213: 4028169912829137482
+    second: QueueBit Title v7_255
+  - first:
+      213: 5092679361135931804
+    second: QueueBit Title v7_256
+  - first:
+      213: -3170583052754690555
+    second: QueueBit Title v7_257
+  - first:
+      213: 48990566019190287
+    second: QueueBit Title v7_258
+  - first:
+      213: 7404400959710323784
+    second: QueueBit Title v7_259
+  - first:
+      213: 8045016206672882657
+    second: QueueBit Title v7_260
+  - first:
+      213: 6602438149852140488
+    second: QueueBit Title v7_261
+  - first:
+      213: 2340410757944816513
+    second: QueueBit Title v7_262
+  - first:
+      213: 55206053390505970
+    second: QueueBit Title v7_263
+  - first:
+      213: -501912825793486827
+    second: QueueBit Title v7_264
+  - first:
+      213: 2315932876500696133
+    second: QueueBit Title v7_265
+  - first:
+      213: -4011678867215862959
+    second: QueueBit Title v7_266
+  - first:
+      213: 2792188772543773720
+    second: QueueBit Title v7_267
+  - first:
+      213: 5156669959458841162
+    second: QueueBit Title v7_268
+  - first:
+      213: -1103077880311280418
+    second: QueueBit Title v7_269
+  - first:
+      213: -60044244651902444
+    second: QueueBit Title v7_270
+  - first:
+      213: -3371623491817572474
+    second: QueueBit Title v7_271
+  - first:
+      213: 4307002905870543899
+    second: QueueBit Title v7_272
+  - first:
+      213: 2019563329489434123
+    second: QueueBit Title v7_273
+  - first:
+      213: -2975262448279970918
+    second: QueueBit Title v7_274
+  - first:
+      213: -8489408365081382932
+    second: QueueBit Title v7_275
+  - first:
+      213: -2775236745483470724
+    second: QueueBit Title v7_276
+  - first:
+      213: -8764159085645293867
+    second: QueueBit Title v7_277
+  - first:
+      213: 2125075878023815403
+    second: QueueBit Title v7_278
+  - first:
+      213: -5159071915158670471
+    second: QueueBit Title v7_279
+  - first:
+      213: -6684036709375699026
+    second: QueueBit Title v7_280
+  - first:
+      213: -3665236181283395070
+    second: QueueBit Title v7_281
+  - first:
+      213: -3495273352345952253
+    second: QueueBit Title v7_282
+  - first:
+      213: 4120773028810837291
+    second: QueueBit Title v7_283
+  - first:
+      213: -5161192725666111080
+    second: QueueBit Title v7_284
+  - first:
+      213: 6016236485197650477
+    second: QueueBit Title v7_285
+  - first:
+      213: -8605388831684134858
+    second: QueueBit Title v7_286
+  - first:
+      213: 4020530799703908066
+    second: QueueBit Title v7_287
+  - first:
+      213: 7103620980145036427
+    second: QueueBit Title v7_288
+  - first:
+      213: 1022352875419680178
+    second: QueueBit Title v7_289
+  - first:
+      213: 7243485858347132693
+    second: QueueBit Title v7_290
+  - first:
+      213: 4728511887445606410
+    second: QueueBit Title v7_291
+  - first:
+      213: -3082789873746926344
+    second: QueueBit Title v7_292
+  - first:
+      213: -7354675257056482185
+    second: QueueBit Title v7_293
+  - first:
+      213: -6408361751346810922
+    second: QueueBit Title v7_294
+  - first:
+      213: -1068724232911144194
+    second: QueueBit Title v7_295
+  - first:
+      213: -3602296301556803091
+    second: QueueBit Title v7_296
+  - first:
+      213: -3167589436852064245
+    second: QueueBit Title v7_297
+  - first:
+      213: 4527706790883747202
+    second: QueueBit Title v7_298
+  - first:
+      213: 4212295781645634685
+    second: QueueBit Title v7_299
+  - first:
+      213: 2492784972812498833
+    second: QueueBit Title v7_300
+  - first:
+      213: -3087581702441492983
+    second: QueueBit Title v7_301
+  - first:
+      213: 5752336456919451047
+    second: QueueBit Title v7_302
+  - first:
+      213: -3922267312533984310
+    second: QueueBit Title v7_303
+  - first:
+      213: -798385201890691258
+    second: QueueBit Title v7_304
+  - first:
+      213: 1444038985139019649
+    second: QueueBit Title v7_305
+  - first:
+      213: -5028750079921752782
+    second: QueueBit Title v7_306
+  - first:
+      213: 5188935638852987510
+    second: QueueBit Title v7_307
+  - first:
+      213: -9022876346002489328
+    second: QueueBit Title v7_308
+  - first:
+      213: 2950930363162004821
+    second: QueueBit Title v7_309
+  - first:
+      213: -315610602833600847
+    second: QueueBit Title v7_310
+  - first:
+      213: -1974676416275577566
+    second: QueueBit Title v7_311
+  - first:
+      213: 2220257761117971710
+    second: QueueBit Title v7_312
+  - first:
+      213: 5974575312920305991
+    second: QueueBit Title v7_313
+  - first:
+      213: -1533168808679017314
+    second: QueueBit Title v7_314
+  - first:
+      213: -9170647397966482709
+    second: QueueBit Title v7_315
+  - first:
+      213: -4224844364014073557
+    second: QueueBit Title v7_316
+  - first:
+      213: -5409010066602891107
+    second: QueueBit Title v7_317
+  - first:
+      213: 5049838900034873725
+    second: QueueBit Title v7_318
+  - first:
+      213: -7109335025213312299
+    second: QueueBit Title v7_319
+  - first:
+      213: -8641130387970782880
+    second: QueueBit Title v7_320
+  - first:
+      213: -403155602312813063
+    second: QueueBit Title v7_321
+  - first:
+      213: -5843318600952007166
+    second: QueueBit Title v7_322
+  - first:
+      213: -7954392353446882363
+    second: QueueBit Title v7_323
+  - first:
+      213: 1378169314662677969
+    second: QueueBit Title v7_324
+  - first:
+      213: -4404672237501575362
+    second: QueueBit Title v7_325
+  - first:
+      213: -8928496004719247065
+    second: QueueBit Title v7_326
+  - first:
+      213: -8953230733923321178
+    second: QueueBit Title v7_327
+  - first:
+      213: 2544765866211915043
+    second: QueueBit Title v7_328
+  - first:
+      213: -8465027385855109798
+    second: QueueBit Title v7_329
+  - first:
+      213: 7398692760341916753
+    second: QueueBit Title v7_330
+  - first:
+      213: -9078118843821958
+    second: QueueBit Title v7_331
+  - first:
+      213: 2508174769407222044
+    second: QueueBit Title v7_332
+  - first:
+      213: -7323608793352708932
+    second: QueueBit Title v7_333
+  - first:
+      213: 3992791986650813354
+    second: QueueBit Title v7_334
+  - first:
+      213: -4424410995957156705
+    second: QueueBit Title v7_335
+  - first:
+      213: -7219958476455003752
+    second: QueueBit Title v7_336
+  - first:
+      213: 8399558305870960916
+    second: QueueBit Title v7_337
+  - first:
+      213: 6413876241652141220
+    second: QueueBit Title v7_338
+  - first:
+      213: 2149915123678906357
+    second: QueueBit Title v7_339
+  - first:
+      213: 1921473761863197697
+    second: QueueBit Title v7_340
+  - first:
+      213: 8260750919034494922
+    second: QueueBit Title v7_341
+  - first:
+      213: 7950062382853999427
+    second: QueueBit Title v7_342
+  - first:
+      213: -4909471192035951452
+    second: QueueBit Title v7_343
+  - first:
+      213: -3614294613337113846
+    second: QueueBit Title v7_344
+  - first:
+      213: 2487085818589833665
+    second: QueueBit Title v7_345
+  - first:
+      213: -301789530395206286
+    second: QueueBit Title v7_346
+  - first:
+      213: 7181000701550525032
+    second: QueueBit Title v7_347
+  - first:
+      213: -1160589803666324675
+    second: QueueBit Title v7_348
+  - first:
+      213: -6051455847547918336
+    second: QueueBit Title v7_349
+  - first:
+      213: -8828656232637126424
+    second: QueueBit Title v7_350
+  - first:
+      213: -392425556186952980
+    second: QueueBit Title v7_351
+  - first:
+      213: 8990945918483072515
+    second: QueueBit Title v7_352
+  - first:
+      213: 6129862648019489619
+    second: QueueBit Title v7_353
+  - first:
+      213: -8445305159049929583
+    second: QueueBit Title v7_354
+  - first:
+      213: -1205639328441832551
+    second: QueueBit Title v7_355
+  - first:
+      213: -5809144002151539606
+    second: QueueBit Title v7_356
+  - first:
+      213: -6587554700846938095
+    second: QueueBit Title v7_357
+  - first:
+      213: -5678990773911679133
+    second: QueueBit Title v7_358
+  - first:
+      213: 4927069481127534495
+    second: QueueBit Title v7_359
+  - first:
+      213: 7581557335218078001
+    second: QueueBit Title v7_360
+  - first:
+      213: 7288070846076429419
+    second: QueueBit Title v7_361
+  - first:
+      213: 5556120456130659779
+    second: QueueBit Title v7_362
+  - first:
+      213: 8199900857944299435
+    second: QueueBit Title v7_363
+  - first:
+      213: -3023781093862026325
+    second: QueueBit Title v7_364
+  - first:
+      213: 1665343701138432244
+    second: QueueBit Title v7_365
+  - first:
+      213: -5741508996206732994
+    second: QueueBit Title v7_366
+  - first:
+      213: 8976439179096065279
+    second: QueueBit Title v7_367
+  - first:
+      213: -6139323065232378857
+    second: QueueBit Title v7_368
+  - first:
+      213: 3423295945853108869
+    second: QueueBit Title v7_369
+  - first:
+      213: 7045838439054290186
+    second: QueueBit Title v7_370
+  - first:
+      213: 391261612143398284
+    second: QueueBit Title v7_371
+  - first:
+      213: -1429252420898054277
+    second: QueueBit Title v7_372
+  - first:
+      213: -9137350792418027672
+    second: QueueBit Title v7_373
+  - first:
+      213: 7565013550246312191
+    second: QueueBit Title v7_374
+  - first:
+      213: 4524305282158764305
+    second: QueueBit Title v7_375
+  - first:
+      213: -3919118892030787509
+    second: QueueBit Title v7_376
+  - first:
+      213: -7599130104493393708
+    second: QueueBit Title v7_377
+  - first:
+      213: 3114300544294208334
+    second: QueueBit Title v7_378
+  - first:
+      213: -6397074955508560635
+    second: QueueBit Title v7_379
+  - first:
+      213: -8536877902477567493
+    second: QueueBit Title v7_380
+  - first:
+      213: 615467760899075815
+    second: QueueBit Title v7_381
+  - first:
+      213: -50094281838644073
+    second: QueueBit Title v7_382
+  - first:
+      213: 499150368082932297
+    second: QueueBit Title v7_383
+  - first:
+      213: -276717404665369635
+    second: QueueBit Title v7_384
+  - first:
+      213: 2349314884913972779
+    second: QueueBit Title v7_385
+  - first:
+      213: -2991147826860374214
+    second: QueueBit Title v7_386
+  - first:
+      213: 1663469158883435643
+    second: QueueBit Title v7_387
+  - first:
+      213: -1048719179514948869
+    second: QueueBit Title v7_388
+  - first:
+      213: -8336496461099399374
+    second: QueueBit Title v7_389
+  - first:
+      213: 7673599740224559376
+    second: QueueBit Title v7_390
+  - first:
+      213: 3546630679790792315
+    second: QueueBit Title v7_391
+  - first:
+      213: -302346005101733415
+    second: QueueBit Title v7_392
+  - first:
+      213: 7924079896768670473
+    second: QueueBit Title v7_393
+  - first:
+      213: -2638522279829504404
+    second: QueueBit Title v7_394
+  - first:
+      213: -5540612707606017851
+    second: QueueBit Title v7_395
+  - first:
+      213: -1911604922055258646
+    second: QueueBit Title v7_396
+  - first:
+      213: 5412643981326056264
+    second: QueueBit Title v7_397
+  - first:
+      213: 3656181668392504092
+    second: QueueBit Title v7_398
+  - first:
+      213: 2690241275206237591
+    second: QueueBit Title v7_399
+  - first:
+      213: -4932156976863393110
+    second: QueueBit Title v7_400
+  - first:
+      213: -6836929820623190720
+    second: QueueBit Title v7_401
+  - first:
+      213: 4010782858388598305
+    second: QueueBit Title v7_402
+  - first:
+      213: -1198999664376010283
+    second: QueueBit Title v7_403
+  - first:
+      213: 5173174393168505636
+    second: QueueBit Title v7_404
+  - first:
+      213: -7011548756896529027
+    second: QueueBit Title v7_405
+  - first:
+      213: -5406890325715298519
+    second: QueueBit Title v7_406
+  - first:
+      213: 3451255098518574939
+    second: QueueBit Title v7_407
+  - first:
+      213: 4860951930287770354
+    second: QueueBit Title v7_408
+  - first:
+      213: -7026271395144011389
+    second: QueueBit Title v7_409
+  - first:
+      213: 5730947583143423539
+    second: QueueBit Title v7_410
+  - first:
+      213: 4165662363428886225
+    second: QueueBit Title v7_411
+  - first:
+      213: -8193437376248304761
+    second: QueueBit Title v7_412
+  - first:
+      213: 6180990278235213121
+    second: QueueBit Title v7_413
+  - first:
+      213: 1086625540896802927
+    second: QueueBit Title v7_414
+  - first:
+      213: -3465178910883473318
+    second: QueueBit Title v7_415
+  - first:
+      213: -5968595400757816558
+    second: QueueBit Title v7_416
+  - first:
+      213: 449706024213818223
+    second: QueueBit Title v7_417
+  - first:
+      213: -3889836217919108335
+    second: QueueBit Title v7_418
+  - first:
+      213: 2594417154238232153
+    second: QueueBit Title v7_419
+  - first:
+      213: -2038998482608749226
+    second: QueueBit Title v7_420
+  - first:
+      213: -4183448379530492192
+    second: QueueBit Title v7_421
+  - first:
+      213: 7036192044042640491
+    second: QueueBit Title v7_422
+  - first:
+      213: -3242608071130781851
+    second: QueueBit Title v7_423
+  - first:
+      213: 2427901306686989274
+    second: QueueBit Title v7_424
+  - first:
+      213: -6316025576136184168
+    second: QueueBit Title v7_425
+  - first:
+      213: -3920520317429752146
+    second: QueueBit Title v7_426
+  - first:
+      213: 676348124596085179
+    second: QueueBit Title v7_427
+  - first:
+      213: 159714834479630811
+    second: QueueBit Title v7_428
+  - first:
+      213: 4708612872866404195
+    second: QueueBit Title v7_429
+  - first:
+      213: -3497387489976232694
+    second: QueueBit Title v7_430
+  - first:
+      213: 3230424480072783962
+    second: QueueBit Title v7_431
+  - first:
+      213: 1224793611800257288
+    second: QueueBit Title v7_432
+  - first:
+      213: -1965169621417932855
+    second: QueueBit Title v7_433
+  - first:
+      213: -2047510719860176068
+    second: QueueBit Title v7_434
+  - first:
+      213: 3786289136243787921
+    second: QueueBit Title v7_435
+  - first:
+      213: 7279628018836410886
+    second: QueueBit Title v7_436
+  - first:
+      213: -4149640513735021615
+    second: QueueBit Title v7_437
+  - first:
+      213: 2930547559046458593
+    second: QueueBit Title v7_438
+  - first:
+      213: 743987519867824760
+    second: QueueBit Title v7_439
+  - first:
+      213: -6864282752463209504
+    second: QueueBit Title v7_440
+  - first:
+      213: -1495637148136337159
+    second: QueueBit Title v7_441
+  - first:
+      213: 8247268019286490765
+    second: QueueBit Title v7_442
+  - first:
+      213: 5790354348724913050
+    second: QueueBit Title v7_443
+  - first:
+      213: -1977619745950241046
+    second: QueueBit Title v7_444
+  - first:
+      213: 5529379519334936850
+    second: QueueBit Title v7_445
+  - first:
+      213: -7084353596177809751
+    second: QueueBit Title v7_446
+  - first:
+      213: -4925661632626842670
+    second: QueueBit Title v7_447
+  - first:
+      213: 6456284425569872401
+    second: QueueBit Title v7_448
+  - first:
+      213: -1773742240175552482
+    second: QueueBit Title v7_449
+  - first:
+      213: 1268713989455657685
+    second: QueueBit Title v7_450
+  - first:
+      213: -6929170273922648609
+    second: QueueBit Title v7_451
+  - first:
+      213: 4563575692664498615
+    second: QueueBit Title v7_452
+  - first:
+      213: 205253293247864346
+    second: QueueBit Title v7_453
+  - first:
+      213: -8995473051579085225
+    second: QueueBit Title v7_454
+  - first:
+      213: 3680071247129981268
+    second: QueueBit Title v7_455
+  - first:
+      213: 563270994941602523
+    second: QueueBit Title v7_456
+  - first:
+      213: 7250218143032969504
+    second: QueueBit Title v7_457
+  - first:
+      213: -4058001427733102844
+    second: QueueBit Title v7_458
+  - first:
+      213: 7965977668050508596
+    second: QueueBit Title v7_459
+  - first:
+      213: -1131895472608489491
+    second: QueueBit Title v7_460
+  - first:
+      213: -7829431954600051334
+    second: QueueBit Title v7_461
+  - first:
+      213: -1266752559150433065
+    second: QueueBit Title v7_462
+  - first:
+      213: -4782660435155537726
+    second: QueueBit Title v7_463
+  - first:
+      213: -6488684839229436625
+    second: QueueBit Title v7_464
+  - first:
+      213: 4045930676250697414
+    second: QueueBit Title v7_465
+  - first:
+      213: 6733754153603375945
+    second: QueueBit Title v7_466
+  - first:
+      213: -2978472017901396344
+    second: QueueBit Title v7_467
+  - first:
+      213: 8692688694238568820
+    second: QueueBit Title v7_468
+  - first:
+      213: 5571720451041765934
+    second: QueueBit Title v7_469
+  - first:
+      213: 1863258065944689002
+    second: QueueBit Title v7_470
+  - first:
+      213: 2049654845734938719
+    second: QueueBit Title v7_471
+  - first:
+      213: -4122962661519985602
+    second: QueueBit Title v7_472
+  - first:
+      213: -9133824693971270795
+    second: QueueBit Title v7_473
+  - first:
+      213: 7635002099276975573
+    second: QueueBit Title v7_474
+  - first:
+      213: 4409499150797553483
+    second: QueueBit Title v7_475
+  - first:
+      213: 2017182649124053029
+    second: QueueBit Title v7_476
+  - first:
+      213: -1386290553910921677
+    second: QueueBit Title v7_477
+  - first:
+      213: -5942802509555717180
+    second: QueueBit Title v7_478
+  - first:
+      213: -3607802170103543774
+    second: QueueBit Title v7_479
+  - first:
+      213: -6704942345223444852
+    second: QueueBit Title v7_480
+  - first:
+      213: 5334099883502903169
+    second: QueueBit Title v7_481
+  - first:
+      213: -7028738614340718876
+    second: QueueBit Title v7_482
+  - first:
+      213: 2990914199434405263
+    second: QueueBit Title v7_483
+  - first:
+      213: -6889978816409848898
+    second: QueueBit Title v7_484
+  - first:
+      213: 8143207575749423328
+    second: QueueBit Title v7_485
+  - first:
+      213: 3675471202633576753
+    second: QueueBit Title v7_486
+  - first:
+      213: -7972553859241351287
+    second: QueueBit Title v7_487
+  - first:
+      213: 8502874790638885398
+    second: QueueBit Title v7_488
+  - first:
+      213: 711862710027646008
+    second: QueueBit Title v7_489
+  - first:
+      213: 2572958609298650266
+    second: QueueBit Title v7_490
+  - first:
+      213: 7670966974268145188
+    second: QueueBit Title v7_491
+  - first:
+      213: 407351387784531380
+    second: QueueBit Title v7_492
+  - first:
+      213: -2803812490039383078
+    second: QueueBit Title v7_493
+  - first:
+      213: 5221931499947359189
+    second: QueueBit Title v7_494
+  - first:
+      213: -7568685643071006048
+    second: QueueBit Title v7_0
+  - first:
+      213: 1367212902716468399
+    second: QueueBit Title v7_1
+  - first:
+      213: 1516790795528037057
+    second: QueueBit Title v7_2
+  - first:
+      213: 2910532896258044910
+    second: QueueBit Title v7_3
+  - first:
+      213: -747383172213650349
+    second: QueueBit Title v7_4
+  - first:
+      213: 1637898444196263960
+    second: QueueBit Title v7_5
+  - first:
+      213: -5220505346120028804
+    second: QueueBit Title v7_6
+  - first:
+      213: 9087107642888947209
+    second: QueueBit Title v7_7
+  - first:
+      213: 2671868217805729106
+    second: QueueBit Title v7_8
+  - first:
+      213: 6783540714334290480
+    second: QueueBit Title v7_9
+  - first:
+      213: -6324188622254056149
+    second: QueueBit Title v7_10
+  - first:
+      213: 1100070434598201637
+    second: QueueBit Title v7_11
+  - first:
+      213: 6763773036213721052
+    second: QueueBit Title v7_12
+  - first:
+      213: 2016194458474391849
+    second: QueueBit Title v7_13
+  - first:
+      213: -5664986855889586516
+    second: QueueBit Title v7_14
+  - first:
+      213: 2485550964364916733
+    second: QueueBit Title v7_15
+  - first:
+      213: -6626345150555389094
+    second: QueueBit Title v7_16
+  - first:
+      213: 5233878432872382767
+    second: QueueBit Title v7_17
+  - first:
+      213: -128397850331259506
+    second: QueueBit Title v7_18
+  - first:
+      213: -3385503978528320419
+    second: QueueBit Title v7_19
+  - first:
+      213: 4550199741684287265
+    second: QueueBit Title v7_20
+  - first:
+      213: 360960248772745915
+    second: QueueBit Title v7_21
+  - first:
+      213: 4907340238383109066
+    second: QueueBit Title v7_22
+  - first:
+      213: 4195909677423265431
+    second: QueueBit Title v7_23
+  - first:
+      213: -8879064976107617714
+    second: QueueBit Title v7_24
+  - first:
+      213: 1456053980984145646
+    second: QueueBit Title v7_25
+  - first:
+      213: 4162999419950238718
+    second: QueueBit Title v7_26
+  - first:
+      213: -2517073243430277688
+    second: QueueBit Title v7_27
+  - first:
+      213: -8307341825785757316
+    second: QueueBit Title v7_28
+  - first:
+      213: -6233922441572087445
+    second: QueueBit Title v7_29
+  - first:
+      213: 292752483327911077
+    second: QueueBit Title v7_30
+  - first:
+      213: -2713043660200497951
+    second: QueueBit Title v7_31
+  - first:
+      213: -4833741873078835755
+    second: QueueBit Title v7_32
+  - first:
+      213: -4318065265284699987
+    second: QueueBit Title v7_33
+  - first:
+      213: 2844172973708894109
+    second: QueueBit Title v7_34
+  - first:
+      213: -7033926541115351612
+    second: QueueBit Title v7_35
+  - first:
+      213: 312499048921923839
+    second: QueueBit Title v7_36
+  - first:
+      213: 1943019420314684488
+    second: QueueBit Title v7_37
+  - first:
+      213: -2154635511229703601
+    second: QueueBit Title v7_38
+  - first:
+      213: 7147928507269698425
+    second: QueueBit Title v7_39
+  - first:
+      213: 4924565363899202702
+    second: QueueBit Title v7_40
+  - first:
+      213: -7756732678732864015
+    second: QueueBit Title v7_41
+  - first:
+      213: -3090603389437064941
+    second: QueueBit Title v7_42
+  - first:
+      213: 5856813485864446111
+    second: QueueBit Title v7_43
+  - first:
+      213: 6650764997399123579
+    second: QueueBit Title v7_44
+  - first:
+      213: 281162108867351305
+    second: QueueBit Title v7_45
+  - first:
+      213: 3991794115365137275
+    second: QueueBit Title v7_46
+  - first:
+      213: 6921288731896445140
+    second: QueueBit Title v7_47
+  - first:
+      213: 444706793584234262
+    second: QueueBit Title v7_48
+  - first:
+      213: -1711565380674264813
+    second: QueueBit Title v7_49
+  - first:
+      213: -562598834166528119
+    second: QueueBit Title v7_50
+  - first:
+      213: -5859604639380820482
+    second: QueueBit Title v7_51
+  - first:
+      213: -6694526438121423505
+    second: QueueBit Title v7_52
+  - first:
+      213: -1154287349035987152
+    second: QueueBit Title v7_53
+  - first:
+      213: -1978074355071358751
+    second: QueueBit Title v7_54
+  - first:
+      213: -5574372972533704104
+    second: QueueBit Title v7_55
+  - first:
+      213: 3396495999014869917
+    second: QueueBit Title v7_56
+  - first:
+      213: -3104037848445333363
+    second: QueueBit Title v7_57
+  - first:
+      213: -7660988151311115398
+    second: QueueBit Title v7_58
+  - first:
+      213: 3087826841248977793
+    second: QueueBit Title v7_59
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: QueueBit Title v7_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4480
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0aa572c1280a6f690800000000000000
+      internalID: -7568685643071006048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_1
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 4480
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faceeb624e059f210800000000000000
+      internalID: 1367212902716468399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_2
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 4480
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c2e7063139bc0510800000000000000
+      internalID: 1516790795528037057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_3
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 4480
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee3bc8c9f3a446820800000000000000
+      internalID: 2910532896258044910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4160
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35cc915f6f2c0a5f0800000000000000
+      internalID: -747383172213650349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_5
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 4160
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 818bb7005fbfab610800000000000000
+      internalID: 1637898444196263960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_6
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 4160
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7dec701c0a0d87b0800000000000000
+      internalID: -5220505346120028804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_7
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 4160
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90602227144eb1e70800000000000000
+      internalID: 9087107642888947209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3840
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25d67f8ecf1641520800000000000000
+      internalID: 2671868217805729106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_9
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 3840
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0328b45c65af32e50800000000000000
+      internalID: 6783540714334290480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_10
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 3840
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2ddafd74f7fb38a0800000000000000
+      internalID: -6324188622254056149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_11
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 3840
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 529a22a5b3c344f00800000000000000
+      internalID: 1100070434598201637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3520
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd752ec8dbfbddd50800000000000000
+      internalID: 6763773036213721052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_13
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 3520
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9292a7f7d26fafb10800000000000000
+      internalID: 2016194458474391849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_14
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 3520
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca6b17d087ce161b0800000000000000
+      internalID: -5664986855889586516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_15
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 3520
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df7b91ede637e7220800000000000000
+      internalID: 2485550964364916733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3200
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a538306813e7a04a0800000000000000
+      internalID: -6626345150555389094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_17
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 3200
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f21cfe454b872a840800000000000000
+      internalID: 5233878432872382767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_18
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 3200
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8dd41dd5d6d73ef0800000000000000
+      internalID: -128397850331259506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_19
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 3200
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d54d52691164401d0800000000000000
+      internalID: -3385503978528320419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2880
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1278a2c9e8e852f30800000000000000
+      internalID: 4550199741684287265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_21
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 2880
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbad22e0f63620500800000000000000
+      internalID: 360960248772745915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_22
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 2880
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac35ec452ff5a1440800000000000000
+      internalID: 4907340238383109066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_23
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 2880
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7960078ee9dda3a30800000000000000
+      internalID: 4195909677423265431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2560
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e424e71927937c480800000000000000
+      internalID: -8879064976107617714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_25
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 2560
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee67a569161f43410800000000000000
+      internalID: 1456053980984145646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_26
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 2560
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efb8a4a7ae1f5c930800000000000000
+      internalID: 4162999419950238718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_27
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 2560
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cda2bb983f811dd0800000000000000
+      internalID: -2517073243430277688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2240
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c718b46af9466bc80800000000000000
+      internalID: -8307341825785757316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_29
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 2240
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6982c07198ac79a0800000000000000
+      internalID: -6233922441572087445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_30
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 2240
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a4afdf15d0101400800000000000000
+      internalID: 292752483327911077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_31
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 2240
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ecaf955a25595ad0800000000000000
+      internalID: -2713043660200497951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1920
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d5643f60691becb0800000000000000
+      internalID: -4833741873078835755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_33
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 1920
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da8a0c1f4862314c0800000000000000
+      internalID: -4318065265284699987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_34
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 1920
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9f5fa12048887720800000000000000
+      internalID: 2844172973708894109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_35
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 1920
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cd90a40419726e90800000000000000
+      internalID: -7033926541115351612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1600
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff083a3ba38365400800000000000000
+      internalID: 312499048921923839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_37
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 1600
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84cca834eddf6fa10800000000000000
+      internalID: 1943019420314684488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_38
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 1600
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4a16b41b623912e0800000000000000
+      internalID: -2154635511229703601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_39
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 1600
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 973d2b32b1b823360800000000000000
+      internalID: 7147928507269698425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1280
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8c77646b12975440800000000000000
+      internalID: 4924565363899202702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_41
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 1280
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f5a672c9bc8a5490800000000000000
+      internalID: -7756732678732864015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_42
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 1280
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3194cfe8798fb15d0800000000000000
+      internalID: -3090603389437064941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_43
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 1280
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f98eaaca5d4974150800000000000000
+      internalID: 5856813485864446111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 960
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b76939227834c4c50800000000000000
+      internalID: 6650764997399123579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_45
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 960
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9039657c273e6e300800000000000000
+      internalID: 281162108867351305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_46
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 960
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7b65d63993b56730800000000000000
+      internalID: 3991794115365137275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_47
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 960
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d8f99c5e6b5d0060800000000000000
+      internalID: 6921288731896445140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61f8accf87aeb2600800000000000000
+      internalID: 444706793584234262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_49
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 640
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 311ed03ca5c4f38e0800000000000000
+      internalID: -1711565380674264813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_50
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 640
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9878472575f3138f0800000000000000
+      internalID: -562598834166528119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_51
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 640
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efda97140a08eaea0800000000000000
+      internalID: -5859604639380820482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_52
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6dbf447ca34813a0800000000000000
+      internalID: -6694526438121423505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_53
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 320
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03f8bff85c52bffe0800000000000000
+      internalID: -1154287349035987152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_54
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 320
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e869a6bad77c84e0800000000000000
+      internalID: -1978074355071358751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_55
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 320
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85a1796d059d3a2b0800000000000000
+      internalID: -5574372972533704104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_56
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9b115e9d17c22f20800000000000000
+      internalID: 3396495999014869917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_57
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 0
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d805c02d50e3ce4d0800000000000000
+      internalID: -3104037848445333363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_58
+      rect:
+        serializedVersion: 2
+        x: 2176
+        y: 0
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7bdf94bdd3bea590800000000000000
+      internalID: -7660988151311115398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: QueueBit Title v7_59
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 0
+        width: 1088
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 183df80f62a2ada20800000000000000
+      internalID: 3087826841248977793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: d86cfe89d6258b0a3b94037d3582f9cd
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
