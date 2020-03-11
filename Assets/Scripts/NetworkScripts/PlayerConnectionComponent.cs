@@ -25,7 +25,7 @@ public class PlayerConnectionComponent : NetworkBehaviour
             return;
         }
         GameObject targetCell = renderer.GetComponent<GridRenderer>().GetCellRenderAt(gridPos);
-        playerCamera.transform.position = targetCell.transform.position + new Vector3(0, 0, -1);
+        playerCamera.GetComponent<PlayerCameraController>().setCameraTarget(targetCell.transform.position);
     }
 
     [Command]
