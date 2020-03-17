@@ -5,7 +5,27 @@ using UnityEngine.Networking;
 
 public class GameState : NetworkBehaviour
 {
-    public class PlayerDataSyncList : SyncListStruct<PlayerData> {}
+    public class PlayerDataSyncList : SyncListStruct<PlayerData> {
+        public PlayerData GetPlayer(NetworkIdentity id) {
+            foreach (PlayerData data in this) {
+                if (data.id.Equals(id)) {
+                    return data;
+                }
+            }
+            throw new System.Exception("Could not find specified player");
+        }
+
+        public void UpdatePlayer(PlayerData data) {
+            foreach (PlayerData listData in this) {
+                if (listData.id.Equals(data.id)) {
+                    this.Remove(listData);
+                    this.Add(data);
+                    return;
+                }
+            }
+            throw new System.Exception("Could not find specified player");
+        }
+    }
     
     //Move to another file later
     public class GameGridSyncList : SyncListStruct<Cell> {
@@ -27,7 +47,7 @@ public class GameState : NetworkBehaviour
         //Used to access most current version of a cell, from either the SyncList or the queued updates
         public Cell GetMostCurrentCell(int x, int y) {
             if (x < 0 || x >= width || y < 0 || y >= height) {
-                throw new System.Exception("Cannot modify cell at " + x + ", " + y + " becuase it does not exist");
+                throw new System.Exception("Cannot get cell at " + x + ", " + y + " becuase it does not exist");
             }
             return queuedUpdates.ContainsKey(new Vector2Int(x, y)) ? queuedUpdates[new Vector2Int(x, y)]: this.GetItem(y * width + x);
         }
@@ -38,9 +58,9 @@ public class GameState : NetworkBehaviour
         }
 
         //This should be used to update cells, in conjunction with ApplyUpdates()
-        public void QueueUpdateObstacle(int x, int y, bool value) {
+        public void QueueUpdateType(int x, int y, int value) {
             Cell newCell = GetMostCurrentCell(x, y);
-            newCell.SetObstacle(value);
+            newCell.SetType(value);
             QueueCellUpdate(newCell);
         }
 
@@ -52,7 +72,7 @@ public class GameState : NetworkBehaviour
         }
 
         //This should be used to update cells, in conjunction with ApplyUpdates()
-        public void QueueUpdatePlayer(int x, int y, int value) {
+        public void QueueUpdatePlayer(int x, int y, NetworkIdentity value) {
             Cell newCell = GetMostCurrentCell(x, y);
             newCell.SetPlayer(value);
             QueueCellUpdate(newCell);
@@ -102,16 +122,17 @@ public class GameState : NetworkBehaviour
     private GameSettings gameSettings;
     public GameObject localCamera;
     public GameObject localRenderer;
-
-    private int gridWidth;
-    private int gridHeight;
-
-    public SyncListInt players = new SyncListInt(); //Holds list of player id's, to be used to reference the list of their data
+    
     public PlayerDataSyncList playerData = new PlayerDataSyncList();
 
     [SyncVar]
     bool gridCreated = false; //Used by GridRenderer to know when the grid has been filled so
     //it can start checking for updates
+
+    System.Random rand = new System.Random();
+
+    List<Vector2Int> cacheLocations = new List<Vector2Int>();
+    List<Vector2Int> spawnPoints = new List<Vector2Int>();
 
     GameGridSyncList data = new GameGridSyncList();
 
@@ -130,9 +151,7 @@ public class GameState : NetworkBehaviour
         }
         
         //Finds the player's data by cross-ref the playerId with the list of player id's
-        int playerDataId = (int)playerId.netId.Value;
-        int playerIndex = players.IndexOf(playerDataId);
-        PlayerData inputSourceData = playerData.GetItem(playerIndex);
+        PlayerData inputSourceData = playerData.GetPlayer(playerId);
 
         //Creates a vector to represent intended move direction of player
         Vector2 moveDirection = Vector2.zero;
@@ -147,7 +166,7 @@ public class GameState : NetworkBehaviour
         //Calculate movement if input is movement
         if (moveDirection != Vector2.zero) {
             Cell targetCell = data.GetMostCurrentCell(playerHeadPos + moveDirection);
-            if (!targetCell.obstacle && !targetCell.occupied) {
+            if (targetCell.type != 1 && !targetCell.occupied) {
                 //Make all the cell updates needed to move the head of the snake
                 data.QueueUpdateColor(targetCell.x, targetCell.y, inputSourceData.color);
                 data.QueueUpdateOccupied(targetCell.x, targetCell.y, true);
@@ -205,8 +224,7 @@ public class GameState : NetworkBehaviour
         data.ApplyUpdates();
 
         //Updates the data of the player that produced the input across all instances of game
-        playerData.RemoveAt(playerIndex);
-        playerData.Insert(playerIndex, inputSourceData);
+        playerData.UpdatePlayer(inputSourceData);
         
         //Update's player's camera to focus on new head cell
         playerId.GetComponentInParent<PlayerConnectionComponent>().RpcUpdateCamera(new Vector2Int(inputSourceData.x, inputSourceData.y));
@@ -223,12 +241,37 @@ public class GameState : NetworkBehaviour
 
     //Called by command from client to register when a player joins
     public void CreatePlayer(NetworkIdentity playerId) {
-        int idNum = (int) playerId.netId.Value;
-        players.Add(idNum);
-        Vector2Int newPlayerPos = new Vector2Int(2, 2 + dummy);
-        playerData.Add(new PlayerData(idNum, newPlayerPos.x, newPlayerPos.y, teamColorsTemp[dummy % teamColorsTemp.Length]));
-        playerId.GetComponentInParent<PlayerConnectionComponent>().RpcUpdateCamera(new Vector2Int(newPlayerPos.x, newPlayerPos.y));
-        dummy++;
+        playerData.Add(new PlayerData(playerId, 0, 0, teamColorsTemp[dummy++ % teamColorsTemp.Length]));
+        SpawnPlayer(playerId);
+    }
+
+    public void SpawnPlayer(NetworkIdentity playerId) {
+        PlayerData player = playerData.GetPlayer(playerId);
+        if (player.spawned) {
+            return;
+        }
+
+        int randStart = rand.Next(spawnPoints.Count);
+        for (int i = 0; i < spawnPoints.Count; i++) {
+            Vector2Int spawn = spawnPoints[(randStart + i) % spawnPoints.Count];
+            if (!data.GetMostCurrentCell(spawn).occupied) {
+                Debug.Log("Spawning Player at: " + spawn);
+                player.SetSpawned(true);
+                player.SetX(spawn.x);
+                player.SetY(spawn.y);
+                data.QueueUpdateIsHead(spawn.x, spawn.y, true);
+                data.QueueUpdateColor(spawn.x, spawn.y, player.color);
+                data.QueueUpdateOccupied(spawn.x, spawn.y, true);
+                data.QueueUpdatePlayer(spawn.x, spawn.y, playerId);
+                data.QueueUpdatePainted(spawn.x, spawn.y, true);
+                data.ApplyUpdates();
+                playerData.UpdatePlayer(player);
+                playerId.GetComponentInParent<PlayerConnectionComponent>().RpcUpdateCamera(new Vector2Int(spawn.x, spawn.y));
+        
+                return;
+            }
+        }
+        
     }
     
     // Start is called before the first frame update
@@ -239,16 +282,17 @@ public class GameState : NetworkBehaviour
         }
         
         gameSettings = settingsObject.GetComponent<GameSettings>();
-        gridWidth = gameSettings.mapWidth;
-        gridHeight = gameSettings.mapHeight;
+        int[, ] map = gameSettings.map;
+        int gridHeight = map.GetLength(0);
+        int gridWidth = map.GetLength(1);
         data.SetDimensions(gridWidth, gridHeight);
 
         for (int i = 0; i < gridHeight; i++) {
             for (int j = 0; j < gridWidth; j++) {
                 Cell newCell = new Cell(j, i);
-                if (i == 0 || i == gridHeight - 1 || j == 0 || j == gridWidth - 1) {
-                    newCell.obstacle = true;
-                }
+                int type = map[i, j];
+                newCell.type = type;
+                if (type == 3) spawnPoints.Add(new Vector2Int(j, i));
                 data.Add(newCell);
             }
         }
@@ -256,9 +300,19 @@ public class GameState : NetworkBehaviour
         gridCreated = true;
     }
 
+    float counter = 0;
+    float updateInterval = 500;
+
     // Update is called once per frame
     void Update()
     {
-        
+        counter += Time.deltaTime;
+        if (counter >= updateInterval) {
+            counter -= updateInterval;
+
+            //Run server managed updates
+
+
+        }
     }
 }

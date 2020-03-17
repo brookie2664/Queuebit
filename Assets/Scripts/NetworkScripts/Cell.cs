@@ -1,12 +1,18 @@
 using UnityEngine;
+using UnityEngine.Networking;
 
 public struct Cell {
 
     public int x; //X position of cell
     public int y; //Y position of cell
-    public bool obstacle; //True if the tile is an obstacle tile, false if it is a floor tile
+
+    // 0 for empty
+    // 1 for obstacle
+    // 2 for ground
+    // 3 for spawn
+    public int type;
     public bool occupied; //True if occupied by a player
-    public int player; //Player occupying the cell, if occupied
+    public NetworkIdentity player; //Player occupying the cell, if occupied
     public int distToTail; //Number of cells to traverse to head of snake
     public bool isHead; //True if the cell is the head of a snake
     public bool painted; //True if the tile is painted
@@ -17,15 +23,15 @@ public struct Cell {
         this.y = y;
     }
 
-    public void SetObstacle(bool value) {
-        obstacle = value;
+    public void SetType(int value) {
+        type = value;
     }
 
     public void SetOccupied(bool value) {
         occupied = value;
     }
 
-    public void SetPlayer(int value) {
+    public void SetPlayer(NetworkIdentity value) {
         player = value;
     }
 
