@@ -25,6 +25,10 @@ public struct PlayerData {
     public void SetY(int y) {
         this.y = y;
     }
+    
+    public void SetLength(int value) {
+        this.length = value;
+    }
 
     public void SetSpawned(bool value) {
         spawned = value;

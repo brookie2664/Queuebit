@@ -22,8 +22,6 @@ public class GridRenderer : MonoBehaviour
     void UpdateCell(Cell data) {
         GameObject sprite = map[data.y, data.x];
         SpriteRenderer renderer = sprite.GetComponent<SpriteRenderer>();
-        
-        Debug.Log("Updating " + data.x + ", " + data.y);
 
         if (data.type == 0) {
             renderer.enabled = false;
@@ -39,6 +37,9 @@ public class GridRenderer : MonoBehaviour
             renderer.color = data.color * .9f;
         } else if (data.type == 3) {
             renderer.color = Color.cyan;
+        } else if (data.type == 4) {
+            float colorWeight = (1 + data.cache / 5) / 4f;
+            renderer.color = Color.yellow * colorWeight + Color.gray * (1 - colorWeight);
         } else if (data.painted) {
             renderer.color = data.color * .66f;
         

@@ -106,6 +106,18 @@ public class GameState : NetworkBehaviour
             QueueCellUpdate(newCell);
         }
 
+        public void QueueUpdateCache(int x, int y, int value) {
+            Cell newCell = GetMostCurrentCell(x, y);
+            newCell.SetCache(value);
+            QueueCellUpdate(newCell);
+        }
+
+        public void QueueUpdateCache(int x, int y) {
+            Cell newCell = GetMostCurrentCell(x, y);
+            newCell.IncrementCache();
+            QueueCellUpdate(newCell);
+        }
+
         //Pushes updates in the queued updates to the synclist so they propogate to clients
         public void ApplyUpdates() {
             foreach (KeyValuePair<Vector2Int, Cell> pair in queuedUpdates) {
@@ -176,12 +188,19 @@ public class GameState : NetworkBehaviour
                 data.QueueUpdatePlayer(targetCell.x, targetCell.y, inputSourceData.id);
                 data.QueueUpdateIsHead(currHeadCell.x, currHeadCell.y, false);
 
+                if (targetCell.type == 4 && targetCell.cache >= 15) {
+                    inputSourceData.SetLength(inputSourceData.length + 3);
+                    data.QueueUpdateCache(targetCell.x, targetCell.y, 0);
+                }
+
                 //Update the PlayerData with the new head position
                 inputSourceData.SetX(targetCell.x);
                 inputSourceData.SetY(targetCell.y);
 
                 //Update variable for later use
                 playerHeadPos += moveDirection;
+            } else {
+                inputSourceData.SetLength(System.Math.Max(inputSourceData.length - 1, 0));
             }
 
             //Update length of tail after movement
@@ -293,6 +312,7 @@ public class GameState : NetworkBehaviour
                 int type = map[i, j];
                 newCell.type = type;
                 if (type == 3) spawnPoints.Add(new Vector2Int(j, i));
+                if (type == 4) cacheLocations.Add(new Vector2Int(j, i));
                 data.Add(newCell);
             }
         }
@@ -301,17 +321,30 @@ public class GameState : NetworkBehaviour
     }
 
     float counter = 0;
-    float updateInterval = 500;
+    float updateInterval = 1f;
 
     // Update is called once per frame
     void Update()
     {
+        if (!isServer || !gridCreated) {
+            return;
+        }
+        
         counter += Time.deltaTime;
+
         if (counter >= updateInterval) {
             counter -= updateInterval;
+            Debug.Log("Updating serverside");
 
             //Run server managed updates
-
+            foreach(Vector2Int cache in cacheLocations) {
+                Cell cacheCell = data.GetMostCurrentCell(cache);
+                if (!cacheCell.occupied) {
+                    data.QueueUpdateCache(cache.x, cache.y);
+                    Debug.Log("Charging at " + cache);
+                }
+            }
+            data.ApplyUpdates();
 
         }
     }

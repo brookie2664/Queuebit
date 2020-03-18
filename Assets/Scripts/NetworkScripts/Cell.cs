@@ -3,20 +3,22 @@ using UnityEngine.Networking;
 
 public struct Cell {
 
-    public int x; //X position of cell
-    public int y; //Y position of cell
+    public int x; // X position of cell
+    public int y; // Y position of cell
 
     // 0 for empty
     // 1 for obstacle
     // 2 for ground
     // 3 for spawn
+    // 4 for cache
     public int type;
-    public bool occupied; //True if occupied by a player
-    public NetworkIdentity player; //Player occupying the cell, if occupied
-    public int distToTail; //Number of cells to traverse to head of snake
-    public bool isHead; //True if the cell is the head of a snake
-    public bool painted; //True if the tile is painted
-    public Color color; //Color painted in cell, or of occupying player
+    public bool occupied; // True if occupied by a player
+    public NetworkIdentity player; // Player occupying the cell, if occupied
+    public int distToTail; // Number of cells to traverse to head of snake
+    public bool isHead; // True if the cell is the head of a snake
+    public bool painted; // True if the tile is painted
+    public Color color; // Color painted in cell, or of occupying player
+    public int cache; // Value of cache if cell is a cache, between 0-15
 
     public Cell(int x, int y) : this() {
         this.x = x;
@@ -49,6 +51,14 @@ public struct Cell {
 
     public void SetColor(Color value) {
         color = value;
+    }
+
+    public void SetCache(int value) {
+        cache = value;
+    }
+
+    public void IncrementCache() {
+        cache = System.Math.Min(cache + 1, 15);
     }
 
     // public static bool operator ==(Cell lhs, Cell rhs) {
