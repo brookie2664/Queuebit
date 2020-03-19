@@ -100,7 +100,7 @@ public class GameState : NetworkBehaviour
         }
 
         //This should be used to update cells, in conjunction with ApplyUpdates()
-        public void QueueUpdateColor(int x, int y, Color value) {
+        public void QueueUpdateColor(int x, int y, int value) {
             Cell newCell = GetMostCurrentCell(x, y);
             newCell.SetColor(value);
             QueueCellUpdate(newCell);
@@ -249,10 +249,10 @@ public class GameState : NetworkBehaviour
         playerId.GetComponentInParent<PlayerConnectionComponent>().RpcUpdateCamera(new Vector2Int(inputSourceData.x, inputSourceData.y));
     }
 
-    private Color[] teamColorsTemp = {
-        Color.red,
-        Color.blue,
-        Color.green
+    private int[] teamColorsTemp = {
+        1,
+        2,
+        3
     };
 
     //Dummy variable for team assignment and spawn placement
@@ -334,14 +334,12 @@ public class GameState : NetworkBehaviour
 
         if (counter >= updateInterval) {
             counter -= updateInterval;
-            Debug.Log("Updating serverside");
 
             //Run server managed updates
             foreach(Vector2Int cache in cacheLocations) {
                 Cell cacheCell = data.GetMostCurrentCell(cache);
                 if (!cacheCell.occupied) {
                     data.QueueUpdateCache(cache.x, cache.y);
-                    Debug.Log("Charging at " + cache);
                 }
             }
             data.ApplyUpdates();

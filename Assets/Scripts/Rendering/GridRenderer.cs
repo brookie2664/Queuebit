@@ -22,30 +22,43 @@ public class GridRenderer : MonoBehaviour
     void UpdateCell(Cell data) {
         GameObject sprite = map[data.y, data.x];
         SpriteRenderer renderer = sprite.GetComponent<SpriteRenderer>();
+        Animator animator = sprite.GetComponent<Animator>();
 
-        if (data.type == 0) {
-            renderer.enabled = false;
-        } else {
-            renderer.enabled = true;
+        animator.StartPlayback();
+
+        animator.SetInteger("type", data.type);
+        animator.SetBool("occupied", data.occupied);
+        animator.SetInteger("color", data.color);
+        if (data.occupied) {
+            animator.SetBool("head", data.isHead);
+        }
+        if (data.type == 4) {
+            animator.SetInteger("cache", data.cache);
         }
 
-        if (data.type == 1) {
-            renderer.color = Color.white;
-        } else if (data.isHead) {
-            renderer.color = data.color;
-        } else if (data.occupied) {
-            renderer.color = data.color * .9f;
-        } else if (data.type == 3) {
-            renderer.color = Color.cyan;
-        } else if (data.type == 4) {
-            float colorWeight = (1 + data.cache / 5) / 4f;
-            renderer.color = Color.yellow * colorWeight + Color.gray * (1 - colorWeight);
-        } else if (data.painted) {
-            renderer.color = data.color * .66f;
+        // if (data.type == 0) {
+        //     renderer.enabled = false;
+        // } else {
+        //     renderer.enabled = true;
+        // }
+
+        // if (data.type == 1) {
+        //     renderer.color = Color.white;
+        // } else if (data.isHead) {
+        //     renderer.color = data.color;
+        // } else if (data.occupied) {
+        //     renderer.color = data.color * .9f;
+        // } else if (data.type == 3) {
+        //     renderer.color = Color.cyan;
+        // } else if (data.type == 4) {
+        //     float colorWeight = (1 + data.cache / 5) / 4f;
+        //     renderer.color = Color.yellow * colorWeight + Color.gray * (1 - colorWeight);
+        // } else if (data.painted) {
+        //     renderer.color = data.color * .66f;
         
-        } else {
-            renderer.color = Color.gray;
-        }
+        // } else {
+        //     renderer.color = Color.gray;
+        // }
     }
 
     //Used for updating camera position

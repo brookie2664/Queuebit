@@ -17,7 +17,7 @@ public struct Cell {
     public int distToTail; // Number of cells to traverse to head of snake
     public bool isHead; // True if the cell is the head of a snake
     public bool painted; // True if the tile is painted
-    public Color color; // Color painted in cell, or of occupying player
+    public int color; // Color painted in cell, or of occupying player
     public int cache; // Value of cache if cell is a cache, between 0-15
 
     public Cell(int x, int y) : this() {
@@ -49,7 +49,7 @@ public struct Cell {
         painted = value;
     }
 
-    public void SetColor(Color value) {
+    public void SetColor(int value) {
         color = value;
     }
 

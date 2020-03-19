@@ -6,10 +6,10 @@ public struct PlayerData {
     public int length; //The length of the player's snake
     public int x; //The x position of the player's head
     public int y; //The y position of the player's head
-    public Color color; //The color/team of the player
+    public int color; //The color/team of the player
     public bool spawned; //If player is in game
 
-    public PlayerData(NetworkIdentity id, int x, int y, Color color) {
+    public PlayerData(NetworkIdentity id, int x, int y, int color) {
         this.id = id;
         this.x = x;
         this.y = y;
