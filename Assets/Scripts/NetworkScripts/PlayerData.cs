@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
 
 public struct PlayerData {
     public NetworkIdentity id; //An int representing the player, as derived from the PlayerController's NetworkIdentity
@@ -8,6 +9,8 @@ public struct PlayerData {
     public int y; //The y position of the player's head
     public int color; //The color/team of the player
     public bool spawned; //If player is in game
+    public int atkCharge; //Charge of attack power
+    public const int MAX_ATK_CHARGE = 15;
 
     public PlayerData(NetworkIdentity id, int x, int y, int color) {
         this.id = id;
@@ -16,6 +19,7 @@ public struct PlayerData {
         this.color = color;
         this.length = 5;
         this.spawned = false;
+        this.atkCharge = 0;
     }
 
     public void SetX(int x) {
@@ -32,5 +36,13 @@ public struct PlayerData {
 
     public void SetSpawned(bool value) {
         spawned = value;
+    }
+
+    public void SetAtkCharge(int value) {
+        atkCharge = Math.Min(MAX_ATK_CHARGE, value);
+    }
+
+    public void AtkChargeUp() {
+        atkCharge = Math.Min(MAX_ATK_CHARGE, atkCharge + 1);
     }
 }

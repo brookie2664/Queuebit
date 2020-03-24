@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -37,6 +38,14 @@ public class GameState : NetworkBehaviour
         public void SetDimensions(int width, int height) {
             this.width = width;
             this.height = height;
+        }
+
+        public bool HasCellAt(Vector2Int pos) {
+            return HasCellAt(pos.x, pos.y);
+        }
+
+        public bool HasCellAt(int x, int y) {
+            return !(x < 0 || x >= width || y < 0 || y >= height);
         }
 
         //Used to access most current version of a cell, from either the SyncList or the queued updates 
@@ -166,13 +175,53 @@ public class GameState : NetworkBehaviour
         PlayerData inputSourceData = playerData.GetPlayer(playerId);
 
         //Creates a vector to represent intended move direction of player
-        Vector2 moveDirection = Vector2.zero;
-        if (input == KeyCode.W) moveDirection = Vector2.down;
-        else if (input == KeyCode.A) moveDirection = Vector2.left;
-        else if (input == KeyCode.S) moveDirection = Vector2.up;
-        else if (input == KeyCode.D) moveDirection = Vector2.right; 
+        Vector2Int moveDirection = Vector2Int.zero;
+        Vector2Int playerHeadPos = new Vector2Int(inputSourceData.x, inputSourceData.y);
+        if (input == KeyCode.W) moveDirection = Vector2Int.down;
+        else if (input == KeyCode.A) moveDirection = Vector2Int.left;
+        else if (input == KeyCode.S) moveDirection = Vector2Int.up;
+        else if (input == KeyCode.D) moveDirection = Vector2Int.right;
+        else if (input == KeyCode.Space && inputSourceData.atkCharge != 0) {
+            int atkRadius = inputSourceData.atkCharge / 3;
+            
+            List<Vector2Int> cellsToDamage = new List<Vector2Int>();
 
-        Vector2 playerHeadPos = new Vector2(inputSourceData.x, inputSourceData.y);
+            for (int i = -atkRadius; i <= atkRadius; i++) {
+                int height = atkRadius - Math.Abs(i);
+                for (int j = -height; j <= height; j++) {
+                    Vector2Int testPos = playerHeadPos + new Vector2Int(i, j);
+                    if (data.HasCellAt(testPos)) {
+                        if (!data.GetMostCurrentCell(testPos).occupied) {
+                            data.QueueUpdateColor(testPos.x, testPos.y, inputSourceData.color);
+                        } else {
+                            cellsToDamage.Add(testPos);
+                        }
+                    }
+                }
+            }
+
+            Dictionary<NetworkIdentity, int> damages = new Dictionary<NetworkIdentity, int>();
+
+            foreach (Vector2Int pos in cellsToDamage) {
+                Cell cell = data.GetMostCurrentCell(pos);
+                if (cell.color != inputSourceData.color) {
+                    if (!damages.ContainsKey(cell.player)) {
+                        damages[cell.player] = 0;
+                    }
+                    damages[cell.player] = damages[cell.player] + 1;
+                }
+            }
+
+            foreach (NetworkIdentity player in damages.Keys) {
+                PlayerData damagedPlayer = playerData.GetPlayer(player);
+                Debug.Log("Damaging player " + player.netId.Value + " for " + damages[player] + " damage");
+                damagedPlayer.SetLength(damagedPlayer.length - damages[player]);
+                playerData.UpdatePlayer(damagedPlayer);
+            }
+
+            inputSourceData.SetAtkCharge(0);
+        }
+
         Cell currHeadCell = data.GetMostCurrentCell(playerHeadPos);
         
         //Calculate movement if input is movement
@@ -188,6 +237,9 @@ public class GameState : NetworkBehaviour
                 data.QueueUpdatePlayer(targetCell.x, targetCell.y, inputSourceData.id);
                 data.QueueUpdateIsHead(currHeadCell.x, currHeadCell.y, false);
 
+                //Update attack charge
+                inputSourceData.AtkChargeUp();
+                
                 if (targetCell.type == 4 && targetCell.cache >= 15) {
                     inputSourceData.SetLength(inputSourceData.length + 3);
                     data.QueueUpdateCache(targetCell.x, targetCell.y, 0);
@@ -201,6 +253,7 @@ public class GameState : NetworkBehaviour
                 playerHeadPos += moveDirection;
             } else {
                 inputSourceData.SetLength(System.Math.Max(inputSourceData.length - 1, 0));
+                inputSourceData.SetAtkCharge(0);
             }
 
             //Update length of tail after movement

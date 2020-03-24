@@ -16,7 +16,8 @@ public class PlayerConnectionComponent : NetworkBehaviour
         KeyCode.W,
         KeyCode.A,
         KeyCode.S,
-        KeyCode.D
+        KeyCode.D,
+        KeyCode.Space
     };
 
     [ClientRpc]
