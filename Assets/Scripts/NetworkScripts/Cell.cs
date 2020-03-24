@@ -14,7 +14,7 @@ public struct Cell {
     public int type;
     public bool occupied; // True if occupied by a player
     public NetworkIdentity player; // Player occupying the cell, if occupied
-    public int distToTail; // Number of cells to traverse to head of snake
+    public int life; // Distance to tail for length purposes
     public bool isHead; // True if the cell is the head of a snake
     public bool painted; // True if the tile is painted
     public int color; // Color painted in cell, or of occupying player
@@ -37,8 +37,8 @@ public struct Cell {
         player = value;
     }
 
-    public void SetDistToTail(int value) {
-        distToTail = value;
+    public void SetLife(int value) {
+        life = value;
     }
 
     public void SetIsHead(bool value) {
