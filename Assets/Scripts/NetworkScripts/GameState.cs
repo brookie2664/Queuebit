@@ -165,20 +165,49 @@ public class GameState : NetworkBehaviour
         return data;
     }
 
+    private void KillPlayer(NetworkIdentity playerId) {
+        PlayerData player = playerData.GetPlayer(playerId);
+        bool finishedKillUpdate = false;
+        Vector2Int updateLocation = new Vector2Int(player.x, player.y);
+        
+        //Update distance for each segment of snake
+        while (!finishedKillUpdate) {
+
+            int nextSearch = data.GetMostCurrentCell(updateLocation).life - 1;
+            data.QueueUpdateOccupied(updateLocation.x, updateLocation.y, false);
+
+            //Look for next further segment in all directions
+            Vector2Int[] directions = new Vector2Int[]{Vector2Int.up, Vector2Int.left, Vector2Int.down, Vector2Int.right};
+            bool foundNext = false;
+            foreach (Vector2Int searchDir in directions) {
+                Vector2Int searchPos = updateLocation + searchDir;
+                Cell checkCell = data.GetMostCurrentCell(searchPos);
+                if (checkCell.occupied && checkCell.player == player.id && checkCell.life == nextSearch) {
+                    foundNext = true;
+                    updateLocation = searchPos;
+                    break;
+                }
+            }
+            if (!foundNext) {
+                finishedKillUpdate = true;
+            }
+        }
+
+        player.SetSpawned(false);
+        playerData.UpdatePlayer(player);
+    }
+
     // Must apply updates to grid to take effect
     private void updateSnakeCells(PlayerData player) {
         bool finishedTailUpdate = false;
         int cellsUpdated = 0;
         Vector2Int updateLocation = new Vector2Int(player.x, player.y);
-        
-        Debug.Log("Starting length update at " + updateLocation);
 
         //Update distance for each segment of snake
         while (!finishedTailUpdate) {
 
             int nextSearch = data.GetMostCurrentCell(updateLocation).life - 1;
             int newLife = player.length - cellsUpdated;
-            Debug.Log("Updating cell at " + updateLocation + " with life " + newLife);
             data.QueueUpdateDistToTail(updateLocation.x, updateLocation.y, newLife);
             if (newLife < 0) {
                 data.QueueUpdateOccupied(updateLocation.x, updateLocation.y, false);
@@ -211,6 +240,8 @@ public class GameState : NetworkBehaviour
         
         //Finds the player's data by cross-ref the playerId with the list of player id's
         PlayerData inputSourceData = playerData.GetPlayer(playerId);
+
+        if (!inputSourceData.spawned) return;
 
         //Creates a vector to represent intended move direction of player
         Vector2Int moveDirection = Vector2Int.zero;
@@ -250,11 +281,22 @@ public class GameState : NetworkBehaviour
                 }
             }
 
-            foreach (NetworkIdentity player in damages.Keys) {
-                PlayerData damagedPlayer = playerData.GetPlayer(player);
-                damagedPlayer.SetLength(damagedPlayer.length - damages[player]);
-                playerData.UpdatePlayer(damagedPlayer);
-                updateSnakeCells(damagedPlayer);
+            foreach (NetworkIdentity damagedPlayerId in damages.Keys) {
+                PlayerData player = playerData.GetPlayer(damagedPlayerId);
+                if (damages[damagedPlayerId] <= player.length) {
+                    player.SetLength(player.length - damages[damagedPlayerId]);
+                    playerData.UpdatePlayer(player);
+                    updateSnakeCells(player);
+                } else {
+                    KillPlayer(damagedPlayerId);
+                }
+            }
+
+            foreach (Vector2Int pos in cellsToDamage) {
+                Cell cell = data.GetMostCurrentCell(pos);
+                if (!cell.occupied) {
+                    data.QueueUpdateColor(pos.x, pos.y, inputSourceData.color);
+                }
             }
 
             inputSourceData.SetAtkCharge(0);
@@ -296,37 +338,6 @@ public class GameState : NetworkBehaviour
 
             //Update length of tail after movement
             updateSnakeCells(inputSourceData);
-
-            // Cell updatedTargetCell = data.GetMostCurrentCell(playerHeadPos);
-            // if (updatedTargetCell.life > inputSourceData.length) {
-            //     bool finishedTailUpdate = false;
-            //     Vector2 tailUpdateLocation = playerHeadPos;
-                
-            //     //Update distance for each segment of snake
-            //     while (!finishedTailUpdate) {
-            //         int newDist = data.GetMostCurrentCell(tailUpdateLocation).life - 1;
-            //         data.QueueUpdateDistToTail((int) tailUpdateLocation.x, (int) tailUpdateLocation.y, newDist);
-            //         if (newDist < 0) {
-            //             data.QueueUpdateOccupied((int) tailUpdateLocation.x, (int) tailUpdateLocation.y, false);
-            //         }
-
-            //         //Look for next further segment in all directions
-            //         Vector2[] directions = new Vector2[]{Vector2.up, Vector2.left, Vector2.down, Vector2.right};
-            //         bool foundNext = false;
-            //         foreach (Vector2 searchDir in directions) {
-            //             Vector2 searchPos = tailUpdateLocation + searchDir;
-            //             Cell checkCell = data.GetMostCurrentCell(searchPos);
-            //             if (checkCell.occupied && checkCell.player == inputSourceData.id && checkCell.life == newDist) {
-            //                 foundNext = true;
-            //                 tailUpdateLocation = searchPos;
-            //                 break;
-            //             }
-            //         }
-            //         if (!foundNext) {
-            //             finishedTailUpdate = true;
-            //         }
-            //     }
-            // }
         }
 
         //VERY IMPORTANT
