@@ -18,7 +18,7 @@ public class GridRenderer : MonoBehaviour
     public GameObject floorPrefab;
     public GameObject obstaclePrefab;
 
-    //Used by callback to update the rendering of an individual cell based on cell data
+    // Used by callback to update the rendering of an individual cell based on cell data
     void UpdateCell(Cell data) {
         GameObject sprite = map[data.y, data.x];
         SpriteRenderer renderer = sprite.GetComponent<SpriteRenderer>();
@@ -61,7 +61,7 @@ public class GridRenderer : MonoBehaviour
         // }
     }
 
-    //Used for updating camera position
+    // Used for updating camera position
     public GameObject GetCellRenderAt(Vector2 position) {
         return map[(int) position.y, (int) position.x];
     }
@@ -87,15 +87,15 @@ public class GridRenderer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Wait for grid to be started on the server before setting up callback and performing intial update
+        // Wait for grid to be started on the server before setting up callback and performing intial update
         if (!gridUpdateConnected && gameState.IsGridCreated()) {
             gridUpdateConnected = true;
             foreach (Cell entry in gameState.GetData()) {
                 UpdateCell(entry);
             }
-            //Set callback for when a cell gets updated on the server
+            // Set callback for when a cell gets updated on the server
             gameState.GetData().Callback = (op, index) => {
-                //Only if the update is an addition to the list
+                // Only if the update is an addition to the list
                 if (op.Equals(GameState.GameGridSyncList.Operation.OP_INSERT)) {
                     Cell cellData = gameState.GetData().GetItem(index);
                     UpdateCell(cellData);

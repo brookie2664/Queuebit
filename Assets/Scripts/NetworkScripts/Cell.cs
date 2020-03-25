@@ -19,6 +19,7 @@ public struct Cell {
     public bool painted; // True if the tile is painted
     public int color; // Color painted in cell, or of occupying player
     public int cache; // Value of cache if cell is a cache, between 0-15
+    public const int MAX_CACHE = 15;
 
     public Cell(int x, int y) : this() {
         this.x = x;
@@ -58,7 +59,7 @@ public struct Cell {
     }
 
     public void IncrementCache() {
-        cache = System.Math.Min(cache + 1, 15);
+        cache = System.Math.Min(cache + 1, MAX_CACHE);
     }
 
     // public static bool operator ==(Cell lhs, Cell rhs) {
