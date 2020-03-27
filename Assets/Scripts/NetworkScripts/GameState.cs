@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
+[RequireComponent(typeof(AudioSource))]
 public class GameState : NetworkBehaviour
 {
     public class PlayerDataSyncList : SyncListStruct<PlayerData> {}
@@ -163,6 +163,9 @@ public class GameState : NetworkBehaviour
 
                 //Update variable for later use
                 playerHeadPos += moveDirection;
+
+                //Play SFX
+                RpcPlayOneShotOnClients(0);
             }
 
             //Update length of tail after movement
@@ -232,6 +235,7 @@ public class GameState : NetworkBehaviour
     }
     
     // Start is called before the first frame update
+
     void Start()
     {
         if (!isServer) {
@@ -254,6 +258,39 @@ public class GameState : NetworkBehaviour
         }
 
         gridCreated = true;
+        source = this.GetComponent<AudioSource>();
+    }
+
+    private AudioSource source;
+
+    public AudioClip[] clips;
+    public bool loopingAudio = false;
+    public float bpm = 120;
+    public double localBGMStartTime;
+    //Clips reference:
+    //0: Movement SFX
+    //1: 
+    [ClientRpc]
+    void RpcPlayOneShotOnClients(int id) {
+        source.PlayOneShot(clips[id]);
+    }
+    // [ClientRpc]
+    // void RpcPlayClipAtPointOnClients(int id, Vector3 soundPosition) {
+    //     GameState.source.PlayClipAtPoint(clips[id], soundPosition);
+    //     //AudioClip[] must be the same on all clients.
+    // }
+
+    [ClientRpc]
+    void RpcSendBGMStartToClients(bool loopingAudio, int id) {
+        
+        //Starts audio
+        if (loopingAudio == true) {
+            //Do loop logic here?
+        } 
+        else {
+            source.PlayOneShot(clips[id]);
+        }
+        localBGMStartTime = AudioSettings.dspTime;
     }
 
     // Update is called once per frame
