@@ -16,7 +16,8 @@ public class PlayerConnectionComponent : NetworkBehaviour
         KeyCode.W,
         KeyCode.A,
         KeyCode.S,
-        KeyCode.D
+        KeyCode.D,
+        KeyCode.Space
     };
 
     [ClientRpc]
@@ -44,10 +45,10 @@ public class PlayerConnectionComponent : NetworkBehaviour
         gameStateObject = GameObject.Find("GameState");
         gameState = gameStateObject.GetComponent<GameState>();
 
-        //PlayerConnectionObject is an always-on, invisible object that is spawned when a player connects to the game.
+        // PlayerConnectionObject is an always-on, invisible object that is spawned when a player connects to the game.
         //
         if (isLocalPlayer == false) {
-            //object belongs to another player
+            // object belongs to another player
             return;
         }
 
@@ -64,7 +65,7 @@ public class PlayerConnectionComponent : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Update runs on everyone's computer, wether or not they own this particular player object
+        // Update runs on everyone's computer, wether or not they own this particular player object
         if (isLocalPlayer == false) {
             return;
         }

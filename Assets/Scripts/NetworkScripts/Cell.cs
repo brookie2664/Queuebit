@@ -1,36 +1,45 @@
 using UnityEngine;
+using UnityEngine.Networking;
 
 public struct Cell {
 
-    public int x; //X position of cell
-    public int y; //Y position of cell
-    public bool obstacle; //True if the tile is an obstacle tile, false if it is a floor tile
-    public bool occupied; //True if occupied by a player
-    public int player; //Player occupying the cell, if occupied
-    public int distToTail; //Number of cells to traverse to head of snake
-    public bool isHead; //True if the cell is the head of a snake
-    public bool painted; //True if the tile is painted
-    public Color color; //Color painted in cell, or of occupying player
+    public int x; // X position of cell
+    public int y; // Y position of cell
+
+    // 0 for empty
+    // 1 for obstacle
+    // 2 for ground
+    // 3 for spawn
+    // 4 for cache
+    public int type;
+    public bool occupied; // True if occupied by a player
+    public NetworkIdentity player; // Player occupying the cell, if occupied
+    public int life; // Distance to tail for length purposes
+    public bool isHead; // True if the cell is the head of a snake
+    public bool painted; // True if the tile is painted
+    public int color; // Color painted in cell, or of occupying player
+    public int cache; // Value of cache if cell is a cache, between 0-15
+    public const int MAX_CACHE = 15;
 
     public Cell(int x, int y) : this() {
         this.x = x;
         this.y = y;
     }
 
-    public void SetObstacle(bool value) {
-        obstacle = value;
+    public void SetType(int value) {
+        type = value;
     }
 
     public void SetOccupied(bool value) {
         occupied = value;
     }
 
-    public void SetPlayer(int value) {
+    public void SetPlayer(NetworkIdentity value) {
         player = value;
     }
 
-    public void SetDistToTail(int value) {
-        distToTail = value;
+    public void SetLife(int value) {
+        life = value;
     }
 
     public void SetIsHead(bool value) {
@@ -41,8 +50,16 @@ public struct Cell {
         painted = value;
     }
 
-    public void SetColor(Color value) {
+    public void SetColor(int value) {
         color = value;
+    }
+
+    public void SetCache(int value) {
+        cache = value;
+    }
+
+    public void IncrementCache() {
+        cache = System.Math.Min(cache + 1, MAX_CACHE);
     }
 
     // public static bool operator ==(Cell lhs, Cell rhs) {
