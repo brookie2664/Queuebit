@@ -319,6 +319,9 @@ public class GameState : NetworkBehaviour
 
             // Reset charge of attacking player
             inputSourceData.SetAtkCharge(0);
+
+            //TODO: Add SFX for attack
+            inputSourceData.id.GetComponent<PlayerConnectionComponent>().RpcPlayOneShotOnClients(1);
         }
         
         // Calculate movement if input is movement
@@ -356,6 +359,9 @@ public class GameState : NetworkBehaviour
 
             // Update length of tail after movement
             updateSnakeCells(inputSourceData);
+
+            //Play SFX for movement
+            inputSourceData.id.GetComponent<PlayerConnectionComponent>().RpcPlayOneShotOnClients(0);
         }
 
         // VERY IMPORTANT
@@ -444,6 +450,7 @@ public class GameState : NetworkBehaviour
         }
 
         gridCreated = true;
+
     }
 
     float counter = 0;
@@ -472,4 +479,5 @@ public class GameState : NetworkBehaviour
 
         }
     }
+
 }
