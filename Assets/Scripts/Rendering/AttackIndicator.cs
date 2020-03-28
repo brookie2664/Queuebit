@@ -14,7 +14,7 @@ public class AttackIndicator : MonoBehaviour
         Vector3[] directions = {Vector3.up, Vector3.left, Vector3.down, Vector3.right};
         int i = 0;
         foreach (Vector3 dir in directions) {
-            targets[i] = dir * 1.9f + dir * 1.2f * atkLevel + Vector3.forward;
+            targets[i] = atkLevel > 0 ? dir * .7f + dir * GridRenderer.CELL_SEPARATION * atkLevel + Vector3.forward : Vector3.zero;
             i++;
         }
     }

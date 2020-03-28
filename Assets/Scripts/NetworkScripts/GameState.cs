@@ -264,7 +264,7 @@ public class GameState : NetworkBehaviour
             // Attack Handling
             
             // TODO Update later for fine tuning
-            int atkRadius = inputSourceData.atkCharge / 3;
+            int atkRadius = AttackTable.getAtkLevel(0, inputSourceData.length, inputSourceData.atkCharge);
             
             List<Vector2Int> cellsToDamage = new List<Vector2Int>();
 
@@ -376,7 +376,7 @@ public class GameState : NetworkBehaviour
         PlayerConnectionComponent playerComponent = playerId.GetComponent<PlayerConnectionComponent>();
         // Update's player's camera to focus on new head cell
         playerComponent.RpcUpdateCamera(new Vector2Int(inputSourceData.x, inputSourceData.y));
-        playerComponent.RpcUpdateAtkIndicator(inputSourceData.atkCharge / 3 - 1);
+        playerComponent.RpcUpdateAtkIndicator(AttackTable.getAtkLevel(0, inputSourceData.length, inputSourceData.atkCharge));
     }
 
     // Used to assign teams
