@@ -307,6 +307,7 @@ public class GameState : NetworkBehaviour
                 } else {
                     KillPlayer(damagedPlayerId);
                 }
+                player.id.GetComponent<PlayerConnectionComponent>().RpcUpdateAtkIndicator(AttackTable.getAtkLevel(0, player.length, player.atkCharge));
             }
 
             // Recheck cells to paint if no longer occupied
