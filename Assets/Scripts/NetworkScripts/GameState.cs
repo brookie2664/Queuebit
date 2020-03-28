@@ -373,8 +373,10 @@ public class GameState : NetworkBehaviour
         // Updates the data of the player that produced the input across network
         playerData.UpdatePlayer(inputSourceData);
         
+        PlayerConnectionComponent playerComponent = playerId.GetComponent<PlayerConnectionComponent>();
         // Update's player's camera to focus on new head cell
-        playerId.GetComponentInParent<PlayerConnectionComponent>().RpcUpdateCamera(new Vector2Int(inputSourceData.x, inputSourceData.y));
+        playerComponent.RpcUpdateCamera(new Vector2Int(inputSourceData.x, inputSourceData.y));
+        playerComponent.RpcUpdateAtkIndicator(inputSourceData.atkCharge / 3 - 1);
     }
 
     // Used to assign teams
@@ -389,8 +391,10 @@ public class GameState : NetworkBehaviour
 
     // Called by command from client to register when a player joins
     public void CreatePlayer(NetworkIdentity playerId) {
-        playerData.Add(new PlayerData(playerId, 0, 0, teamColorsTemp[dummy++ % teamColorsTemp.Length]));
+        PlayerData newPlayer = new PlayerData(playerId, 0, 0, teamColorsTemp[dummy++ % teamColorsTemp.Length]);
+        playerData.Add(newPlayer);
         SpawnPlayer(playerId);
+        playerId.GetComponent<PlayerConnectionComponent>().RpcSetPlayerColor(newPlayer.color);
     }
 
     // Spawns player at a random spawn point, unless none are available

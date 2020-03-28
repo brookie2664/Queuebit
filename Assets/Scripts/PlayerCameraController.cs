@@ -14,7 +14,7 @@ public class PlayerCameraController : MonoBehaviour
         if (target != null) {
             Vector3 desiredPosition = target + offset;
             Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothTime);
-            transform.position = smoothedPosition;
+            gameObject.transform.position = smoothedPosition;
         }
     }
 

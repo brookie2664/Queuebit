@@ -35,6 +35,22 @@ public class PlayerConnectionComponent : NetworkBehaviour
         playerCamera.GetComponent<PlayerCameraController>().setCameraTarget(targetCell.transform.position);
     }
 
+    [ClientRpc]
+    public void RpcUpdateAtkIndicator(int atkLevel) {
+        if (!isLocalPlayer) {
+            return;
+        }
+        playerCamera.GetComponent<AttackIndicator>().SetRender(atkLevel);
+    }
+
+    [ClientRpc]
+    public void RpcSetPlayerColor(int color) {
+        if (!isLocalPlayer) {
+            return;
+        }
+        playerCamera.GetComponent<AttackIndicator>().SetColor(color);
+    }
+
     //Clips reference:
     //0: Movement SFX
     //1: 
