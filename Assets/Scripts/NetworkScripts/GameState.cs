@@ -210,18 +210,19 @@ public class GameState : NetworkBehaviour
     // Need to run data.ApplyUpdates() to be shown to network
     private void updateSnakeCells(PlayerData player) {
         bool finishedTailUpdate = false;
-        int cellsUpdated = 0;
+        List<Vector2Int> cellsUpdated = new List<Vector2Int>(); 
         Vector2Int updateLocation = new Vector2Int(player.x, player.y);
 
         // Update distance for each segment of snake
         while (!finishedTailUpdate) {
 
             int nextSearch = data.GetMostCurrentCell(updateLocation).life - 1;
-            int newLife = player.length - cellsUpdated;
+            int newLife = player.length - cellsUpdated.Count;
             data.QueueUpdateDistToTail(updateLocation.x, updateLocation.y, newLife);
             if (newLife < 0) {
                 data.QueueUpdateOccupied(updateLocation.x, updateLocation.y, false);
             }
+            cellsUpdated.Add(updateLocation);
 
             // Look for next further segment in all directions
             Vector2Int[] directions = new Vector2Int[]{Vector2Int.up, Vector2Int.left, Vector2Int.down, Vector2Int.right};
@@ -229,7 +230,7 @@ public class GameState : NetworkBehaviour
             foreach (Vector2Int searchDir in directions) {
                 Vector2Int searchPos = updateLocation + searchDir;
                 Cell checkCell = data.GetMostCurrentCell(searchPos);
-                if (checkCell.occupied && checkCell.player == player.id && checkCell.life == nextSearch) {
+                if (!cellsUpdated.Contains(searchPos) && checkCell.occupied && checkCell.player == player.id && checkCell.life == nextSearch) {
                     foundNext = true;
                     updateLocation = searchPos;
                     break;
@@ -238,7 +239,6 @@ public class GameState : NetworkBehaviour
             if (!foundNext) {
                 finishedTailUpdate = true;
             }
-            cellsUpdated++;
         }
     }
     
