@@ -10,6 +10,8 @@ public struct PlayerData {
     public int color; // The color/team of the player
     public bool spawned; // If player is in game
     public int atkCharge; // Charge of attack power
+    public int weapon; // Id of current weapon
+    public Vector2 lastMoveDirection; // Last direction moved, eg. direction head is facing
     public const int MAX_ATK_CHARGE = 15;
     public const int START_LENGTH = 5;
 
@@ -21,6 +23,8 @@ public struct PlayerData {
         this.length = START_LENGTH;
         this.spawned = false;
         this.atkCharge = 0;
+        this.weapon = 0;
+        this.lastMoveDirection = Vector2.zero;
     }
 
     public void SetX(int x) {
@@ -45,5 +49,13 @@ public struct PlayerData {
 
     public void AtkChargeUp() {
         atkCharge = Math.Min(MAX_ATK_CHARGE, atkCharge + 1);
+    }
+
+    public void SetWeapon(int value) {
+        weapon = value;
+    }
+
+    public void SetLastMoveDirection(Vector2 value) {
+        lastMoveDirection = value;
     }
 }

@@ -37,6 +37,10 @@ public class GridRenderer : MonoBehaviour
         if (data.type == 4) {
             animator.SetInteger("cache", data.cache);
         }
+        if (data.type == 5) {
+            animator.SetInteger("weapon", data.weapon);
+            animator.SetBool("weaponAvailable", data.weaponTimer == 0);
+        }
     }
 
     // Used for updating camera position

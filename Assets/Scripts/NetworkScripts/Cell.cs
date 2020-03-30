@@ -11,6 +11,7 @@ public struct Cell {
     // 2 for ground
     // 3 for spawn
     // 4 for cache
+    // 5 for weapon
     public int type;
     public bool occupied; // True if occupied by a player
     public NetworkIdentity player; // Player occupying the cell, if occupied
@@ -19,11 +20,18 @@ public struct Cell {
     public bool painted; // True if the tile is painted
     public int color; // Color painted in cell, or of occupying player
     public int cache; // Value of cache if cell is a cache, between 0-15
+    public int weaponTimer; // Time until weapon is available
+    public int weapon; // Available weapon
+    // 0 for splash
+    // 1 for sniper
     public const int MAX_CACHE = 15;
+    public const int WEAPON_DROP_TIME = 15;
+    public const int NUM_WEAPONS = 2;
 
     public Cell(int x, int y) : this() {
         this.x = x;
         this.y = y;
+        this.weaponTimer = WEAPON_DROP_TIME;
     }
 
     public void SetType(int value) {
@@ -62,20 +70,20 @@ public struct Cell {
         cache = System.Math.Min(cache + 1, MAX_CACHE);
     }
 
-    // public static bool operator ==(Cell lhs, Cell rhs) {
-    //     // Check for null on left side.
-    //     return lhs.x == rhs.x && lhs.y == rhs.y;
-    // }
+    public void SetWeaponTimer(int value) {
+        bool available = weaponTimer == 0;
+        weaponTimer = System.Math.Max(value, 0);
+        if (!available && weaponTimer == 0) {
+            PickRandWeapon();
+        }
+    }
 
-    // public static bool operator !=(Cell lhs, Cell rhs) {
-    //     return !(lhs == rhs);
-    // }
+    public void TickWeaponTimer() {
+        SetWeaponTimer(weaponTimer - 1);
+    }
 
-    // public override int GetHashCode() {
-    //     int prime = 13;
-    //     int result = 1;
-    //     result = result * prime + x;
-    //     result = result * prime + y;
-    //     return result;
-    // }
+    public void PickRandWeapon() {
+        Debug.Log("Picking weapon");
+        weapon = new System.Random().Next(NUM_WEAPONS);
+    }
 }
