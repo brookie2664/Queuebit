@@ -83,7 +83,6 @@ public struct Cell {
     }
 
     public void PickRandWeapon() {
-        Debug.Log("Picking weapon");
         weapon = new System.Random().Next(NUM_WEAPONS);
     }
 }

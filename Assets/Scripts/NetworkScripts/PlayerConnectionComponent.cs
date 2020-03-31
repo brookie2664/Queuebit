@@ -36,11 +36,19 @@ public class PlayerConnectionComponent : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcUpdateAtkIndicator(int atkLevel) {
+    public void RpcUpdateAtkIndicator(int atkLevel, Vector2 direction) {
         if (!isLocalPlayer) {
             return;
         }
-        playerCamera.GetComponent<AttackIndicator>().SetRender(atkLevel);
+        playerCamera.GetComponent<AttackIndicator>().AdjustRender(atkLevel, direction);
+    }
+
+    [ClientRpc]
+    public void RpcSetAtkIndicatorWeapon(int weapon, int atkLevel, Vector2 direction) {
+        if (!isLocalPlayer) {
+            return;
+        }
+        playerCamera.GetComponent<AttackIndicator>().SetWeapon(weapon, atkLevel, direction);
     }
 
     [ClientRpc]

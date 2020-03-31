@@ -264,6 +264,8 @@ public class GameState : NetworkBehaviour
         // Finds the player's data by cross-ref the playerId with the list of player id's
         PlayerData inputSourceData = playerData.GetPlayer(playerId);
 
+        PlayerConnectionComponent playerComponent = playerId.GetComponent<PlayerConnectionComponent>();
+
         if (!inputSourceData.spawned) return;
 
         // Creates a vector to represent intended move direction of player
@@ -280,7 +282,7 @@ public class GameState : NetworkBehaviour
 
             switch (inputSourceData.weapon) {
             
-                case 0:
+                case 0: // Find attack cells for splash
 
                     int atkRadius = AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge);
                     
@@ -299,7 +301,8 @@ public class GameState : NetworkBehaviour
                         }
                     }
                     break;
-                case 1:
+                case 1: // Find attack cells for sniper
+                    
                     int atkLength = AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge);
                     
                     if (atkLength < 1) break;
@@ -357,7 +360,7 @@ public class GameState : NetworkBehaviour
                 } else {
                     KillPlayer(damagedPlayerId);
                 }
-                player.id.GetComponent<PlayerConnectionComponent>().RpcUpdateAtkIndicator(AttackTable.getAtkLevel(0, player.length, player.atkCharge));
+                player.id.GetComponent<PlayerConnectionComponent>().RpcUpdateAtkIndicator(AttackTable.getAtkLevel(0, player.length, player.atkCharge), player.lastMoveDirection);
             }
 
             // Recheck cells to paint if no longer occupied
@@ -399,6 +402,9 @@ public class GameState : NetworkBehaviour
                 }
 
                 if (targetCell.type == 5 && targetCell.weaponTimer == 0) {
+                    if (inputSourceData.weapon != targetCell.weapon) {
+                        playerComponent.RpcSetAtkIndicatorWeapon(targetCell.weapon, AttackTable.getAtkLevel(targetCell.weapon, inputSourceData.length, inputSourceData.atkCharge), inputSourceData.lastMoveDirection);
+                    }
                     inputSourceData.SetWeapon(targetCell.weapon);
                     data.QueueUpdateWeaponTimer(targetCell.x, targetCell.y, Cell.WEAPON_DROP_TIME);
                 }
@@ -430,10 +436,10 @@ public class GameState : NetworkBehaviour
         // Updates the data of the player that produced the input across network
         playerData.UpdatePlayer(inputSourceData);
         
-        PlayerConnectionComponent playerComponent = playerId.GetComponent<PlayerConnectionComponent>();
+        
         // Update's player's camera to focus on new head cell
         playerComponent.RpcUpdateCamera(new Vector2Int(inputSourceData.x, inputSourceData.y));
-        playerComponent.RpcUpdateAtkIndicator(AttackTable.getAtkLevel(0, inputSourceData.length, inputSourceData.atkCharge));
+        playerComponent.RpcUpdateAtkIndicator(AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge), inputSourceData.lastMoveDirection);
     }
 
     // Used to assign teams
