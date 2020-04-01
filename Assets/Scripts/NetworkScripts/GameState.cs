@@ -132,6 +132,18 @@ public class GameState : NetworkBehaviour
             QueueCellUpdate(newCell);
         }
 
+        public void QueueUpdateWeaponTimer(int x, int y, int value) {
+            Cell newCell = GetMostCurrentCell(x, y);
+            newCell.SetWeaponTimer(value);
+            QueueCellUpdate(newCell);
+        }
+
+        public void QueueTickWeaponTimer(int x, int y) {
+            Cell newCell = GetMostCurrentCell(x, y);
+            newCell.TickWeaponTimer();
+            QueueCellUpdate(newCell);
+        }
+
         // Pushes updates in the queued updates to the synclist so they propogate to clients
         public void ApplyUpdates() {
             foreach (KeyValuePair<Vector2Int, Cell> pair in queuedUpdates) {
@@ -159,6 +171,7 @@ public class GameState : NetworkBehaviour
 
     List<Vector2Int> cacheLocations = new List<Vector2Int>();
     List<Vector2Int> spawnPoints = new List<Vector2Int>();
+    List<Vector2Int> weaponPoints = new List<Vector2Int>();
 
     GameGridSyncList data = new GameGridSyncList();
 
@@ -251,6 +264,8 @@ public class GameState : NetworkBehaviour
         // Finds the player's data by cross-ref the playerId with the list of player id's
         PlayerData inputSourceData = playerData.GetPlayer(playerId);
 
+        PlayerConnectionComponent playerComponent = playerId.GetComponent<PlayerConnectionComponent>();
+
         if (!inputSourceData.spawned) return;
 
         // Creates a vector to represent intended move direction of player
@@ -263,24 +278,62 @@ public class GameState : NetworkBehaviour
         else if (input == KeyCode.Space && inputSourceData.atkCharge != 0) {
             // Attack Handling
             
-            // TODO Update later for fine tuning
-            int atkRadius = inputSourceData.atkCharge / 3;
-            
             List<Vector2Int> cellsToDamage = new List<Vector2Int>();
 
-            // Find all the cells to paint, paint if unoccupied, record the cell otherwise
-            for (int i = -atkRadius; i <= atkRadius; i++) {
-                int height = atkRadius - Math.Abs(i);
-                for (int j = -height; j <= height; j++) {
-                    Vector2Int testPos = playerHeadPos + new Vector2Int(i, j);
-                    if (data.HasCellAt(testPos)) {
-                        if (!data.GetMostCurrentCell(testPos).occupied) {
-                            data.QueueUpdateColor(testPos.x, testPos.y, inputSourceData.color);
-                        } else {
-                            cellsToDamage.Add(testPos);
+            switch (inputSourceData.weapon) {
+            
+                case 0: // Find attack cells for splash
+
+                    int atkRadius = AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge);
+                    
+                    // Find all the cells to paint, paint if unoccupied, record the cell otherwise
+                    for (int i = -atkRadius; i <= atkRadius; i++) {
+                        int height = atkRadius - Math.Abs(i);
+                        for (int j = -height; j <= height; j++) {
+                            Vector2Int testPos = playerHeadPos + new Vector2Int(i, j);
+                            if (data.HasCellAt(testPos)) {
+                                if (!data.GetMostCurrentCell(testPos).occupied) {
+                                    data.QueueUpdateColor(testPos.x, testPos.y, inputSourceData.color);
+                                } else {
+                                    cellsToDamage.Add(testPos);
+                                }
+                            }
                         }
                     }
-                }
+                    break;
+                case 1: // Find attack cells for sniper
+                    
+                    int atkLength = AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge);
+                    
+                    if (atkLength < 1) break;
+
+                    // Find all the cells to paint, paint if unoccupied, record the cell otherwise
+                    for (int i = -1; i <= 1; i++) {
+                        for (int j = 0 - 1 + Math.Abs(i); j <= atkLength - Math.Abs(i); j++) {
+                            Vector2Int directionalizedVector;
+                            Vector2 lastDirection = inputSourceData.lastMoveDirection;
+                            if (lastDirection == Vector2.up) {
+                                directionalizedVector = new Vector2Int(i, j);
+                            } else if (lastDirection == Vector2.right) {
+                                directionalizedVector = new Vector2Int(j, i);
+                            } else if (lastDirection == Vector2.down) {
+                                directionalizedVector = new Vector2Int(i, -j);
+                            } else if (lastDirection == Vector2.left) {
+                                directionalizedVector = new Vector2Int(-j, i);
+                            } else {
+                                directionalizedVector = Vector2Int.zero;
+                            }
+                            Vector2Int testPos = playerHeadPos + directionalizedVector;
+                            if (data.HasCellAt(testPos)) {
+                                if (!data.GetMostCurrentCell(testPos).occupied) {
+                                    data.QueueUpdateColor(testPos.x, testPos.y, inputSourceData.color);
+                                } else {
+                                    cellsToDamage.Add(testPos);
+                                }
+                            }
+                        }
+                    }
+                    break;
             }
 
             Dictionary<NetworkIdentity, int> damages = new Dictionary<NetworkIdentity, int>();
@@ -307,6 +360,7 @@ public class GameState : NetworkBehaviour
                 } else {
                     KillPlayer(damagedPlayerId);
                 }
+                player.id.GetComponent<PlayerConnectionComponent>().RpcUpdateAtkIndicator(AttackTable.getAtkLevel(0, player.length, player.atkCharge), player.lastMoveDirection);
             }
 
             // Recheck cells to paint if no longer occupied
@@ -340,10 +394,19 @@ public class GameState : NetworkBehaviour
 
                 // Raise attack charge
                 inputSourceData.AtkChargeUp();
+                inputSourceData.SetLastMoveDirection(moveDirection);
                 
                 if (targetCell.type == 4 && targetCell.cache >= Cell.MAX_CACHE) {
                     inputSourceData.SetLength(inputSourceData.length + 3);
                     data.QueueUpdateCache(targetCell.x, targetCell.y, 0);
+                }
+
+                if (targetCell.type == 5 && targetCell.weaponTimer == 0) {
+                    if (inputSourceData.weapon != targetCell.weapon) {
+                        playerComponent.RpcSetAtkIndicatorWeapon(targetCell.weapon, AttackTable.getAtkLevel(targetCell.weapon, inputSourceData.length, inputSourceData.atkCharge), inputSourceData.lastMoveDirection);
+                    }
+                    inputSourceData.SetWeapon(targetCell.weapon);
+                    data.QueueUpdateWeaponTimer(targetCell.x, targetCell.y, Cell.WEAPON_DROP_TIME);
                 }
 
                 // Update the PlayerData with the new head position
@@ -373,8 +436,10 @@ public class GameState : NetworkBehaviour
         // Updates the data of the player that produced the input across network
         playerData.UpdatePlayer(inputSourceData);
         
+        
         // Update's player's camera to focus on new head cell
-        playerId.GetComponentInParent<PlayerConnectionComponent>().RpcUpdateCamera(new Vector2Int(inputSourceData.x, inputSourceData.y));
+        playerComponent.RpcUpdateCamera(new Vector2Int(inputSourceData.x, inputSourceData.y));
+        playerComponent.RpcUpdateAtkIndicator(AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge), inputSourceData.lastMoveDirection);
     }
 
     // Used to assign teams
@@ -389,8 +454,10 @@ public class GameState : NetworkBehaviour
 
     // Called by command from client to register when a player joins
     public void CreatePlayer(NetworkIdentity playerId) {
-        playerData.Add(new PlayerData(playerId, 0, 0, teamColorsTemp[dummy++ % teamColorsTemp.Length]));
+        PlayerData newPlayer = new PlayerData(playerId, 0, 0, teamColorsTemp[dummy++ % teamColorsTemp.Length]);
+        playerData.Add(newPlayer);
         SpawnPlayer(playerId);
+        playerId.GetComponent<PlayerConnectionComponent>().RpcSetPlayerColor(newPlayer.color);
     }
 
     // Spawns player at a random spawn point, unless none are available
@@ -445,6 +512,7 @@ public class GameState : NetworkBehaviour
                 newCell.type = type;
                 if (type == 3) spawnPoints.Add(new Vector2Int(j, i));
                 if (type == 4) cacheLocations.Add(new Vector2Int(j, i));
+                if (type == 5) weaponPoints.Add(new Vector2Int(j, i));
                 data.Add(newCell);
             }
         }
@@ -473,6 +541,12 @@ public class GameState : NetworkBehaviour
                 Cell cacheCell = data.GetMostCurrentCell(cache);
                 if (!cacheCell.occupied) {
                     data.QueueUpdateCache(cache.x, cache.y);
+                }
+            }
+            foreach(Vector2Int weaponSpot in weaponPoints) {
+                Cell weaponCell = data.GetMostCurrentCell(weaponSpot);
+                if (!weaponCell.occupied) {
+                    data.QueueTickWeaponTimer(weaponSpot.x, weaponSpot.y);
                 }
             }
             data.ApplyUpdates();
