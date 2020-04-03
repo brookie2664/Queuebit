@@ -11,7 +11,13 @@ public class PlayerConnectionComponent : NetworkBehaviour
     public AudioClip[] clips;
     public bool loopingAudio = false;
     public float bpm = 120;
-    public double localBGMStartTime;
+    public float secPerBeat;
+    public float songPosition;
+    public float songPositionInBeats;
+    //public float dspSongTime; = localBGMStartTime
+    private bool alreadyRefreshedActivity = false;
+    public bool allowInput = true;
+    public double localdspStartTime;
     public GameObject gameStateObject;
     private GameState gameState;
 
@@ -61,7 +67,9 @@ public class PlayerConnectionComponent : NetworkBehaviour
 
     //Clips reference:
     //0: Movement SFX
-    //1: 
+    //1: Attack SFX
+    //10: BGM0
+
     [ClientRpc]
     public void RpcPlayOneShotOnClients(int id) {
         //if(isLocalPlayer) {
@@ -74,15 +82,15 @@ public class PlayerConnectionComponent : NetworkBehaviour
     //     //AudioClip[] must be the same on all clients.
     // }
     [ClientRpc]
-    public void RpcSendBGMStartToClients(bool loopingAudio, int id) {
+    public void RpcSendBGMStartToClients(int id) {//bool loopingAudio, int id) {
         //Starts audio
-        if (loopingAudio == true) {
+        //if (loopingAudio == true) {
             //Do loop logic here?
-        } 
-        else {
+        //} 
+        //else {
             source.PlayOneShot(clips[id]);
-        }
-        localBGMStartTime = AudioSettings.dspTime;
+        //}
+        localdspStartTime = AudioSettings.dspTime;
     }
 
     [Command]
@@ -111,10 +119,13 @@ public class PlayerConnectionComponent : NetworkBehaviour
 
         playerCamera = gameState.localCamera;
         renderer = gameState.localRenderer;
-        
+        secPerBeat = 60/bpm;
         Debug.Log("Spawning Player Unit");
 
         CmdCreatePlayer(GetComponent<NetworkIdentity>());
+
+        //TODO: Temporary!
+        RpcSendBGMStartToClients(10);
         
     }
 
@@ -123,13 +134,27 @@ public class PlayerConnectionComponent : NetworkBehaviour
     void Update()
     {
         // Update runs on everyone's computer, wether or not they own this particular player object
+        songPosition = (float)(AudioSettings.dspTime - localdspStartTime);
+        songPositionInBeats = songPosition / secPerBeat;
+
         if (isLocalPlayer == false) {
             return;
         }
+        if ((Mathf.Repeat(songPositionInBeats, 1) >= 0.5f) && !alreadyRefreshedActivity) {
+            allowInput = true;
+            alreadyRefreshedActivity = true;
+        } else if (Mathf.Repeat(songPositionInBeats, 1) < 0.5f) {
+            alreadyRefreshedActivity = false;
+        }
+
         foreach (KeyCode entry in ALLOWED_INPUTS) {
             if (Input.GetKeyDown(entry)) {
-                CmdSendInput(entry, GetComponent<NetworkIdentity>());
-                break;
+                if (allowInput) {
+                    CmdSendInput(entry, GetComponent<NetworkIdentity>());
+                    allowInput = false;
+                    break;
+                }
+                
             }
         }
 

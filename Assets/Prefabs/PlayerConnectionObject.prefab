@@ -80,18 +80,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: 7cee7ee5bf8946f41b7e8594ee5ad589, type: 3}
-  - {fileID: 8300000, guid: 7cee7ee5bf8946f41b7e8594ee5ad589, type: 3}
+  - {fileID: 8300000, guid: 07ba756cfcd51ca4e9a9afcdf390436d, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: cb5c134649ea22141ab00c62950ff971, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   loopingAudio: 0
   bpm: 120
-  localBGMStartTime: 0
+  secPerBeat: 0
+  songPosition: 0
+  songPositionInBeats: 0
+  localdspStartTime: 0
   gameStateObject: {fileID: 0}
   PlayerName: Anon
 --- !u!82 &89924323170941796
