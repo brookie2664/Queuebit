@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -85,6 +86,11 @@ public class PlayerConnectionComponent : NetworkBehaviour
         localBGMStartTime = AudioSettings.dspTime;
     }
 
+    [ClientRpc]
+    public void RpcStartTimer(string message, float timer) {
+        Countdown.countdown.StartCountdown(message, timer);
+    }
+
     [Command]
     public void CmdCreatePlayer(NetworkIdentity playerId) {
         gameState.CreatePlayer(playerId);
@@ -133,7 +139,5 @@ public class PlayerConnectionComponent : NetworkBehaviour
                 break;
             }
         }
-
     }
-
 }

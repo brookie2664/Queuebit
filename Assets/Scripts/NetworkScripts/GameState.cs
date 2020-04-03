@@ -164,7 +164,7 @@ public class GameState : NetworkBehaviour
     public PlayerDataSyncList playerData = new PlayerDataSyncList();
 
     [SyncVar]
-    bool gridCreated = false; // Used by GridRenderer to know when the grid has been filled so
+    bool gameLoaded = false; // Used by GridRenderer to know when the grid has been filled so
     // it can start checking for updates
 
     System.Random rand = new System.Random();
@@ -175,9 +175,12 @@ public class GameState : NetworkBehaviour
 
     GameGridSyncList data = new GameGridSyncList();
 
+    [SerializeField]
+    private bool debugAllowSinglePlayer = false;
+
     // Used by other objects to determine whether they can start using the grid
-    public bool IsGridCreated() {
-        return gridCreated;
+    public bool IsGameLoaded() {
+        return gameLoaded;
     }
 
     public GameGridSyncList GetData() {
@@ -452,13 +455,31 @@ public class GameState : NetworkBehaviour
     // Dummy variable for team assignment and spawn placement
     int dummy = 0;
 
+    List<NetworkIdentity> joiningPlayers = new List<NetworkIdentity>();
+    
+    private bool loadTimerRunning = false;
+    private float loadTimer = 15f;
+
     // Called by command from client to register when a player joins
     public void CreatePlayer(NetworkIdentity playerId) {
-        PlayerData newPlayer = new PlayerData(playerId, 0, 0, teamColorsTemp[dummy++ % teamColorsTemp.Length]);
-        playerData.Add(newPlayer);
-        SpawnPlayer(playerId);
-        playerId.GetComponent<PlayerConnectionComponent>().RpcSetPlayerColor(newPlayer.color);
+        if (gameLoaded) return;
+
+        joiningPlayers.Add(playerId);
+
+        if (loadTimerRunning) {
+            playerId.GetComponent<PlayerConnectionComponent>().RpcStartTimer("Game starting in:", loadTimer);
+        }
+
+        if (!loadTimerRunning && joiningPlayers.Count > (debugAllowSinglePlayer ? 0 : 1)) {
+            loadTimerRunning = true;
+            foreach (NetworkIdentity id in joiningPlayers) {
+                id.GetComponent<PlayerConnectionComponent>().RpcStartTimer("Game starting in:", loadTimer);
+            }
+        }
+
     }
+
+
 
     // Spawns player at a random spawn point, unless none are available
     public void SpawnPlayer(NetworkIdentity playerId) {
@@ -494,31 +515,7 @@ public class GameState : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!isServer) {
-            return;
-        }
-
-        // Build grid from settings        
-        gameSettings = settingsObject.GetComponent<GameSettings>();
-        int[, ] map = gameSettings.map;
-        int gridHeight = map.GetLength(0);
-        int gridWidth = map.GetLength(1);
-        data.SetDimensions(gridWidth, gridHeight);
-
-        for (int i = 0; i < gridHeight; i++) {
-            for (int j = 0; j < gridWidth; j++) {
-                Cell newCell = new Cell(j, i);
-                int type = map[i, j];
-                newCell.type = type;
-                if (type == 3) spawnPoints.Add(new Vector2Int(j, i));
-                if (type == 4) cacheLocations.Add(new Vector2Int(j, i));
-                if (type == 5) weaponPoints.Add(new Vector2Int(j, i));
-                data.Add(newCell);
-            }
-        }
-
-        gridCreated = true;
-
+        
     }
 
     float counter = 0;
@@ -527,9 +524,46 @@ public class GameState : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isServer || !gridCreated) {
+        if (!isServer) {
             return;
         }
+
+        if (!gameLoaded && loadTimerRunning) {
+            loadTimer -= Time.deltaTime;
+            if (loadTimer <= 0) {
+                // Build grid from settings        
+                gameSettings = settingsObject.GetComponent<GameSettings>();
+                int[, ] map = gameSettings.map;
+                int gridHeight = map.GetLength(0);
+                int gridWidth = map.GetLength(1);
+                data.SetDimensions(gridWidth, gridHeight);
+
+                for (int i = 0; i < gridHeight; i++) {
+                    for (int j = 0; j < gridWidth; j++) {
+                        Cell newCell = new Cell(j, i);
+                        int type = map[i, j];
+                        newCell.type = type;
+                        if (type == 3) spawnPoints.Add(new Vector2Int(j, i));
+                        if (type == 4) cacheLocations.Add(new Vector2Int(j, i));
+                        if (type == 5) weaponPoints.Add(new Vector2Int(j, i));
+                        data.Add(newCell);
+                    }
+                }
+
+                foreach (NetworkIdentity id in joiningPlayers) {
+                    PlayerData newPlayer = new PlayerData(id, 0, 0, teamColorsTemp[dummy++ % teamColorsTemp.Length]);
+                    playerData.Add(newPlayer);
+                    SpawnPlayer(id);
+                    id.GetComponent<PlayerConnectionComponent>().RpcSetPlayerColor(newPlayer.color);
+                }
+
+                MusicManager.musicManager.RpcStartPlaying(0);
+
+                gameLoaded = true;
+            }
+        }
+
+        if (!gameLoaded) return;
         
         counter += Time.deltaTime;
 
