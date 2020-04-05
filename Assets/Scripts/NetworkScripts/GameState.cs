@@ -375,7 +375,7 @@ public class GameState : NetworkBehaviour
             inputSourceData.SetAtkCharge(0);
 
             //TODO: Add SFX for attack
-            inputSourceData.id.GetComponent<PlayerConnectionComponent>().RpcPlayOneShotOnClients(1);
+            inputSourceData.id.GetComponent<PlayerConnectionComponent>().RpcPlayClipAtCellOnClients(1, playerHeadPos);
         }
         
         // Calculate movement if input is movement
@@ -424,7 +424,7 @@ public class GameState : NetworkBehaviour
             updateSnakeCells(inputSourceData);
 
             //Play SFX for movement
-            inputSourceData.id.GetComponent<PlayerConnectionComponent>().RpcPlayOneShotOnClients(0);
+            inputSourceData.id.GetComponent<PlayerConnectionComponent>().RpcPlayClipAtCellOnClients(0, playerHeadPos);
         }
 
         // VERY IMPORTANT

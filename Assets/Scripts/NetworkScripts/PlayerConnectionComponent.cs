@@ -68,11 +68,11 @@ public class PlayerConnectionComponent : NetworkBehaviour
             source.PlayOneShot(clips[id]);
         //}
     }
-    // [ClientRpc]
-    // void RpcPlayClipAtPointOnClients(int id, Vector3 soundPosition) {
-    //     GameState.source.PlayClipAtPoint(clips[id], soundPosition);
-    //     //AudioClip[] must be the same on all clients.
-    // }
+    [ClientRpc]
+    public void RpcPlayClipAtCellOnClients(int id, Vector2 soundPosition) {
+        AudioSource.PlayClipAtPoint(clips[id], renderer.GetComponent<GridRenderer>().GetCellRenderAt(soundPosition).transform.position);
+        //AudioClip[] must be the same on all clients.
+    }
     [ClientRpc]
     public void RpcSendBGMStartToClients(bool loopingAudio, int id) {
         //Starts audio
@@ -101,6 +101,7 @@ public class PlayerConnectionComponent : NetworkBehaviour
         gameStateObject = GameObject.Find("GameState");
         gameState = gameStateObject.GetComponent<GameState>();
         source = this.GetComponent<AudioSource>();
+        renderer = gameState.localRenderer;
 
         // PlayerConnectionObject is an always-on, invisible object that is spawned when a player connects to the game.
         //
