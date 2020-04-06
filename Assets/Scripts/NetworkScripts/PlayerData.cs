@@ -11,6 +11,7 @@ public struct PlayerData {
     public bool spawned; // If player is in game
     public int atkCharge; // Charge of attack power
     public int weapon; // Id of current weapon
+    public bool movedThisTurn; // Has the player moved on the current beat?
     public Vector2 lastMoveDirection; // Last direction moved, eg. direction head is facing
     public const int MAX_ATK_CHARGE = 15;
     public const int START_LENGTH = 5;
@@ -25,6 +26,7 @@ public struct PlayerData {
         this.atkCharge = 0;
         this.weapon = 0;
         this.lastMoveDirection = Vector2.zero;
+        this.movedThisTurn = false;
     }
 
     public void SetX(int x) {

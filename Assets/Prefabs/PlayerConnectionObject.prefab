@@ -80,15 +80,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: 7cee7ee5bf8946f41b7e8594ee5ad589, type: 3}
-  - {fileID: 8300000, guid: 7cee7ee5bf8946f41b7e8594ee5ad589, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: fc2acd53569aa81a092c1971761716a6, type: 3}
+  - {fileID: 8300000, guid: e1e447406cd4564bab6a2ed3c374f55b, type: 3}
   loopingAudio: 0
   bpm: 120
   localBGMStartTime: 0

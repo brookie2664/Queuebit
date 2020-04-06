@@ -19,7 +19,7 @@ public class MusicManager : NetworkBehaviour
     private bool playbackStarted;
     private float playbackStartTime;
     private float beatStartTime;
-    private bool beatsStarted;
+    public bool beatsStarted {get; private set;}
     private int lastBeatMode = 0;
 
     public int GetRandomSong() {
@@ -35,6 +35,7 @@ public class MusicManager : NetworkBehaviour
         playbackStarted = true;
         playbackStartTime = Time.time;
         beatStartTime = song.startDelay + playbackStartTime;
+        Countdown.countdown.StartCountdown("Move in..", song.startDelay);
     }
 
     void Awake() {
@@ -60,12 +61,10 @@ public class MusicManager : NetworkBehaviour
         if (!beatsStarted) {
             beatsStarted = Time.time >= beatStartTime;
         }
-        if (!beatsStarted) return;
 
         float currTime = Time.time;
         float timeSinceBeatStart = currTime - beatStartTime;
-        float percentTimeInCurrBeat = (timeSinceBeatStart % beatLength) / beatLength;
-        Debug.Log(percentTimeInCurrBeat);
+        float percentTimeInCurrBeat = Util.nfmod(timeSinceBeatStart, beatLength) / beatLength;
         int currBeatMode;
         if (percentTimeInCurrBeat < (1 - preBeatAssist) / 2) {
             currBeatMode = 0;
@@ -84,8 +83,8 @@ public class MusicManager : NetworkBehaviour
         if (beatModeUpdated) {
             switch(currBeatMode) {
                 case 0:
-                    if (isServer) {
-
+                    if (isServer && beatsStarted) {
+                        GameState.gameState.EndBeatUpdate();
                     }
                     break;
                 case 2:
