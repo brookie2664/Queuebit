@@ -8,6 +8,8 @@ public class MusicManager : NetworkBehaviour
 {
     public static MusicManager musicManager {get; private set;}
 
+    public GameObject gameState;
+
     public MusicData[] songs;
     [Min(0)]
     public float preBeatAssist = .5f;
@@ -84,7 +86,7 @@ public class MusicManager : NetworkBehaviour
             switch(currBeatMode) {
                 case 0:
                     if (isServer && beatsStarted) {
-                        GameState.gameState.EndBeatUpdate();
+                        gameState.GetComponent<GameState>().EndBeatUpdate();
                     }
                     break;
                 case 2:

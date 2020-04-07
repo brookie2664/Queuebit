@@ -6,15 +6,15 @@ using UnityEngine.Networking;
 
 public class GameState : NetworkBehaviour
 {
-    public static GameState gameState {get; private set;}
+    // public static GameState gameState {get; private set;}
 
-    void Awake() {
-        if (gameState == null) {
-            gameState = this;
-        } else {
-            Destroy(gameObject);
-        }
-    }
+    // void Awake() {
+    //     if (gameState == null) {
+    //         gameState = this;
+    //     } else {
+    //         Destroy(gameObject);
+    //     }
+    // }
     
     public class PlayerDataSyncList : SyncListStruct<PlayerData> {
         public PlayerData GetPlayer(NetworkIdentity id) {
