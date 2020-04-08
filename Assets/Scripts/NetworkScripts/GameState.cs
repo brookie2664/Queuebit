@@ -229,6 +229,10 @@ public class GameState : NetworkBehaviour
         }
 
         player.SetSpawned(false);
+        player.beatsToRespawn = 8;
+        PlayerConnectionComponent playerComponent = playerId.GetComponent<PlayerConnectionComponent>();
+        playerComponent.RpcShowWarning("You died!");
+        playerComponent.RpcStartTimer("Respawn in..", MusicManager.musicManager.beatLength * 8);
         playerData.UpdatePlayer(player);
     }
 
@@ -538,9 +542,17 @@ public class GameState : NetworkBehaviour
 
     public void EndBeatUpdate() {
         List<PlayerData> updatedPlayers = new List<PlayerData>();
+        List<NetworkIdentity> toSpawn = new List<NetworkIdentity>();
         foreach (PlayerData player in playerData) {
             PlayerData newPlayer = player;
-            if (!newPlayer.movedThisTurn) {
+            if (!newPlayer.spawned) {
+                if (newPlayer.beatsToRespawn > 0) {
+                    newPlayer.beatsToRespawn--;
+                } else {
+                    toSpawn.Add(newPlayer.id);
+                }
+            }
+            else if (!newPlayer.movedThisTurn) {
                 newPlayer.SetAtkCharge(0);
                 PlayerConnectionComponent playerCon = newPlayer.id.GetComponent<PlayerConnectionComponent>();
                 playerCon.RpcShowWarning("Streak Lost");
@@ -552,6 +564,9 @@ public class GameState : NetworkBehaviour
         }
         foreach (PlayerData player in updatedPlayers) {
             playerData.UpdatePlayer(player);
+        }
+        foreach (NetworkIdentity id in toSpawn) {
+            SpawnPlayer(id);
         }
     }
     

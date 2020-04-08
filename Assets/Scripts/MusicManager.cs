@@ -17,7 +17,7 @@ public class MusicManager : NetworkBehaviour
     public float postBeatAssist = .5f;
 
     private AudioSource source;
-    private float beatLength;
+    public float beatLength {get; private set;}
     private bool playbackStarted;
     private float playbackStartTime;
     private float beatStartTime;
