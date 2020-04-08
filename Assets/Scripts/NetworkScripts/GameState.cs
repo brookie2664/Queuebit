@@ -600,7 +600,8 @@ public class GameState : NetworkBehaviour
                     id.GetComponent<PlayerConnectionComponent>().RpcSetPlayerColor(newPlayer.color);
                 }
 
-                MusicManager.musicManager.RpcStartPlaying(0);
+                MusicManager m = MusicManager.musicManager;
+                m.RpcStartPlaying(m.GetRandomSong());
 
                 gameLoaded = true;
             }
