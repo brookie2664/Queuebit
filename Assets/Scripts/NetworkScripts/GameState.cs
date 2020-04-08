@@ -568,6 +568,21 @@ public class GameState : NetworkBehaviour
         foreach (NetworkIdentity id in toSpawn) {
             SpawnPlayer(id);
         }
+
+        // Run cell updates
+        foreach(Vector2Int cache in cacheLocations) {
+            Cell cacheCell = data.GetMostCurrentCell(cache);
+            if (!cacheCell.occupied) {
+                data.QueueUpdateCache(cache.x, cache.y);
+            }
+        }
+        foreach(Vector2Int weaponSpot in weaponPoints) {
+            Cell weaponCell = data.GetMostCurrentCell(weaponSpot);
+            if (!weaponCell.occupied) {
+                data.QueueTickWeaponTimer(weaponSpot.x, weaponSpot.y);
+            }
+        }
+        data.ApplyUpdates();
     }
     
     // Start is called before the first frame update
@@ -576,7 +591,6 @@ public class GameState : NetworkBehaviour
         
     }
 
-    float counter = 0;
     float updateInterval = 1f;
 
     // Update is called once per frame
@@ -620,30 +634,6 @@ public class GameState : NetworkBehaviour
 
                 gameLoaded = true;
             }
-        }
-
-        if (!gameLoaded) return;
-        
-        counter += Time.deltaTime;
-
-        if (counter >= updateInterval) {
-            counter -= updateInterval;
-
-            // Run server managed updates
-            foreach(Vector2Int cache in cacheLocations) {
-                Cell cacheCell = data.GetMostCurrentCell(cache);
-                if (!cacheCell.occupied) {
-                    data.QueueUpdateCache(cache.x, cache.y);
-                }
-            }
-            foreach(Vector2Int weaponSpot in weaponPoints) {
-                Cell weaponCell = data.GetMostCurrentCell(weaponSpot);
-                if (!weaponCell.occupied) {
-                    data.QueueTickWeaponTimer(weaponSpot.x, weaponSpot.y);
-                }
-            }
-            data.ApplyUpdates();
-
         }
     }
 
