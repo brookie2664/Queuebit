@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -70,7 +71,7 @@ public class PlayerConnectionComponent : NetworkBehaviour
     }
     [ClientRpc]
     public void RpcPlayClipAtCellOnClients(int id, Vector2 soundPosition) {
-        AudioSource.PlayClipAtPoint(clips[id], renderer.GetComponent<GridRenderer>().GetCellRenderAt(soundPosition).transform.position);
+        AudioSource.PlayClipAtPoint(clips[id], renderer.GetComponent<GridRenderer>().GetCellRenderAt(soundPosition).transform.position, .5f);
         //AudioClip[] must be the same on all clients.
     }
     [ClientRpc]
@@ -83,6 +84,19 @@ public class PlayerConnectionComponent : NetworkBehaviour
             source.PlayOneShot(clips[id]);
         }
         localBGMStartTime = AudioSettings.dspTime;
+    }
+
+    [ClientRpc]
+    public void RpcStartTimer(string message, float timer) {
+        Countdown.countdown.StartCountdown(message, timer);
+    }
+
+    [ClientRpc]
+    public void RpcShowWarning(string message) {
+        if (!isLocalPlayer) {
+            return;
+        }
+        Warning.warning.ShowMessage(message);
     }
 
     [Command]
@@ -133,7 +147,5 @@ public class PlayerConnectionComponent : NetworkBehaviour
                 break;
             }
         }
-
     }
-
 }

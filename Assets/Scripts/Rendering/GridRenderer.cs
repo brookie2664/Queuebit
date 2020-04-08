@@ -70,7 +70,7 @@ public class GridRenderer : MonoBehaviour
     void Update()
     {
         // Wait for grid to be started on the server before setting up callback and performing intial update
-        if (!gridUpdateConnected && gameState.IsGridCreated()) {
+        if (!gridUpdateConnected && gameState.IsGameLoaded()) {
             gridUpdateConnected = true;
             foreach (Cell entry in gameState.GetData()) {
                 UpdateCell(entry);

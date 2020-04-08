@@ -6,6 +6,16 @@ using UnityEngine.Networking;
 
 public class GameState : NetworkBehaviour
 {
+    // public static GameState gameState {get; private set;}
+
+    // void Awake() {
+    //     if (gameState == null) {
+    //         gameState = this;
+    //     } else {
+    //         Destroy(gameObject);
+    //     }
+    // }
+    
     public class PlayerDataSyncList : SyncListStruct<PlayerData> {
         public PlayerData GetPlayer(NetworkIdentity id) {
             foreach (PlayerData data in this) {
@@ -164,7 +174,7 @@ public class GameState : NetworkBehaviour
     public PlayerDataSyncList playerData = new PlayerDataSyncList();
 
     [SyncVar]
-    bool gridCreated = false; // Used by GridRenderer to know when the grid has been filled so
+    bool gameLoaded = false; // Used by GridRenderer to know when the grid has been filled so
     // it can start checking for updates
 
     System.Random rand = new System.Random();
@@ -175,9 +185,12 @@ public class GameState : NetworkBehaviour
 
     GameGridSyncList data = new GameGridSyncList();
 
+    [SerializeField]
+    private bool debugAllowSinglePlayer = false;
+
     // Used by other objects to determine whether they can start using the grid
-    public bool IsGridCreated() {
-        return gridCreated;
+    public bool IsGameLoaded() {
+        return gameLoaded;
     }
 
     public GameGridSyncList GetData() {
@@ -261,6 +274,10 @@ public class GameState : NetworkBehaviour
             return;
         }
         
+        if (!MusicManager.musicManager.beatsStarted) {
+            return;
+        }
+        
         // Finds the player's data by cross-ref the playerId with the list of player id's
         PlayerData inputSourceData = playerData.GetPlayer(playerId);
 
@@ -268,163 +285,171 @@ public class GameState : NetworkBehaviour
 
         if (!inputSourceData.spawned) return;
 
-        // Creates a vector to represent intended move direction of player
-        Vector2Int moveDirection = Vector2Int.zero;
-        Vector2Int playerHeadPos = new Vector2Int(inputSourceData.x, inputSourceData.y);
-        if (input == KeyCode.W) moveDirection = Vector2Int.down;
-        else if (input == KeyCode.A) moveDirection = Vector2Int.left;
-        else if (input == KeyCode.S) moveDirection = Vector2Int.up;
-        else if (input == KeyCode.D) moveDirection = Vector2Int.right;
-        else if (input == KeyCode.Space && inputSourceData.atkCharge != 0) {
-            // Attack Handling
-            
-            List<Vector2Int> cellsToDamage = new List<Vector2Int>();
+        if (!inputSourceData.movedThisTurn) {
 
-            switch (inputSourceData.weapon) {
-            
-                case 0: // Find attack cells for splash
-
-                    int atkRadius = AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge);
-                    
-                    // Find all the cells to paint, paint if unoccupied, record the cell otherwise
-                    for (int i = -atkRadius; i <= atkRadius; i++) {
-                        int height = atkRadius - Math.Abs(i);
-                        for (int j = -height; j <= height; j++) {
-                            Vector2Int testPos = playerHeadPos + new Vector2Int(i, j);
-                            if (data.HasCellAt(testPos)) {
-                                if (!data.GetMostCurrentCell(testPos).occupied) {
-                                    data.QueueUpdateColor(testPos.x, testPos.y, inputSourceData.color);
-                                } else {
-                                    cellsToDamage.Add(testPos);
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case 1: // Find attack cells for sniper
-                    
-                    int atkLength = AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge);
-                    
-                    if (atkLength < 1) break;
-
-                    // Find all the cells to paint, paint if unoccupied, record the cell otherwise
-                    for (int i = -1; i <= 1; i++) {
-                        for (int j = 0 - 1 + Math.Abs(i); j <= atkLength - Math.Abs(i); j++) {
-                            Vector2Int directionalizedVector;
-                            Vector2 lastDirection = inputSourceData.lastMoveDirection;
-                            if (lastDirection == Vector2.up) {
-                                directionalizedVector = new Vector2Int(i, j);
-                            } else if (lastDirection == Vector2.right) {
-                                directionalizedVector = new Vector2Int(j, i);
-                            } else if (lastDirection == Vector2.down) {
-                                directionalizedVector = new Vector2Int(i, -j);
-                            } else if (lastDirection == Vector2.left) {
-                                directionalizedVector = new Vector2Int(-j, i);
-                            } else {
-                                directionalizedVector = Vector2Int.zero;
-                            }
-                            Vector2Int testPos = playerHeadPos + directionalizedVector;
-                            if (data.HasCellAt(testPos)) {
-                                if (!data.GetMostCurrentCell(testPos).occupied) {
-                                    data.QueueUpdateColor(testPos.x, testPos.y, inputSourceData.color);
-                                } else {
-                                    cellsToDamage.Add(testPos);
-                                }
-                            }
-                        }
-                    }
-                    break;
-            }
-
-            Dictionary<NetworkIdentity, int> damages = new Dictionary<NetworkIdentity, int>();
-
-            // Loop through painted cells that are occupied and tally damages to appropriate players
-            foreach (Vector2Int pos in cellsToDamage) {
-                Cell cell = data.GetMostCurrentCell(pos);
-                // Check cell is enemy
-                if (cell.color != inputSourceData.color) {
-                    if (!damages.ContainsKey(cell.player)) {
-                        damages[cell.player] = 0;
-                    }
-                    damages[cell.player] = damages[cell.player] + 1;
-                }
-            }
-
-            // Apply tallied damages
-            foreach (NetworkIdentity damagedPlayerId in damages.Keys) {
-                PlayerData player = playerData.GetPlayer(damagedPlayerId);
-                if (damages[damagedPlayerId] <= player.length) {
-                    player.SetLength(player.length - damages[damagedPlayerId]);
-                    playerData.UpdatePlayer(player);
-                    updateSnakeCells(player);
-                } else {
-                    KillPlayer(damagedPlayerId);
-                }
-                player.id.GetComponent<PlayerConnectionComponent>().RpcUpdateAtkIndicator(AttackTable.getAtkLevel(0, player.length, player.atkCharge), player.lastMoveDirection);
-            }
-
-            // Recheck cells to paint if no longer occupied
-            foreach (Vector2Int pos in cellsToDamage) {
-                Cell cell = data.GetMostCurrentCell(pos);
-                if (!cell.occupied) {
-                    data.QueueUpdateColor(pos.x, pos.y, inputSourceData.color);
-                }
-            }
-
-            // Reset charge of attacking player
-            inputSourceData.SetAtkCharge(0);
-
-            //TODO: Add SFX for attack
-            inputSourceData.id.GetComponent<PlayerConnectionComponent>().RpcPlayClipAtCellOnClients(1, playerHeadPos);
-        }
-        
-        // Calculate movement if input is movement
-        if (moveDirection != Vector2.zero) {
-            Cell currHeadCell = data.GetMostCurrentCell(playerHeadPos);
-            Cell targetCell = data.GetMostCurrentCell(playerHeadPos + moveDirection);
-            if (targetCell.type != 1 && !targetCell.occupied) {
-                // Make all the cell updates needed to move the head of the snake
-                data.QueueUpdateColor(targetCell.x, targetCell.y, inputSourceData.color);
-                data.QueueUpdateOccupied(targetCell.x, targetCell.y, true);
-                data.QueueUpdateIsHead(targetCell.x, targetCell.y, true);
-                data.QueueUpdateDistToTail(targetCell.x, targetCell.y, currHeadCell.life + 1);
-                data.QueueUpdatePainted(targetCell.x, targetCell.y, true);
-                data.QueueUpdatePlayer(targetCell.x, targetCell.y, inputSourceData.id);
-                data.QueueUpdateIsHead(currHeadCell.x, currHeadCell.y, false);
-
-                // Raise attack charge
-                inputSourceData.AtkChargeUp();
-                inputSourceData.SetLastMoveDirection(moveDirection);
+            // Creates a vector to represent intended move direction of player
+            Vector2Int moveDirection = Vector2Int.zero;
+            Vector2Int playerHeadPos = new Vector2Int(inputSourceData.x, inputSourceData.y);
+            if (input == KeyCode.W) moveDirection = Vector2Int.down;
+            else if (input == KeyCode.A) moveDirection = Vector2Int.left;
+            else if (input == KeyCode.S) moveDirection = Vector2Int.up;
+            else if (input == KeyCode.D) moveDirection = Vector2Int.right;
+            else if (input == KeyCode.Space && inputSourceData.atkCharge != 0) {
+                // Attack Handling
                 
-                if (targetCell.type == 4 && targetCell.cache >= Cell.MAX_CACHE) {
-                    inputSourceData.SetLength(inputSourceData.length + 3);
-                    data.QueueUpdateCache(targetCell.x, targetCell.y, 0);
+                List<Vector2Int> cellsToDamage = new List<Vector2Int>();
+
+                switch (inputSourceData.weapon) {
+                
+                    case 0: // Find attack cells for splash
+
+                        int atkRadius = AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge);
+                        
+                        // Find all the cells to paint, paint if unoccupied, record the cell otherwise
+                        for (int i = -atkRadius; i <= atkRadius; i++) {
+                            int height = atkRadius - Math.Abs(i);
+                            for (int j = -height; j <= height; j++) {
+                                Vector2Int testPos = playerHeadPos + new Vector2Int(i, j);
+                                if (data.HasCellAt(testPos)) {
+                                    if (!data.GetMostCurrentCell(testPos).occupied) {
+                                        data.QueueUpdateColor(testPos.x, testPos.y, inputSourceData.color);
+                                    } else {
+                                        cellsToDamage.Add(testPos);
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case 1: // Find attack cells for sniper
+                        
+                        int atkLength = AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge);
+                        
+                        if (atkLength < 1) break;
+
+                        // Find all the cells to paint, paint if unoccupied, record the cell otherwise
+                        for (int i = -1; i <= 1; i++) {
+                            for (int j = 0 - 1 + Math.Abs(i); j <= atkLength - Math.Abs(i); j++) {
+                                Vector2Int directionalizedVector;
+                                Vector2 lastDirection = inputSourceData.lastMoveDirection;
+                                if (lastDirection == Vector2.up) {
+                                    directionalizedVector = new Vector2Int(i, j);
+                                } else if (lastDirection == Vector2.right) {
+                                    directionalizedVector = new Vector2Int(j, i);
+                                } else if (lastDirection == Vector2.down) {
+                                    directionalizedVector = new Vector2Int(i, -j);
+                                } else if (lastDirection == Vector2.left) {
+                                    directionalizedVector = new Vector2Int(-j, i);
+                                } else {
+                                    directionalizedVector = Vector2Int.zero;
+                                }
+                                Vector2Int testPos = playerHeadPos + directionalizedVector;
+                                if (data.HasCellAt(testPos)) {
+                                    if (!data.GetMostCurrentCell(testPos).occupied) {
+                                        data.QueueUpdateColor(testPos.x, testPos.y, inputSourceData.color);
+                                    } else {
+                                        cellsToDamage.Add(testPos);
+                                    }
+                                }
+                            }
+                        }
+                        break;
                 }
 
-                if (targetCell.type == 5 && targetCell.weaponTimer == 0) {
-                    if (inputSourceData.weapon != targetCell.weapon) {
-                        playerComponent.RpcSetAtkIndicatorWeapon(targetCell.weapon, AttackTable.getAtkLevel(targetCell.weapon, inputSourceData.length, inputSourceData.atkCharge), inputSourceData.lastMoveDirection);
+                Dictionary<NetworkIdentity, int> damages = new Dictionary<NetworkIdentity, int>();
+
+                // Loop through painted cells that are occupied and tally damages to appropriate players
+                foreach (Vector2Int pos in cellsToDamage) {
+                    Cell cell = data.GetMostCurrentCell(pos);
+                    // Check cell is enemy
+                    if (cell.color != inputSourceData.color) {
+                        if (!damages.ContainsKey(cell.player)) {
+                            damages[cell.player] = 0;
+                        }
+                        damages[cell.player] = damages[cell.player] + 1;
                     }
-                    inputSourceData.SetWeapon(targetCell.weapon);
-                    data.QueueUpdateWeaponTimer(targetCell.x, targetCell.y, Cell.WEAPON_DROP_TIME);
                 }
 
-                // Update the PlayerData with the new head position
-                inputSourceData.SetX(targetCell.x);
-                inputSourceData.SetY(targetCell.y);
+                // Apply tallied damages
+                foreach (NetworkIdentity damagedPlayerId in damages.Keys) {
+                    PlayerData player = playerData.GetPlayer(damagedPlayerId);
+                    if (damages[damagedPlayerId] <= player.length) {
+                        player.SetLength(player.length - damages[damagedPlayerId]);
+                        playerData.UpdatePlayer(player);
+                        updateSnakeCells(player);
+                    } else {
+                        KillPlayer(damagedPlayerId);
+                    }
+                    player.id.GetComponent<PlayerConnectionComponent>().RpcUpdateAtkIndicator(AttackTable.getAtkLevel(0, player.length, player.atkCharge), player.lastMoveDirection);
+                }
 
-                // Update variable for later use
-                playerHeadPos += moveDirection;
-            } else {
-                inputSourceData.SetLength(System.Math.Max(inputSourceData.length - 1, 0));
+                // Recheck cells to paint if no longer occupied
+                foreach (Vector2Int pos in cellsToDamage) {
+                    Cell cell = data.GetMostCurrentCell(pos);
+                    if (!cell.occupied) {
+                        data.QueueUpdateColor(pos.x, pos.y, inputSourceData.color);
+                    }
+                }
+
+                // Reset charge of attacking player
                 inputSourceData.SetAtkCharge(0);
+
+                // Play attack sfx
+                inputSourceData.id.GetComponent<PlayerConnectionComponent>().RpcPlayClipAtCellOnClients(inputSourceData.weapon + 1, playerHeadPos);
             }
+            
+            // Calculate movement if input is movement
+            if (moveDirection != Vector2.zero) {
+                Cell currHeadCell = data.GetMostCurrentCell(playerHeadPos);
+                Cell targetCell = data.GetMostCurrentCell(playerHeadPos + moveDirection);
+                if (targetCell.type != 1 && !targetCell.occupied) {
+                    // Make all the cell updates needed to move the head of the snake
+                    data.QueueUpdateColor(targetCell.x, targetCell.y, inputSourceData.color);
+                    data.QueueUpdateOccupied(targetCell.x, targetCell.y, true);
+                    data.QueueUpdateIsHead(targetCell.x, targetCell.y, true);
+                    data.QueueUpdateDistToTail(targetCell.x, targetCell.y, currHeadCell.life + 1);
+                    data.QueueUpdatePainted(targetCell.x, targetCell.y, true);
+                    data.QueueUpdatePlayer(targetCell.x, targetCell.y, inputSourceData.id);
+                    data.QueueUpdateIsHead(currHeadCell.x, currHeadCell.y, false);
 
-            // Update length of tail after movement
-            updateSnakeCells(inputSourceData);
+                    // Raise attack charge
+                    inputSourceData.AtkChargeUp();
+                    inputSourceData.SetLastMoveDirection(moveDirection);
+                    
+                    if (targetCell.type == 4 && targetCell.cache >= Cell.MAX_CACHE) {
+                        inputSourceData.SetLength(inputSourceData.length + 3);
+                        data.QueueUpdateCache(targetCell.x, targetCell.y, 0);
+                    }
 
-            //Play SFX for movement
-            inputSourceData.id.GetComponent<PlayerConnectionComponent>().RpcPlayClipAtCellOnClients(0, playerHeadPos);
+                    if (targetCell.type == 5 && targetCell.weaponTimer == 0) {
+                        if (inputSourceData.weapon != targetCell.weapon) {
+                            playerComponent.RpcSetAtkIndicatorWeapon(targetCell.weapon, AttackTable.getAtkLevel(targetCell.weapon, inputSourceData.length, inputSourceData.atkCharge), inputSourceData.lastMoveDirection);
+                        }
+                        inputSourceData.SetWeapon(targetCell.weapon);
+                        data.QueueUpdateWeaponTimer(targetCell.x, targetCell.y, Cell.WEAPON_DROP_TIME);
+                    }
+
+                    // Update the PlayerData with the new head position
+                    inputSourceData.SetX(targetCell.x);
+                    inputSourceData.SetY(targetCell.y);
+
+                    // Update variable for later use
+                    playerHeadPos += moveDirection;
+                } else {
+                    inputSourceData.SetLength(System.Math.Max(inputSourceData.length - 1, 0));
+                    inputSourceData.SetAtkCharge(0);
+                    playerId.GetComponent<PlayerConnectionComponent>().RpcPlayOneShotOnClients(0);
+                    playerId.GetComponent<PlayerConnectionComponent>().RpcUpdateAtkIndicator(AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge), inputSourceData.lastMoveDirection);
+                    playerId.GetComponent<PlayerConnectionComponent>().RpcShowWarning("Streak Lost");
+                }
+
+                // Update length of tail after movement
+                updateSnakeCells(inputSourceData);
+            }
+        } else {
+            inputSourceData.SetAtkCharge(0);
+            playerId.GetComponent<PlayerConnectionComponent>().RpcPlayOneShotOnClients(0);
+            playerId.GetComponent<PlayerConnectionComponent>().RpcUpdateAtkIndicator(AttackTable.getAtkLevel(inputSourceData.weapon, inputSourceData.length, inputSourceData.atkCharge), inputSourceData.lastMoveDirection);
+            playerId.GetComponent<PlayerConnectionComponent>().RpcShowWarning("Streak Lost");
         }
 
         // VERY IMPORTANT
@@ -432,6 +457,8 @@ public class GameState : NetworkBehaviour
         // This takes those updates and applies them to the synclist so that any cell updates
         // are applied with only one actual network update per cell
         data.ApplyUpdates();
+
+        inputSourceData.movedThisTurn = true;
 
         // Updates the data of the player that produced the input across network
         playerData.UpdatePlayer(inputSourceData);
@@ -452,13 +479,31 @@ public class GameState : NetworkBehaviour
     // Dummy variable for team assignment and spawn placement
     int dummy = 0;
 
+    List<NetworkIdentity> joiningPlayers = new List<NetworkIdentity>();
+    
+    private bool loadTimerRunning = false;
+    private float loadTimer = 15f;
+
     // Called by command from client to register when a player joins
     public void CreatePlayer(NetworkIdentity playerId) {
-        PlayerData newPlayer = new PlayerData(playerId, 0, 0, teamColorsTemp[dummy++ % teamColorsTemp.Length]);
-        playerData.Add(newPlayer);
-        SpawnPlayer(playerId);
-        playerId.GetComponent<PlayerConnectionComponent>().RpcSetPlayerColor(newPlayer.color);
+        if (gameLoaded) return;
+
+        joiningPlayers.Add(playerId);
+
+        if (loadTimerRunning) {
+            playerId.GetComponent<PlayerConnectionComponent>().RpcStartTimer("Game starting in:", loadTimer);
+        }
+
+        if (!loadTimerRunning && joiningPlayers.Count > (debugAllowSinglePlayer ? 0 : 1)) {
+            loadTimerRunning = true;
+            foreach (NetworkIdentity id in joiningPlayers) {
+                id.GetComponent<PlayerConnectionComponent>().RpcStartTimer("Game starting in:", loadTimer);
+            }
+        }
+
     }
+
+
 
     // Spawns player at a random spawn point, unless none are available
     public void SpawnPlayer(NetworkIdentity playerId) {
@@ -490,35 +535,30 @@ public class GameState : NetworkBehaviour
         }
         
     }
+
+    public void EndBeatUpdate() {
+        List<PlayerData> updatedPlayers = new List<PlayerData>();
+        foreach (PlayerData player in playerData) {
+            PlayerData newPlayer = player;
+            if (!newPlayer.movedThisTurn) {
+                newPlayer.SetAtkCharge(0);
+                PlayerConnectionComponent playerCon = newPlayer.id.GetComponent<PlayerConnectionComponent>();
+                playerCon.RpcShowWarning("Streak Lost");
+                playerCon.RpcUpdateAtkIndicator(AttackTable.getAtkLevel(newPlayer.weapon, newPlayer.length, newPlayer.atkCharge), newPlayer.lastMoveDirection);
+                playerCon.RpcPlayOneShotOnClients(0);
+            }
+            newPlayer.movedThisTurn = false;
+            updatedPlayers.Add(newPlayer);
+        }
+        foreach (PlayerData player in updatedPlayers) {
+            playerData.UpdatePlayer(player);
+        }
+    }
     
     // Start is called before the first frame update
     void Start()
     {
-        if (!isServer) {
-            return;
-        }
-
-        // Build grid from settings        
-        gameSettings = settingsObject.GetComponent<GameSettings>();
-        int[, ] map = gameSettings.map;
-        int gridHeight = map.GetLength(0);
-        int gridWidth = map.GetLength(1);
-        data.SetDimensions(gridWidth, gridHeight);
-
-        for (int i = 0; i < gridHeight; i++) {
-            for (int j = 0; j < gridWidth; j++) {
-                Cell newCell = new Cell(j, i);
-                int type = map[i, j];
-                newCell.type = type;
-                if (type == 3) spawnPoints.Add(new Vector2Int(j, i));
-                if (type == 4) cacheLocations.Add(new Vector2Int(j, i));
-                if (type == 5) weaponPoints.Add(new Vector2Int(j, i));
-                data.Add(newCell);
-            }
-        }
-
-        gridCreated = true;
-
+        
     }
 
     float counter = 0;
@@ -527,9 +567,47 @@ public class GameState : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isServer || !gridCreated) {
+        if (!isServer) {
             return;
         }
+
+        if (!gameLoaded && loadTimerRunning) {
+            loadTimer -= Time.deltaTime;
+            if (loadTimer <= 0) {
+                // Build grid from settings        
+                gameSettings = settingsObject.GetComponent<GameSettings>();
+                int[, ] map = gameSettings.map;
+                int gridHeight = map.GetLength(0);
+                int gridWidth = map.GetLength(1);
+                data.SetDimensions(gridWidth, gridHeight);
+
+                for (int i = 0; i < gridHeight; i++) {
+                    for (int j = 0; j < gridWidth; j++) {
+                        Cell newCell = new Cell(j, i);
+                        int type = map[i, j];
+                        newCell.type = type;
+                        if (type == 3) spawnPoints.Add(new Vector2Int(j, i));
+                        if (type == 4) cacheLocations.Add(new Vector2Int(j, i));
+                        if (type == 5) weaponPoints.Add(new Vector2Int(j, i));
+                        data.Add(newCell);
+                    }
+                }
+
+                foreach (NetworkIdentity id in joiningPlayers) {
+                    PlayerData newPlayer = new PlayerData(id, 0, 0, teamColorsTemp[dummy++ % teamColorsTemp.Length]);
+                    playerData.Add(newPlayer);
+                    SpawnPlayer(id);
+                    id.GetComponent<PlayerConnectionComponent>().RpcSetPlayerColor(newPlayer.color);
+                }
+
+                MusicManager m = MusicManager.musicManager;
+                m.RpcStartPlaying(m.GetRandomSong());
+
+                gameLoaded = true;
+            }
+        }
+
+        if (!gameLoaded) return;
         
         counter += Time.deltaTime;
 
