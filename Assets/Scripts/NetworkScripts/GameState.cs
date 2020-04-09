@@ -278,7 +278,7 @@ public class GameState : NetworkBehaviour
             return;
         }
         
-        if (!MusicManager.musicManager.beatsStarted) {
+        if (!MusicManager.musicManager.beatsStarted || MusicManager.musicManager.songEnded) {
             return;
         }
         
@@ -583,6 +583,46 @@ public class GameState : NetworkBehaviour
             }
         }
         data.ApplyUpdates();
+    }
+
+    public void EndGame() {
+        Dictionary<int, int> scores = new Dictionary<int, int>();
+        foreach (Cell cell in data) {
+            if (cell.type != 0 && cell.type != 1 && cell.painted) {
+                if (!scores.ContainsKey(cell.color)) scores[cell.color] = 0;
+                scores[cell.color] += 1;
+            }
+        }
+        List<int> teamsArr = new List<int>();
+        List<int> scoresArr = new List<int>();
+        foreach (int key in scores.Keys) {
+            teamsArr.Add(key);
+            scoresArr.Add(scores[key]);
+        }
+        RpcShowResults(teamsArr.ToArray(), scoresArr.ToArray());
+
+    }
+
+    [ClientRpc]
+    public void RpcShowResults(int[] teams, int[] scores) {
+        List<Results.TeamScore> results = new List<Results.TeamScore>();
+        for (int i = 0; i < teams.Length; i++) {
+            if (teams[i] == 0) continue;
+            Color myColor = Color.white;
+            switch(teams[i]) {
+                case 1:
+                    myColor = Color.red;
+                    break;
+                case 2:
+                    myColor = Color.green;
+                    break;
+                case 3:
+                    myColor = Color.blue;
+                    break;
+            }
+            results.Add(new Results.TeamScore(scores[i], myColor));
+        }
+        Results.results.TriggerResults(results.ToArray());
     }
     
     // Start is called before the first frame update

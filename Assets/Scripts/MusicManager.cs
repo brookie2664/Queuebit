@@ -23,6 +23,8 @@ public class MusicManager : NetworkBehaviour
     private float beatStartTime;
     public bool beatsStarted {get; private set;}
     private int lastBeatMode = 0;
+    private int beatsToEnd = 0;
+    public bool songEnded {get; private set;} = false; 
 
     public int GetRandomSong() {
         return new System.Random().Next(songs.Length);
@@ -38,6 +40,7 @@ public class MusicManager : NetworkBehaviour
         playbackStartTime = Time.time;
         beatStartTime = song.startDelay + playbackStartTime;
         Countdown.countdown.StartCountdown("Move in..", song.startDelay);
+        beatsToEnd = song.totalPlayBeats;
     }
 
     void Awake() {
@@ -62,6 +65,9 @@ public class MusicManager : NetworkBehaviour
         }
         if (!beatsStarted) {
             beatsStarted = Time.time >= beatStartTime;
+        }
+        if (songEnded) {
+            return;
         }
 
         float currTime = Time.time;
@@ -92,6 +98,12 @@ public class MusicManager : NetworkBehaviour
                 case 2:
                     PlayerCameraController.cameraController.BeatFlash();
                     break;
+            }
+        }
+        if (timeSinceBeatStart / beatLength >= beatsToEnd) {
+            songEnded = true;
+            if (isServer) {
+                gameState.GetComponent<GameState>().EndGame();
             }
         }
     }

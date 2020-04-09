@@ -15,4 +15,4 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: 42ba21cae44c22ddfb5f8481039f9ae9, type: 3}
   bpm: 192
   startDelay: 3
-  totalPlayBeats: 0
+  totalPlayBeats: 554
