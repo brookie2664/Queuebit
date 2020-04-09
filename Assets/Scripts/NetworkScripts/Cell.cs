@@ -25,7 +25,7 @@ public struct Cell {
     // 0 for splash
     // 1 for sniper
     public const int MAX_CACHE = 15;
-    public const int WEAPON_DROP_TIME = 15;
+    public const int WEAPON_DROP_TIME = 40;
     public const int NUM_WEAPONS = 2;
 
     public Cell(int x, int y) : this() {

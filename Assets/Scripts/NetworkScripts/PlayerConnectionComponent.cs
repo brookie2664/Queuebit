@@ -88,6 +88,9 @@ public class PlayerConnectionComponent : NetworkBehaviour
 
     [ClientRpc]
     public void RpcStartTimer(string message, float timer) {
+        if (!isLocalPlayer) {
+            return;
+        }
         Countdown.countdown.StartCountdown(message, timer);
     }
 

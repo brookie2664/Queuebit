@@ -229,6 +229,10 @@ public class GameState : NetworkBehaviour
         }
 
         player.SetSpawned(false);
+        player.beatsToRespawn = 8;
+        PlayerConnectionComponent playerComponent = playerId.GetComponent<PlayerConnectionComponent>();
+        playerComponent.RpcShowWarning("You died!");
+        playerComponent.RpcStartTimer("Respawn in..", MusicManager.musicManager.beatLength * 8);
         playerData.UpdatePlayer(player);
     }
 
@@ -274,7 +278,7 @@ public class GameState : NetworkBehaviour
             return;
         }
         
-        if (!MusicManager.musicManager.beatsStarted) {
+        if (!MusicManager.musicManager.beatsStarted || MusicManager.musicManager.songEnded) {
             return;
         }
         
@@ -538,9 +542,17 @@ public class GameState : NetworkBehaviour
 
     public void EndBeatUpdate() {
         List<PlayerData> updatedPlayers = new List<PlayerData>();
+        List<NetworkIdentity> toSpawn = new List<NetworkIdentity>();
         foreach (PlayerData player in playerData) {
             PlayerData newPlayer = player;
-            if (!newPlayer.movedThisTurn) {
+            if (!newPlayer.spawned) {
+                if (newPlayer.beatsToRespawn > 0) {
+                    newPlayer.beatsToRespawn--;
+                } else {
+                    toSpawn.Add(newPlayer.id);
+                }
+            }
+            else if (!newPlayer.movedThisTurn) {
                 newPlayer.SetAtkCharge(0);
                 PlayerConnectionComponent playerCon = newPlayer.id.GetComponent<PlayerConnectionComponent>();
                 playerCon.RpcShowWarning("Streak Lost");
@@ -553,6 +565,64 @@ public class GameState : NetworkBehaviour
         foreach (PlayerData player in updatedPlayers) {
             playerData.UpdatePlayer(player);
         }
+        foreach (NetworkIdentity id in toSpawn) {
+            SpawnPlayer(id);
+        }
+
+        // Run cell updates
+        foreach(Vector2Int cache in cacheLocations) {
+            Cell cacheCell = data.GetMostCurrentCell(cache);
+            if (!cacheCell.occupied) {
+                data.QueueUpdateCache(cache.x, cache.y);
+            }
+        }
+        foreach(Vector2Int weaponSpot in weaponPoints) {
+            Cell weaponCell = data.GetMostCurrentCell(weaponSpot);
+            if (!weaponCell.occupied) {
+                data.QueueTickWeaponTimer(weaponSpot.x, weaponSpot.y);
+            }
+        }
+        data.ApplyUpdates();
+    }
+
+    public void EndGame() {
+        Dictionary<int, int> scores = new Dictionary<int, int>();
+        foreach (Cell cell in data) {
+            if (cell.type != 0 && cell.type != 1 && cell.painted) {
+                if (!scores.ContainsKey(cell.color)) scores[cell.color] = 0;
+                scores[cell.color] += 1;
+            }
+        }
+        List<int> teamsArr = new List<int>();
+        List<int> scoresArr = new List<int>();
+        foreach (int key in scores.Keys) {
+            teamsArr.Add(key);
+            scoresArr.Add(scores[key]);
+        }
+        RpcShowResults(teamsArr.ToArray(), scoresArr.ToArray());
+
+    }
+
+    [ClientRpc]
+    public void RpcShowResults(int[] teams, int[] scores) {
+        List<Results.TeamScore> results = new List<Results.TeamScore>();
+        for (int i = 0; i < teams.Length; i++) {
+            if (teams[i] == 0) continue;
+            Color myColor = Color.white;
+            switch(teams[i]) {
+                case 1:
+                    myColor = Color.red;
+                    break;
+                case 2:
+                    myColor = Color.green;
+                    break;
+                case 3:
+                    myColor = Color.blue;
+                    break;
+            }
+            results.Add(new Results.TeamScore(scores[i], myColor));
+        }
+        Results.results.TriggerResults(results.ToArray());
     }
     
     // Start is called before the first frame update
@@ -561,8 +631,7 @@ public class GameState : NetworkBehaviour
         
     }
 
-    float counter = 0;
-    float updateInterval = 1f;
+    private int teamCount = 0;
 
     // Update is called once per frame
     void Update()
@@ -593,8 +662,21 @@ public class GameState : NetworkBehaviour
                     }
                 }
 
+
+                switch(joiningPlayers.Count) {
+                    case 1:
+                    case 2:
+                    case 4:
+                    case 5:
+                        teamCount = 2;
+                        break;
+                    default:
+                        teamCount = 3;
+                        break;
+                }
+
                 foreach (NetworkIdentity id in joiningPlayers) {
-                    PlayerData newPlayer = new PlayerData(id, 0, 0, teamColorsTemp[dummy++ % teamColorsTemp.Length]);
+                    PlayerData newPlayer = new PlayerData(id, 0, 0, teamColorsTemp[dummy++ % teamCount]);
                     playerData.Add(newPlayer);
                     SpawnPlayer(id);
                     id.GetComponent<PlayerConnectionComponent>().RpcSetPlayerColor(newPlayer.color);
@@ -605,30 +687,6 @@ public class GameState : NetworkBehaviour
 
                 gameLoaded = true;
             }
-        }
-
-        if (!gameLoaded) return;
-        
-        counter += Time.deltaTime;
-
-        if (counter >= updateInterval) {
-            counter -= updateInterval;
-
-            // Run server managed updates
-            foreach(Vector2Int cache in cacheLocations) {
-                Cell cacheCell = data.GetMostCurrentCell(cache);
-                if (!cacheCell.occupied) {
-                    data.QueueUpdateCache(cache.x, cache.y);
-                }
-            }
-            foreach(Vector2Int weaponSpot in weaponPoints) {
-                Cell weaponCell = data.GetMostCurrentCell(weaponSpot);
-                if (!weaponCell.occupied) {
-                    data.QueueTickWeaponTimer(weaponSpot.x, weaponSpot.y);
-                }
-            }
-            data.ApplyUpdates();
-
         }
     }
 
