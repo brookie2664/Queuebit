@@ -591,7 +591,7 @@ public class GameState : NetworkBehaviour
         
     }
 
-    float updateInterval = 1f;
+    private int teamCount = 0;
 
     // Update is called once per frame
     void Update()
@@ -622,8 +622,21 @@ public class GameState : NetworkBehaviour
                     }
                 }
 
+
+                switch(joiningPlayers.Count) {
+                    case 1:
+                    case 2:
+                    case 4:
+                    case 5:
+                        teamCount = 2;
+                        break;
+                    default:
+                        teamCount = 3;
+                        break;
+                }
+
                 foreach (NetworkIdentity id in joiningPlayers) {
-                    PlayerData newPlayer = new PlayerData(id, 0, 0, teamColorsTemp[dummy++ % teamColorsTemp.Length]);
+                    PlayerData newPlayer = new PlayerData(id, 0, 0, teamColorsTemp[dummy++ % teamCount]);
                     playerData.Add(newPlayer);
                     SpawnPlayer(id);
                     id.GetComponent<PlayerConnectionComponent>().RpcSetPlayerColor(newPlayer.color);
