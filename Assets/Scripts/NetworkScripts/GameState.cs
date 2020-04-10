@@ -628,7 +628,7 @@ public class GameState : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        NetworkManager.singleton.GetComponent<NetworkManagerHUD>().showGUI = false;
     }
 
     private int teamCount = 0;
