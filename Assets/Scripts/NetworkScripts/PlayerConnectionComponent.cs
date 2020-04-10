@@ -66,12 +66,12 @@ public class PlayerConnectionComponent : NetworkBehaviour
     [ClientRpc]
     public void RpcPlayOneShotOnClients(int id) {
         //if(isLocalPlayer) {
-            source.PlayOneShot(clips[id]);
+            source.PlayOneShot(clips[id], AudioSettings.MasterVolume * AudioSettings.SfxVolume);
         //}
     }
     [ClientRpc]
     public void RpcPlayClipAtCellOnClients(int id, Vector2 soundPosition) {
-        AudioSource.PlayClipAtPoint(clips[id], renderer.GetComponent<GridRenderer>().GetCellRenderAt(soundPosition).transform.position, .5f);
+        AudioSource.PlayClipAtPoint(clips[id], renderer.GetComponent<GridRenderer>().GetCellRenderAt(soundPosition).transform.position, .5f * AudioSettings.MasterVolume * AudioSettings.SfxVolume);
         //AudioClip[] must be the same on all clients.
     }
 

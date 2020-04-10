@@ -63,6 +63,7 @@ public class MusicManager : NetworkBehaviour
         if (!playbackStarted) {
             return;
         }
+        source.volume = AudioSettings.MasterVolume * AudioSettings.MusicVolume;
         if (!beatsStarted) {
             beatsStarted = Time.time >= beatStartTime;
         }
