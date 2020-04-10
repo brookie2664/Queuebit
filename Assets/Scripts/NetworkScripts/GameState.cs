@@ -680,6 +680,7 @@ public class GameState : NetworkBehaviour
                     playerData.Add(newPlayer);
                     SpawnPlayer(id);
                     id.GetComponent<PlayerConnectionComponent>().RpcSetPlayerColor(newPlayer.color);
+                    id.GetComponent<PlayerConnectionComponent>().RpcSetAtkIndicatorWeapon(newPlayer.weapon, 0, newPlayer.lastMoveDirection);
                 }
 
                 MusicManager m = MusicManager.musicManager;
