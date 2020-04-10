@@ -3604,7 +3604,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameState: {fileID: 1365944566}
   songs:
-  - {fileID: 11400000, guid: b9180f5b5b50c720297d96e82015412e, type: 2}
+  - {fileID: 11400000, guid: 023b3f6bf63473aa79852347c6997a0e, type: 2}
   - {fileID: 11400000, guid: 36f48ac51740e27f0bc5e8cc4fcdd54d, type: 2}
   preBeatAssist: 0.8
   postBeatAssist: 0.8
