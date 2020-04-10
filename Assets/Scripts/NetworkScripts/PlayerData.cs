@@ -25,7 +25,8 @@ public struct PlayerData {
         this.length = START_LENGTH;
         this.spawned = false;
         this.atkCharge = 0;
-        this.weapon = 0;
+        this.weapon = Util.random.Next(Cell.NUM_WEAPONS);
+        Debug.Log(this.weapon);
         this.lastMoveDirection = Vector2.zero;
         this.beatsToRespawn = 0;
         this.movedThisTurn = false;

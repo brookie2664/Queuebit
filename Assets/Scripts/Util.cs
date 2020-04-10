@@ -5,4 +5,6 @@ public class Util {
     {
         return a - b * (float) Math.Floor(a / b);
     }
+
+    public static Random random = new Random();
 }
