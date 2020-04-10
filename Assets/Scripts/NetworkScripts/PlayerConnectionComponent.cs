@@ -74,17 +74,6 @@ public class PlayerConnectionComponent : NetworkBehaviour
         AudioSource.PlayClipAtPoint(clips[id], renderer.GetComponent<GridRenderer>().GetCellRenderAt(soundPosition).transform.position, .5f);
         //AudioClip[] must be the same on all clients.
     }
-    [ClientRpc]
-    public void RpcSendBGMStartToClients(bool loopingAudio, int id) {
-        //Starts audio
-        if (loopingAudio == true) {
-            //Do loop logic here?
-        } 
-        else {
-            source.PlayOneShot(clips[id]);
-        }
-        localBGMStartTime = AudioSettings.dspTime;
-    }
 
     [ClientRpc]
     public void RpcStartTimer(string message, float timer) {
