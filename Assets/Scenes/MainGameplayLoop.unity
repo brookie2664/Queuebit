@@ -3606,8 +3606,8 @@ MonoBehaviour:
   songs:
   - {fileID: 11400000, guid: b9180f5b5b50c720297d96e82015412e, type: 2}
   - {fileID: 11400000, guid: 36f48ac51740e27f0bc5e8cc4fcdd54d, type: 2}
-  preBeatAssist: 0.7
-  postBeatAssist: 0.7
+  preBeatAssist: 0.8
+  postBeatAssist: 0.8
 --- !u!114 &1458677555
 MonoBehaviour:
   m_ObjectHideFlags: 0
