@@ -66,24 +66,13 @@ public class PlayerConnectionComponent : NetworkBehaviour
     [ClientRpc]
     public void RpcPlayOneShotOnClients(int id) {
         //if(isLocalPlayer) {
-            source.PlayOneShot(clips[id]);
+            source.PlayOneShot(clips[id], AudioSettings.MasterVolume * AudioSettings.SfxVolume);
         //}
     }
     [ClientRpc]
     public void RpcPlayClipAtCellOnClients(int id, Vector2 soundPosition) {
-        AudioSource.PlayClipAtPoint(clips[id], renderer.GetComponent<GridRenderer>().GetCellRenderAt(soundPosition).transform.position, .5f);
+        AudioSource.PlayClipAtPoint(clips[id], renderer.GetComponent<GridRenderer>().GetCellRenderAt(soundPosition).transform.position, .5f * AudioSettings.MasterVolume * AudioSettings.SfxVolume);
         //AudioClip[] must be the same on all clients.
-    }
-    [ClientRpc]
-    public void RpcSendBGMStartToClients(bool loopingAudio, int id) {
-        //Starts audio
-        if (loopingAudio == true) {
-            //Do loop logic here?
-        } 
-        else {
-            source.PlayOneShot(clips[id]);
-        }
-        localBGMStartTime = AudioSettings.dspTime;
     }
 
     [ClientRpc]
