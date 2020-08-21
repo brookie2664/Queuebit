@@ -24,6 +24,10 @@ public class PlayerConnectionComponent : NetworkBehaviour
         KeyCode.A,
         KeyCode.S,
         KeyCode.D,
+        KeyCode.UpArrow,
+        KeyCode.LeftArrow,
+        KeyCode.DownArrow,
+        KeyCode.RightArrow,
         KeyCode.Space
     };
 

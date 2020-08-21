@@ -294,10 +294,10 @@ public class GameState : NetworkBehaviour
             // Creates a vector to represent intended move direction of player
             Vector2Int moveDirection = Vector2Int.zero;
             Vector2Int playerHeadPos = new Vector2Int(inputSourceData.x, inputSourceData.y);
-            if (input == KeyCode.W) moveDirection = Vector2Int.down;
-            else if (input == KeyCode.A) moveDirection = Vector2Int.left;
-            else if (input == KeyCode.S) moveDirection = Vector2Int.up;
-            else if (input == KeyCode.D) moveDirection = Vector2Int.right;
+            if (input == KeyCode.W || input == KeyCode.UpArrow) moveDirection = Vector2Int.down;
+            else if (input == KeyCode.A || input == KeyCode.LeftArrow) moveDirection = Vector2Int.left;
+            else if (input == KeyCode.S || input == KeyCode.DownArrow) moveDirection = Vector2Int.up;
+            else if (input == KeyCode.D || input == KeyCode.RightArrow) moveDirection = Vector2Int.right;
             else if (input == KeyCode.Space && inputSourceData.atkCharge != 0) {
                 // Attack Handling
                 
