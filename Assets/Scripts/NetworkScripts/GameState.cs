@@ -168,6 +168,10 @@ public class GameState : NetworkBehaviour
 
     public GameObject settingsObject;
     private GameSettings gameSettings;
+    [SerializeField]
+    private GameObject startButton;
+    [SerializeField]
+    private IPPanel ipPanel;
     public GameObject localCamera;
     public GameObject localRenderer;
     
@@ -486,28 +490,36 @@ public class GameState : NetworkBehaviour
     List<NetworkIdentity> joiningPlayers = new List<NetworkIdentity>();
     
     private bool loadTimerRunning = false;
-    private float loadTimer = 15f;
+    private float loadTimer = 5f;
 
-    // Called by command from client to register when a player joins
+    [ClientRpc]
+    public void RpcUpdatePlayerCountDisplay(int count) {
+        ipPanel.UpdatePlayerCount(count);
+    }
+
+    // Capled by command from client to register when a player joins
     public void CreatePlayer(NetworkIdentity playerId) {
-        if (gameLoaded) return;
+        if (gameLoaded && !loadTimerRunning) return;
 
         joiningPlayers.Add(playerId);
+        RpcUpdatePlayerCountDisplay(joiningPlayers.Count);
 
         if (loadTimerRunning) {
             playerId.GetComponent<PlayerConnectionComponent>().RpcStartTimer("Game starting in:", loadTimer);
         }
 
         if (!loadTimerRunning && joiningPlayers.Count > (debugAllowSinglePlayer ? 0 : 1)) {
-            loadTimerRunning = true;
-            foreach (NetworkIdentity id in joiningPlayers) {
-                id.GetComponent<PlayerConnectionComponent>().RpcStartTimer("Game starting in:", loadTimer);
-            }
+            startButton.SetActive(true);
         }
 
     }
 
-
+    public void StartLoadTimer() {
+        loadTimerRunning = true;
+        foreach (NetworkIdentity id in joiningPlayers) {
+            id.GetComponent<PlayerConnectionComponent>().RpcStartTimer("Game starting in:", loadTimer);
+        }
+    }
 
     // Spawns player at a random spawn point, unless none are available
     public void SpawnPlayer(NetworkIdentity playerId) {
@@ -639,6 +651,8 @@ public class GameState : NetworkBehaviour
         if (!isServer) {
             return;
         }
+
+        if (isServer && !loadTimerRunning && !startButton.active) startButton.SetActive(true);
 
         if (!gameLoaded && loadTimerRunning) {
             loadTimer -= Time.deltaTime;
