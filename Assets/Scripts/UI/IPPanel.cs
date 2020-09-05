@@ -10,6 +10,8 @@ public class IPPanel : MonoBehaviour
     private Text ipText;
     [SerializeField]
     private GameState gameState;
+    [SerializeField]
+    private Text playerCountText;
 
     private bool show = true;
 
@@ -28,5 +30,12 @@ public class IPPanel : MonoBehaviour
             show = false;
             gameObject.SetActive(false);
         }
+    }
+
+    private int playerCount = 0;
+
+    public void UpdatePlayerCount(int count) {
+        playerCount = count;
+        playerCountText.text = playerCount + " Players Connected";
     }
 }

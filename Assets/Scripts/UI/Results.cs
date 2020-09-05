@@ -43,12 +43,9 @@ public class Results : MonoBehaviour
     private string winnerMessage = "";
     
     void Awake() {
-        if (results == null) {
-            results = this;
-            gameObject.SetActive(false);
-        } else {
-            Destroy(gameObject);
-        }
+        if (results != null) Destroy(results);
+        results = this;
+        gameObject.SetActive(false);
     }
 
     public float Bezier(float value, int a) {

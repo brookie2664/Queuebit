@@ -44,11 +44,7 @@ public class MusicManager : NetworkBehaviour
     }
 
     void Awake() {
-        if (musicManager == null) {
-            musicManager = this;
-        } else {
-            Destroy(gameObject);
-        }
+        musicManager = this;
     }
 
     void Start()

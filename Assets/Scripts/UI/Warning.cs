@@ -23,12 +23,9 @@ public class Warning : MonoBehaviour
     }
 
     void Awake() {
-        if (warning == null) {
-            warning = this;
-            gameObject.SetActive(false);
-        } else {
-            Destroy(gameObject);
-        }
+        if (warning != null) Destroy(warning);
+        warning = this;
+        gameObject.SetActive(false);
     }
     
     // Start is called before the first frame update
